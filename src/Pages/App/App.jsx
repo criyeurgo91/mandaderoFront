@@ -1,14 +1,17 @@
 import React from "react"
-import Register from "../Register/Register"
-import CreateUser from "../User/CreateUser"
+import { BrowserRouter as Router } from "react-router-dom"
 import UserView from "../User/UserView"
+import Sidebar from "../../Components/Navbar/Sidebar"
+import LayoutComp from "../../Components/Layout/LayoutComp"
 
 
 const App = () => {
   return (
-    <div>
-      <UserView/>
-    </div>
+    <Router>
+      <div>
+        <LayoutComp/>
+      </div>
+    </Router>
   )
 }
 
