@@ -1,4 +1,4 @@
-import React from 'react'
+
 import UserForm from '../../Components/Forms/UserForm'
 
 const CreateUser = () => {
