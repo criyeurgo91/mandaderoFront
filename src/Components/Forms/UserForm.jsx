@@ -2,15 +2,29 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function UserForm() {
+  const [accounts, setAccounts] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
-  const [isMander, setIsMander] = useState(false);
   const [message, setMessage] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetchAccounts();
+  }, []);
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/account/');
+      setAccounts(response.data);
+    } catch (error) {
+      console.error('Error fetching accounts:', error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,54 +35,40 @@ function UserForm() {
     }
 
     try {
-      // Crear la cuenta
+      // Creamos la cuenta con el indicador de admin
       const accountResponse = await axios.post('http://127.0.0.1:8000/api/account/', {
         email_account: email,
         password_account: password,
-        
+        isadmin_account: isAdmin, // Aquí corregimos el nombre del parámetro
       });
 
-      
-
-      
-
-      // Obtener el ID de la cuenta creada
+      // Obtenemos el ID de la cuenta creada
       const accountId = accountResponse.data.id_account;
 
-      // Crear el usuario con el ID de la cuenta
-      const userResponse = await axios.post('http://127.0.0.1:8000/api/user/', {
+      // Creamos el usuario asociado a la cuenta
+      await axios.post('http://127.0.0.1:8000/api/user/', {
         account_id_account: accountId,
         image_user: image,
         name_user: name,
         lastname_user: lastname,
         phone_user: phone,
-        ismander_user: isMander,
       });
 
       setMessage('User created successfully.');
-      console.log('Response:', userResponse.data);
-      
+      console.log('User created successfully.');
+
       // Limpiar los campos después de enviar el formulario
+      setEmail('');
+      setPassword('');
       setImage(null);
       setName('');
       setLastname('');
       setPhone('');
-      setIsMander(false);
+      setIsAdmin(false);
     } catch (error) {
-      setMessage('Error creating user. Please try again.');
+      setMessage('Email already exist. Please try again.');
       console.error('Error creating user:', error);
     }
-  };
-
-  const handleEmailChange = (event) => {
-    const email = event.target.value;
-    setEmail(email);
-    setIsValidEmail(validateEmail(email));
-  };
-
-  const validateEmail = (email) => {
-    // Implementa tu lógica de validación de correo electrónico aquí
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   return (
@@ -87,12 +87,11 @@ function UserForm() {
           <input
             id="email"
             type="email"
-            className={`w-full px-3 py-2 border rounded-md ${isValidEmail ? '' : 'border-red-500'}`}
+            className="w-full px-3 py-2 border rounded-md"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(event) => setEmail(event.target.value)}
             required
           />
-          {!isValidEmail && <p className="text-red-500 text-xs mt-1">Please enter a valid email address.</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -163,10 +162,10 @@ function UserForm() {
             <input
               type="checkbox"
               className="form-checkbox"
-              checked={isMander}
-              onChange={(event) => setIsMander(event.target.checked)}
+              checked={isAdmin}
+              onChange={(event) => setIsAdmin(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Mander?</span>
+            <span className="ml-2 text-gray-700">Is Admin?</span>
           </label>
         </div>
         <button
