@@ -3,6 +3,9 @@ import axios from 'axios';
 
 function UserList() {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [alertMessage, setAlertMessage] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -21,6 +24,7 @@ function UserList() {
         })
       );
       setUsers(usersWithAccountInfo);
+      setFilteredUsers(usersWithAccountInfo);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -41,10 +45,34 @@ function UserList() {
     }
   };
 
+  const handleSearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    const filtered = users.filter(user =>
+      user.name_user.toLowerCase().includes(searchTerm) ||
+      user.lastname_user.toLowerCase().includes(searchTerm) ||
+      user.phone_user.toLowerCase().includes(searchTerm)
+    );
+    setFilteredUsers(filtered);
+
+    if (filtered.length === 0) {
+      setAlertMessage("User doesn't exist");
+    } else {
+      setAlertMessage('');
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">User List</h2>
       <div className="overflow-x-auto">
+        <input
+          type="text"
+          className="w-full px-3 py-2 border rounded-md mb-4"
+          placeholder="Search..."
+          onChange={handleSearch}
+        />
+        {alertMessage && <div className="text-red-500">{alertMessage}</div>}
         <table className="table-auto">
           <thead>
             <tr>
@@ -56,7 +84,7 @@ function UserList() {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {filteredUsers.map(user => (
               <tr key={user.id_user}>
                 <td className="border px-4 py-2">{user.email}</td>
                 <td className="border px-4 py-2">{user.name_user}</td>
