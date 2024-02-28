@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function UserForm() {
-  const [accounts, setAccounts] = useState([]);
-  const [selectedAccount, setSelectedAccount] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [image, setImage] = useState(null);
@@ -14,19 +12,6 @@ function UserForm() {
   const [message, setMessage] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
 
-  useEffect(() => {
-    fetchAccounts();
-  }, []);
-
-  const fetchAccounts = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/account/');
-      setAccounts(response.data);
-    } catch (error) {
-      console.error('Error fetching accounts:', error);
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -36,11 +21,16 @@ function UserForm() {
     }
 
     try {
-      // Crear la cuenta primero
+      // Crear la cuenta
       const accountResponse = await axios.post('http://127.0.0.1:8000/api/account/', {
         email_account: email,
         password_account: password,
+        
       });
+
+      
+
+      
 
       // Obtener el ID de la cuenta creada
       const accountId = accountResponse.data.id_account;
@@ -117,7 +107,68 @@ function UserForm() {
             required
           />
         </div>
-        {/* Resto del formulario */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+            Image:
+          </label>
+          <input
+            id="image"
+            type="file"
+            className="w-full px-3 py-2 border rounded-md"
+            onChange={(event) => setImage(event.target.files[0])}
+            accept="image/*"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            Name:
+          </label>
+          <input
+            id="name"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastname">
+            Lastname:
+          </label>
+          <input
+            id="lastname"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={lastname}
+            onChange={(event) => setLastname(event.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+            Phone:
+          </label>
+          <input
+            id="phone"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              checked={isMander}
+              onChange={(event) => setIsMander(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is Mander?</span>
+          </label>
+        </div>
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
