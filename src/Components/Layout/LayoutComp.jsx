@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-
-=======
-import React from 'react'
-import UserView from '../../Pages/User/UserView';
-import Sidebar from '../Navbar/Sidebar';
->>>>>>> 774713adbca245279eac30c3896aed3779a5aff4
 
 
 const LayoutComp = () => {
