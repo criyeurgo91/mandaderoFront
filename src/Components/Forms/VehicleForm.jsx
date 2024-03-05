@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+
+const userdefault = 2; // se debe enviar un id de usuario por defecto.
 
 const VehicleForm = () => {
   const initialState = {
@@ -10,7 +12,7 @@ const VehicleForm = () => {
     color_vehicle: "",
     type_vehicle: null,
     isverified_vehicle: false,
-    user_id_user: null,
+    user_id_user: userdefault,
   };
   
     
@@ -37,15 +39,33 @@ const VehicleForm = () => {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      image_vehicle: file
+    });
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (plateError || !formData.brand_vehicle || !formData.plate_vehicle || !formData.model_vehicle || !formData.color_vehicle || !formData.type_vehicle) {
       alert('Por favor, complete todos los campos correctamente antes de enviar.');
       return;
     }
+    const formDataToSend = new FormData();
+    formDataToSend.append('image_vehicle', formData.image_vehicle);
+    formDataToSend.append('brand_vehicle', formData.brand_vehicle);
+    formDataToSend.append('plate_vehicle', formData.plate_vehicle);
+    formDataToSend.append('model_vehicle', formData.model_vehicle);
+    formDataToSend.append('color_vehicle', formData.color_vehicle);
+    formDataToSend.append('type_vehicle', formData.type_vehicle);
+    formDataToSend.append('isverified_vehicle', formData.isverified_vehicle);
+    formDataToSend.append('user_id_user', formData.user_id_user);
+    
+    console.log(formDataToSend);
     try {
       setLoading(true);
-      const response = await axios.post('http://127.0.0.1:8000/api/vehicle/', formData);
+      const response = await axios.post('http://127.0.0.1:8000/api/vehicle/', formDataToSend);
       console.log('Response:', response.data);
       setFormData(initialState);
       setLoading(false);
@@ -83,9 +103,9 @@ const VehicleForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
             <option value="">Select Type</option>
-            <option value="carro">Carro</option>
-            <option value="moto">Moto</option>
-            <option value="bicicleta">Bicicleta</option>
+            <option value="car">Carro</option>
+            <option value="bike">Moto</option>
+            <option value="bicycle">Bicicleta</option>
           </select>
         </div>
         <div className="mb-4">
@@ -147,6 +167,15 @@ const VehicleForm = () => {
               </option>
             ))}
           </select>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Imagen:</label>
+          <input
+            type="file"
+            name="image_vehicle"
+            onChange={handleFileChange}
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
         </div>
        
         <div className="flex items-center justify-between">

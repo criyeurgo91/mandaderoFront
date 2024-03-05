@@ -1,5 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import {RiHome4Line, RiTeamLine, RiUserSearchLine, RiAlarmWarningLine, RiLogoutBoxRLine,} from "react-icons/ri";
+import {
+  RiHome4Line,
+  RiTeamLine,
+  RiUserSearchLine,
+  RiAlarmWarningLine,
+  RiLogoutBoxRLine,
+} from "react-icons/ri";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -9,24 +15,24 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-primary-900 h-full border-e-4 border-teal-300 absolute inset-y-0 left-0 w-32">
+    <div className="bg-primary-900 h-full border-e-4 border-teal-300">
       <nav className="flex flex-col gap-3 place-self-center py-40">
         <Link
-          to="/dashboardAdmin"
+          to="/Admin"
           className="flex items-center gap-10 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiHome4Line />
         </Link>
 
         <Link
-          to="/Userlist"
+          to="manders"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiTeamLine />
         </Link>
 
         <Link
-          to="infoUsers"
+          to="users"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiUserSearchLine />
