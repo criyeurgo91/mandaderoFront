@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import Sidebar from "../../Components/Navbar/Sidebar";
-import LayoutComp from "../../Components/Layout/LayoutComp";
+import React from "react";
 
 function Home() {
   return (
-    <LayoutComp/>
+    <>
+      <p>Esto esta Pendiente!</p>
+    </>
   );
 }
 

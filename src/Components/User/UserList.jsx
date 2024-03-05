@@ -1,6 +1,6 @@
-import  { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import LayoutComp from '../Layout/LayoutComp';
+import { NavLink } from 'react-router-dom';
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -99,17 +99,27 @@ function UserList() {
                     Edit
                   </button>
                   <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
                     onClick={() => handleDelete(user.id_user)}
                   >
                     Delete
                   </button>
+                  <NavLink to={`./detail`}>
+                    <button className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-1 px-2 rounded">
+                    View
+                    </button>
+                  </NavLink>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <NavLink to="./createuser">
+        <button className="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Create User
+        </button>
+      </NavLink>
     </div>
   );
 }
