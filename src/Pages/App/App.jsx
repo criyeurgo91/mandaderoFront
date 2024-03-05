@@ -2,15 +2,15 @@ import React from "react";
 import Createuser from '../User/CreateUser'
 import UserView from '../User/UserView'
 import UpdateUserForm from '../../Components/Forms/UpdateUserForm'
+import { BrowserRouter as Router } from 'react-router-dom';
+import Home from '../Home/index';
 
-
-
-const App = () => {
+function App() {
   return (
-    <div>
-      <Createuser/>
-    </div>
-  )
+    <Router>
+      <UserView />
+    </Router>
+  );
 }
 
 export default App

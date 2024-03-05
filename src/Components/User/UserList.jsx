@@ -1,6 +1,7 @@
-import  { useState, useEffect } from 'react';
+import  React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UpdateUserForm from '../Forms/UpdateUserForm';
+import UserForm from '../Forms/UserForm';
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ function UserList() {
   const [alertMessage, setAlertMessage] = useState('');
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [showCreateForm, setShowCreateForm] = useState(false); 
 
   useEffect(() => {
     fetchUsers();
@@ -38,10 +40,14 @@ function UserList() {
     setShowUpdateForm(true);
   };
 
+  const handleUpdate = () => {
+    fetchUsers();
+    setShowUpdateForm(false);
+  };
+
   const handleDelete = async (userId) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/user/${userId}/`);
-      // Actualizar la lista de usuarios después de eliminar
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -65,59 +71,83 @@ function UserList() {
     }
   };
 
+  const handleCreateUser = () => {
+    setShowCreateForm(true);
+  };
+
+  const handleCreate = () => {
+    fetchUsers();
+    setShowCreateForm(false);
+  };
+
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">User List</h2>
       {showUpdateForm ? (
-        <UpdateUserForm userId={selectedUserId} />
+        <UpdateUserForm userId={selectedUserId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : (
-        <div className="overflow-x-auto">
-          <input
-            type="text"
-            className="w-full px-3 py-2 border rounded-md mb-4"
-            placeholder="Search..."
-            onChange={handleSearch}
-          />
-          {alertMessage && <div className="text-red-500">{alertMessage}</div>}
-          <table className="table-auto">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Lastname</th>
-                <th className="px-4 py-2">Phone</th>
-                <th className="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map(user => (
-                <tr key={user.id_user}>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">{user.name_user}</td>
-                  <td className="border px-4 py-2">{user.lastname_user}</td>
-                  <td className="border px-4 py-2">{user.phone_user}</td>
-                  <td className="border px-4 py-2">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-                      onClick={() => handleEdit(user.id_user)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                      onClick={() => handleDelete(user.id_user)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <>
+          {showCreateForm ? (
+            <UserForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
+          ) : (
+            <div className="overflow-x-auto">
+              <div className="flex mb-4">
+                <input
+                  type="text"
+                  className="w-1/2 px-3 py-2 border rounded-md mr-2"
+                  placeholder="Search..."
+                  onChange={handleSearch}
+                />
+                <button
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  onClick={handleCreateUser}
+                >
+                  New User
+                </button>
+              </div>
+              {alertMessage && <div className="text-red-500">{alertMessage}</div>}
+              <table className="table-auto">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2">Email</th>
+                    <th className="px-4 py-2">Name</th>
+                    <th className="px-4 py-2">Lastname</th>
+                    <th className="px-4 py-2">Phone</th>
+                    <th className="px-4 py-2">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredUsers.map(user => (
+                    <tr key={user.id_user}>
+                      <td className="border px-4 py-2">{user.email}</td>
+                      <td className="border px-4 py-2">{user.name_user}</td>
+                      <td className="border px-4 py-2">{user.lastname_user}</td>
+                      <td className="border px-4 py-2">{user.phone_user}</td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                          onClick={() => handleEdit(user.id_user)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                          onClick={() => handleDelete(user.id_user)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
 }
+
 
 export default UserList;

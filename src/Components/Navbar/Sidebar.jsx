@@ -9,7 +9,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-primary-900 h-full border-e-4 border-teal-300 absolute inset-y-0 left-0 w-16">
+    <div className="bg-primary-900 h-full border-e-4 border-teal-300 absolute inset-y-0 left-0 w-32">
       <nav className="flex flex-col gap-3 place-self-center py-40">
         <Link
           to="/dashboardAdmin"
@@ -19,7 +19,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          to="team"
+          to="/Userlist"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiTeamLine />

@@ -1,8 +1,7 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function UserForm() {
-  const [accounts, setAccounts] = useState([]);
+function UserForm({ onCreate, onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [image, setImage] = useState(null);
@@ -10,42 +9,24 @@ function UserForm() {
   const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    fetchAccounts();
+    // Aquí puedes realizar cualquier acción que necesites cuando se monte el componente
   }, []);
-
-  const fetchAccounts = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/account/');
-      setAccounts(response.data);
-    } catch (error) {
-      console.error('Error fetching accounts:', error);
-    }
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!isValidEmail) {
-      setMessage('Please enter a valid email address.');
-      return;
-    }
-
     try {
-      // Creamos la cuenta con el indicador de admin
       const accountResponse = await axios.post('http://127.0.0.1:8000/api/account/', {
         email_account: email,
         password_account: password,
-        isadmin_account: isAdmin, // Aquí corregimos el nombre del parámetro
+        isadmin_account: isAdmin,
       });
 
-      // Obtenemos el ID de la cuenta creada
       const accountId = accountResponse.data.id_account;
 
-      // Creamos el usuario asociado a la cuenta
       await axios.post('http://127.0.0.1:8000/api/user/', {
         account_id_account: accountId,
         image_user: image,
@@ -55,7 +36,6 @@ function UserForm() {
       });
 
       setMessage('User created successfully.');
-      console.log('User created successfully.');
 
       // Limpiar los campos después de enviar el formulario
       setEmail('');
@@ -65,8 +45,15 @@ function UserForm() {
       setLastname('');
       setPhone('');
       setIsAdmin(false);
+
+      // Llamar a la función onCreate para actualizar la lista de usuarios
+      onCreate();
+
+      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
+      onClose();
+
     } catch (error) {
-      setMessage('Email already exist. Please try again.');
+      setMessage('Error creating user. Please try again.');
       console.error('Error creating user:', error);
     }
   };

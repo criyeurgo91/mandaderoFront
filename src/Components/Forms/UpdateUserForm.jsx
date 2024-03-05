@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-function UpdateUserForm({ userId }) {
+function UpdateUserForm({ userId, onUpdate, onClose }) {
   const [user, setUser] = useState(null);
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isMander, setIsMander] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -21,7 +20,7 @@ function UpdateUserForm({ userId }) {
       setName(response.data.name_user);
       setLastname(response.data.lastname_user);
       setPhone(response.data.phone_user);
-      setIsAdmin(response.data.isadmin_user);
+      setIsMander(response.data.ismander_user);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -31,17 +30,22 @@ function UpdateUserForm({ userId }) {
     event.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append('image_user', image);
-      formData.append('name_user', name);
-      formData.append('lastname_user', lastname);
-      formData.append('phone_user', phone);
-      formData.append('isadmin_user', isAdmin);
+      const userData = {
+        account_id_account: user.account_id_account,
+        image_user: image,
+        name_user: name,
+        lastname_user: lastname,
+        phone_user: phone,
+        ismander_user: isMander,
+      };
 
-      await axios.put(`http://127.0.0.1:8000/api/user/${userId}/`, formData);
+      const response = await axios.put(`http://127.0.0.1:8000/api/user/${userId}/`, userData);
 
       setMessage('User updated successfully.');
-      console.log('User updated successfully.');
+      console.log('User updated successfully.', response.data);
+
+      onUpdate(); // Llamar a la función onUpdate para actualizar la lista después de una actualización exitosa
+      onClose(); // Llamar a la función onClose para cerrar el formulario después de una actualización exitosa
     } catch (error) {
       setMessage('Failed to update user. Please try again.');
       console.error('Error updating user:', error);
@@ -114,10 +118,10 @@ function UpdateUserForm({ userId }) {
               <input
                 type="checkbox"
                 className="form-checkbox"
-                checked={isAdmin}
-                onChange={(event) => setIsAdmin(event.target.checked)}
+                checked={isMander}
+                onChange={(event) => setIsMander(event.target.checked)}
               />
-              <span className="ml-2 text-gray-700">Is Admin?</span>
+              <span className="ml-2 text-gray-700">Is Mander?</span>
             </label>
           </div>
           <button
