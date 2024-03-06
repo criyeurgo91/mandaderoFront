@@ -8,6 +8,7 @@ import VehicleForm from "../Components/Forms/VehicleForm";
 import Register from "../Pages/Register/Register";
 import VehicleList from "../Components/Vehicle/VehicleList";
 import DetailUser from "../Pages/User/DetailUser";
+import DocumentForm from "../Components/Forms/DocumentForm";
 
 const AdminRoutes = () => {
     return (
@@ -25,7 +26,7 @@ const AdminRoutes = () => {
                         <Route path='users/createUser' element={<UserForm />} />
                         <Route path='users/detail' element={<DetailUser />} />
                         <Route path='vehicles' element={<VehicleList />} />
-                        <Route path='vehicles/createvehicle' element={<VehicleForm />} />
+                        <Route path='vehicles/createvehicle' element={<Home />} />
                         <Route path='manders' element={<Home />} />
                         <Route path='manders/createmanders' element={<Home />} />
                         <Route path='services' element={<Home />} />
@@ -34,6 +35,7 @@ const AdminRoutes = () => {
                         <Route path='request/createrequest' element={<Home />} />
                         <Route path='requestmanager' element={<Home />} />
                         <Route path='requestmanager/createrequestmanager' element={<Home />} />
+                        <Route path="document" element={<DocumentForm />} />
                     </Routes>
                 </main>
             </div>
