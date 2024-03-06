@@ -26,11 +26,13 @@ const VehicleForm = () => {
     const { name, value } = e.target;
     if (name === 'plate_vehicle') {
       // Validar formato de placa según el tipo de vehículo seleccionado
-      const plateRegex = formData.type_vehicle === 'carro' ? /^[A-Z]{3}-\d{3}$/ : /^[A-Z]{3}-\d{2}[A-Z]$/;
+      const plateRegex = formData.type_vehicle === 'car' ? /^[A-Z]{3}\d{3}$/ : /^[A-Z]{3}\d{2}[A-Z]$/;
+      //const plateRegex = /^[A-Z]{3}\d{3}$|^[A-Z]{3}\d{2}[A-Z]$/;
+
       if (plateRegex.test(value)) {
         setPlateError('');
       } else {
-        setPlateError(formData.type_vehicle === 'carro' ? 'Formato de placa correcto para Carro es Ejemplo: ABC-123 MAYUSCULAS' : 'Formato de placa correcto para Moto es. Ejemplo: ABC-12A MAYUSCULAS');
+        setPlateError(formData.type_vehicle === 'car' ? 'Formato de placa correcto para Carro es Ejemplo: ABC123 MAYUSCULAS' : 'Formato de placa correcto para Moto es. Ejemplo: ABC12A MAYUSCULAS');
       }
     }
     setFormData({
@@ -48,6 +50,10 @@ const VehicleForm = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(plateError){
+      alert("Error Placa");
+    }
+    console.log(formData);
     if (plateError || !formData.brand_vehicle || !formData.plate_vehicle || !formData.model_vehicle || !formData.color_vehicle || !formData.type_vehicle) {
       alert('Por favor, complete todos los campos correctamente antes de enviar.');
       return;
@@ -70,6 +76,8 @@ const VehicleForm = () => {
       setFormData(initialState);
       setLoading(false);
       alert('Formulario enviado exitosamente');
+      window.location.href = '/Admin/vehicles';
+
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);
