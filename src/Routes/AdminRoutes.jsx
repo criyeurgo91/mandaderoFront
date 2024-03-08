@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import Sidebar from "../Components/Navbar/Sidebar";
+import Headers from "../Components/Headers/index"
 import Home from "../Pages/Home";
 import UserList from "../Components/User/UserList";
 import UserForm from "../Components/Forms/UserForm";
@@ -15,7 +16,9 @@ const AdminRoutes = () => {
         <>
             <div className="flex h-screen">
                 <div className="col-span-1">
-                    <Sidebar />
+                    
+                  <Sidebar/>
+                    
                 </div>
                 <main className="flex-grow overflow-y-auto">
                     <Routes>
@@ -26,7 +29,7 @@ const AdminRoutes = () => {
                         <Route path='users/createUser' element={<UserForm />} />
                         <Route path='users/detail' element={<DetailUser />} />
                         <Route path='vehicles' element={<VehicleList />} />
-                        <Route path='vehicles/createvehicle' element={<VehicleForm />} />
+                        <Route path="/vehicles/createvehicle" element={<VehicleForm />} />
                         <Route path='manders' element={<PageDefault />} />
                         <Route path='manders/createmanders' element={<PageDefault />} />
                         <Route path='services' element={<PageDefault />} />

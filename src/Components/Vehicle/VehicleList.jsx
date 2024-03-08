@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Importar Link desde react-router-dom
 
@@ -36,11 +36,11 @@ const VehicleList = () => {
       </div>
       
       <Link
-        to="vehicles/createvehicle" // Ruta a la que se redirigirá
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-      >
-        New Vehicle
-      </Link>
+     to="/vehicles/createvehicle" // Ruta al formulario VehicleForm
+     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+>
+  New Vehicle
+</Link>
     </div>
   );
 };
