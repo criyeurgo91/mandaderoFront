@@ -5,6 +5,7 @@ import {
   RiUserSearchLine,
   RiAlarmWarningLine,
   RiLogoutBoxRLine,
+  RiCarLine 
 } from "react-icons/ri";
 
 const Sidebar = () => {
@@ -15,11 +16,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-primary-900 h-full border-e-4 border-teal-300">
+    <div className="bg-primary-900 h-full border-e-4 border-teal-300 flex flex-col justify-between">
       <nav className="flex flex-col gap-3 place-self-center py-40">
         <Link
           to="/Admin"
-          className="flex items-center gap-10 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiHome4Line />
         </Link>
@@ -44,16 +45,21 @@ const Sidebar = () => {
         >
           <RiAlarmWarningLine />
         </Link>
+
+        <Link
+          to="vehicles"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+        >
+          <RiCarLine /> 
+        </Link>
       </nav>
 
-      <nav className="place-self-end gap-40 py-50">
-        <div
-          onClick={logout}
-          className="flex gap-4 justify-center text-3xl text-white py2- px-4 rounded-tr-[20px] hover:bg-teal-300"
-        >
-          <RiLogoutBoxRLine />
-        </div>
-      </nav>
+      <div
+        onClick={logout}
+        className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300 cursor-pointer"
+      >
+        <RiLogoutBoxRLine />
+      </div>
     </div>
   );
 };
