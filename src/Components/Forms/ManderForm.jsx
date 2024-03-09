@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 const ManderForm = () => {
@@ -86,7 +86,6 @@ const ManderForm = () => {
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-4 text-center">Crear Mander</h1>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
-        {/* Campos para la cuenta */}
         <div>
           <label htmlFor="email_account" className="block">Email:</label>
           <input type="email" id="email_account" name="email_account" value={formData.email_account} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
