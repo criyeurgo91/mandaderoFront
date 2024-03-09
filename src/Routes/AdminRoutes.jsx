@@ -9,6 +9,7 @@ import VehicleForm from "../Components/Forms/VehicleForm";
 import Register from "../Pages/Register/Register";
 import VehicleList from "../Components/Vehicle/VehicleList";
 import DetailUser from "../Pages/User/DetailUser";
+import DocumentForm from "../Components/Forms/DocumentForm";
 import PageDefault from "../Pages/Default";
 import ServicesForm from "../Components/Forms/ServicesForm";
 import ServiceList from "../Components/Service/ServiceList";
@@ -39,6 +40,7 @@ const AdminRoutes = () => {
                         <Route path='document' element={<PageDefault />} />
                         <Route path='document/createdocument' element={<PageDefault />} />
                         <Route path='requestmanager' element={<PageDefault />} />
+                        <Route path="document" element={<DocumentForm />} />
                         <Route path='requestmanager/createrequestmanager' element={<PageDefault />} />
                     </Routes>
                 </main>
