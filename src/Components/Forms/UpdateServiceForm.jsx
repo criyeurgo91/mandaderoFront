@@ -4,7 +4,7 @@ import axios from 'axios';
 function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
   const [name, setName] = useState('');
   const [detail, setDetail] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null); // Nuevo estado para manejar la imagen
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -25,19 +25,18 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
     event.preventDefault();
 
     try {
-      const ServiceData = {
-        name_service: name,
-        detail_service: detail,
-        image_service: image,
-      };
+      const formData = new FormData();
+      formData.append('name_service', name);
+      formData.append('detail_service', detail);
+      formData.append('image_service', image); // Agregar la imagen al FormData
 
-      const response = await axios.put(`http://127.0.0.1:8000/api/service/${serviceId}/`, ServiceData);
+      const response = await axios.put(`http://127.0.0.1:8000/api/service/${serviceId}/`, formData);
 
       setMessage('Service updated successfully.');
       console.log('Service updated successfully.', response.data);
 
-      onUpdate(); // Llamar a la función onUpdate para actualizar la lista después de una actualización exitosa
-      onClose(); // Llamar a la función onClose para cerrar el formulario después de una actualización exitosa
+      onUpdate();
+      onClose();
     } catch (error) {
       setMessage('Failed to update service. Please try again.');
       console.error('Error updating service:', error);
@@ -52,54 +51,52 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
           {message}
         </div>
       )}
-      {user && (
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
-              Image:
-            </label>
-            <input
-              id="image"
-              type="file"
-              className="w-full px-3 py-2 border rounded-md"
-              onChange={(event) => setImage(event.target.files[0])}
-              accept="image/*"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Name:
-            </label>
-            <input
-              id="name"
-              type="text"
-              className="w-full px-3 py-2 border rounded-md"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastname">
-              Detail:
-            </label>
-            <input
-              id="detail"
-              type="text"
-              className="w-full px-3 py-2 border rounded-md"
-              value={detail}
-              onChange={(event) => setDetail(event.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Update
-          </button>
-        </form>
-      )}
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            Name:
+          </label>
+          <input
+            id="name"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="detail">
+            Detail:
+          </label>
+          <input
+            id="detail"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={detail}
+            onChange={(event) => setDetail(event.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+            Image:
+          </label>
+          <input
+            id="image"
+            type="file"
+            className="w-full px-3 py-2 border rounded-md"
+            onChange={(event) => setImage(event.target.files[0])}
+            accept="image/*"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Update
+        </button>
+      </form>
     </div>
   );
 }

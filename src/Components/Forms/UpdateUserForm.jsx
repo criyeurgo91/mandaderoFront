@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 function UpdateUserForm({ userId, onUpdate, onClose }) {
   const [user, setUser] = useState(null);
   const [image, setImage] = useState(null);
@@ -44,8 +45,8 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
       setMessage('User updated successfully.');
       console.log('User updated successfully.', response.data);
 
-      onUpdate(); // Llamar a la función onUpdate para actualizar la lista después de una actualización exitosa
-      onClose(); // Llamar a la función onClose para cerrar el formulario después de una actualización exitosa
+      onUpdate();
+      onClose();
     } catch (error) {
       setMessage('Failed to update user. Please try again.');
       console.error('Error updating user:', error);

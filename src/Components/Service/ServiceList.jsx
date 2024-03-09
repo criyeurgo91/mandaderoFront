@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ServicesForm from '../Forms/ServicesForm';
-import UpdateServiceForm from '../Forms/UpdateUserForm';
+import UpdateServiceForm from '../Forms/UpdateServiceForm';
 
-function ServiceList ()  {
+function ServiceList() {
   const [services, setServices] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-  const [selectedserviceId, setSelectedServiceId] = useState(null);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -43,7 +42,7 @@ function ServiceList ()  {
 
   const handleUpdate = () => {
     fetchServices();
-    setShowUpdateForm(true);
+    setShowUpdateForm(false);
   };
 
   const handleDeleteService = async (serviceId) => {
@@ -59,7 +58,7 @@ function ServiceList ()  {
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Service List</h2>
       {showUpdateForm ? (
-        <UpdateServiceForm serviceId={selectedserviceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
+        <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : (
         <>
           {showCreateForm ? (
@@ -80,7 +79,6 @@ function ServiceList ()  {
                   New Service
                 </button>
               </div>
-              {alertMessage && <div className="text-red-500">{alertMessage}</div>}
               <table className="table-auto">
                 <thead>
                   <tr>
@@ -118,6 +116,6 @@ function ServiceList ()  {
       )}
     </div>
   );
-};
+}
 
 export default ServiceList;
