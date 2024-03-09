@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ServicesForm from '../Forms/ServicesForm';
 import UpdateServiceForm from '../Forms/UpdateServiceForm';
@@ -70,18 +70,18 @@ function ServiceList() {
               <div className="flex mb-4">
                 <input
                   type="text"
-                  className="w-1/2 px-3 py-2 border rounded-md mr-2"
+                  className="w-full px-2 py-2 border rounded-md mr-1"
                   placeholder="Search..."
                   onChange={handleSearch}
                 />
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded"
                   onClick={handleCreateService}
                 >
                   New Service
                 </button>
               </div>
-              <table className="table-auto">
+              <table className="table-auto w-full">
                 <thead>
                   <tr>
                     <th className='px-4 py-2'>Name</th>
@@ -94,7 +94,7 @@ function ServiceList() {
                     <tr key={service.id_service}>
                       <td className="border px-4 py-2">{service.name_service}</td>
                       <td className="border px-4 py-2">{service.detail_service}</td>
-                      <td className="border px-4 py-2">
+                      <td className="border px-4 py-2 flex justify-end">
                         <button
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
                           onClick={() => handleEditService(service.id_service)}
