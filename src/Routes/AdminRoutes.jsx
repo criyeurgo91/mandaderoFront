@@ -19,9 +19,7 @@ const AdminRoutes = () => {
         <>
             <div className="flex h-screen">
                 <div className="col-span-1">
-                    
-                  <Sidebar/>
-                    
+                    <Sidebar />
                 </div>
                 <main className="flex-grow overflow-y-auto">
                     <Routes>
@@ -31,16 +29,17 @@ const AdminRoutes = () => {
                         <Route path='users' element={<UserList />} />
                         <Route path='users/createUser' element={<UserForm />} />
                         <Route path='users/detail' element={<DetailUser />} />
-                        <Route path='vehicles' element={<VehicleList />} />
-                        <Route path="/vehicles/createvehicle" element={<VehicleForm />} />
+                        <Route path='/vehicles/*' element={<VehicleList />} />
+                        <Route path="vehicles/createvehicle" element={<VehicleForm />} />
                         <Route path='manders' element={<PageDefault />} />
                         <Route path='manders/createmanders' element={<PageDefault />} />
                         <Route path='services' element={<ServiceList />} />
                         <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />
                         <Route path='request/createrequest' element={<PageDefault />} />
-                        <Route path='requestmanager' element={<PageDefault />} />
                         <Route path="document" element={<DocumentForm />} />
+                        <Route path='document/createdocument' element={<PageDefault />} />
+                        <Route path='requestmanager' element={<PageDefault />} />
                         <Route path='requestmanager/createrequestmanager' element={<PageDefault />} />
                     </Routes>
                 </main>
