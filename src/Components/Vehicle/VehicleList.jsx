@@ -1,10 +1,8 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
-=======
 import { Link } from 'react-router-dom';
->>>>>>> b0cf288532144c9da8a04375b786c7e6f0c5e9fe
+
 
 function VehicleList() {
   const [vehicles, setVehicles] = useState([]);
