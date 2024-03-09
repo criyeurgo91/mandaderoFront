@@ -1,5 +1,5 @@
 import ServicesForm from "../../Components/Forms/ServicesForm"
-import ServiceList from "../../Components/Service/ServiceList"
+//import ServiceList from "../../Components/Service/ServiceList"
 
 
 const ViewService = () => {

@@ -1,7 +1,6 @@
-import { Routes, Route } from "react-router-dom";
 
+import { Routes, Route } from "react-router-dom";
 import Sidebar from "../Components/Navbar/Sidebar";
-//import Headers from "../Components/Headers/index"
 import Home from "../Pages/Home";
 import UserList from "../Components/User/UserList";
 import UserForm from "../Components/Forms/UserForm";
@@ -13,6 +12,7 @@ import DocumentForm from "../Components/Forms/DocumentForm";
 import PageDefault from "../Pages/Default";
 import ServicesForm from "../Components/Forms/ServicesForm";
 import ServiceList from "../Components/Service/ServiceList";
+//import ViewManders from "../Pages/Manders/ViewManders";
 
 const AdminRoutes = () => {
     return (
@@ -30,9 +30,8 @@ const AdminRoutes = () => {
                         <Route path='users/createUser' element={<UserForm />} />
                         <Route path='users/detail' element={<DetailUser />} />
                         <Route path='/vehicles/*' element={<VehicleList />} />
-                        <Route path="vehicles/createvehicle" element={<VehicleForm />} />
+                        <Route path="vehicles/createvehicle" element={<PageDefault />} />
                         <Route path='manders' element={<PageDefault />} />
-                        <Route path='manders/createmanders' element={<PageDefault />} />
                         <Route path='services' element={<ServiceList />} />
                         <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />
