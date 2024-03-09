@@ -62,7 +62,7 @@ function DocumentForm() {
             type="file"
             className="w-full px-3 py-2 border rounded-md"
             onChange={(event) => setImageDocument(event.target.files[0])}
-            accept="image/*"
+  
             required
             
           />
@@ -101,12 +101,12 @@ function DocumentForm() {
             required
           >
             <option value="">Select Document Type</option>
-            <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+            <option value="CC">Cedula de Ciudadania</option>
             <option value="SOAT">SOAT</option>
-            <option value="Licencia">Licencia</option>
-            <option value="Operacion">Operacion</option>
-            <option value="Tecnomecanica">Tecnomecanica</option>
-            <option value="Recibo">Recibo</option>
+            <option value="LICENCIA">Licencia</option>
+            <option value="OPERACION">Operacion</option>
+            <option value="TECNOMECANICA">Tecnomecanica</option>
+            <option value="RECIBO">Recibo</option>
           </select>
           
         </div>

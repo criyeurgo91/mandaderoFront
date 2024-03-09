@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import Sidebar from "../Components/Navbar/Sidebar";
+//import Headers from "../Components/Headers/index"
 import Home from "../Pages/Home";
 import UserList from "../Components/User/UserList";
 import UserForm from "../Components/Forms/UserForm";
@@ -10,13 +11,17 @@ import VehicleList from "../Components/Vehicle/VehicleList";
 import DetailUser from "../Pages/User/DetailUser";
 import DocumentForm from "../Components/Forms/DocumentForm";
 import PageDefault from "../Pages/Default";
+import ServicesForm from "../Components/Forms/ServicesForm";
+import ServiceList from "../Components/Service/ServiceList";
 
 const AdminRoutes = () => {
     return (
         <>
             <div className="flex h-screen">
                 <div className="col-span-1">
-                    <Sidebar />
+                    
+                  <Sidebar/>
+                    
                 </div>
                 <main className="flex-grow overflow-y-auto">
                     <Routes>
@@ -27,11 +32,11 @@ const AdminRoutes = () => {
                         <Route path='users/createUser' element={<UserForm />} />
                         <Route path='users/detail' element={<DetailUser />} />
                         <Route path='vehicles' element={<VehicleList />} />
-                        <Route path='vehicles/createvehicle' element={<VehicleForm />} />
+                        <Route path="/vehicles/createvehicle" element={<VehicleForm />} />
                         <Route path='manders' element={<PageDefault />} />
                         <Route path='manders/createmanders' element={<PageDefault />} />
-                        <Route path='services' element={<PageDefault />} />
-                        <Route path='services/createservice' element={<PageDefault />} />
+                        <Route path='services' element={<ServiceList />} />
+                        <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />
                         <Route path='request/createrequest' element={<PageDefault />} />
                         <Route path='requestmanager' element={<PageDefault />} />
