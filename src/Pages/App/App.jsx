@@ -5,14 +5,12 @@ import ManderForm from '../../Components/Forms/ManderForm';
 
 function App() {
   return (
-   /* <BrowserRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path='/*' element={<AdminRoutes/>} />
-        <Route path='/Admin/*' element={<AdminRoutes/>} />
+        <Route path='/*' element={<AdminRoutes />} />
+        <Route path='/Admin/*' element={<AdminRoutes />} />
       </Routes>
-    </BrowserRouter>*/
-
-    <ManderForm/>
+    </BrowserRouter>
   );
 }
 
