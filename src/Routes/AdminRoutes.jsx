@@ -37,10 +37,9 @@ const AdminRoutes = () => {
                         <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />
                         <Route path='request/createrequest' element={<PageDefault />} />
-                        <Route path='document' element={<PageDefault />} />
+                        <Route path="document" element={<DocumentForm />} />
                         <Route path='document/createdocument' element={<PageDefault />} />
                         <Route path='requestmanager' element={<PageDefault />} />
-                        <Route path="document" element={<DocumentForm />} />
                         <Route path='requestmanager/createrequestmanager' element={<PageDefault />} />
                     </Routes>
                 </main>
