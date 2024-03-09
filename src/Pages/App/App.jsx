@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminRoutes from '../../Routes/AdminRoutes';
-import VehicleForm from '../../Components/Forms/VehicleForm';
-import ManderForm from '../../Components/Forms/ManderForm';
 
 function App() {
   return (
