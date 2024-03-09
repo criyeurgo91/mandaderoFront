@@ -2,7 +2,6 @@ import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-
 function VehicleList() {
   const [vehicles, setVehicles] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +38,7 @@ function VehicleList() {
           onChange={handleSearch}
         />
         <Link
-          to="createvehicle"
+          to="/vehicles/createvehicle"
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
         >
           New Vehicle
@@ -59,7 +58,7 @@ function VehicleList() {
         </thead>
         <tbody>
           {filteredVehicles.map((vehicle) => (
-            <tr key={vehicle.id_vehicle}>
+            <tr key={vehicle.id}>
               <td className="border px-4 py-2">{vehicle.brand_vehicle}</td>
               <td className="border px-4 py-2">{vehicle.plate_vehicle}</td>
               <td className="border px-4 py-2">{vehicle.model_vehicle}</td>
