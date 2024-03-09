@@ -87,5 +87,6 @@ function ServicesForm({ onCreate, onClose }) {
     </div>
   );
 }
+export default ServicesForm;
 
 export default ServicesForm;

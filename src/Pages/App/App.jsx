@@ -6,9 +6,10 @@ import AdminRoutes from '../../Routes/AdminRoutes';
 function App() {
   return (
     <BrowserRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path='/*' element={<AdminRoutes/>} />
-        <Route path='/Admin/*' element={<AdminRoutes/>} />
+        <Route path='/*' element={<AdminRoutes />} />
+        <Route path='/Admin/*' element={<AdminRoutes />} />
       </Routes>
     </BrowserRouter>
 

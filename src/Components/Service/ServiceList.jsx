@@ -54,14 +54,20 @@ function ServiceList() {
     }
   };
 
+  const filteredServices = services.filter(service => 
+    service.name_service.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Service List</h2>
       {showUpdateForm ? (
         <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
+        <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : (
         <>
           {showCreateForm ? (
+            <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
             <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
           ) : (
             <div className="overflow-x-auto">
@@ -74,6 +80,7 @@ function ServiceList() {
                 />
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  onClick={handleCreateService}
                   onClick={handleCreateService}
                 >
                   New Service
