@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import ServicesForm from '../Forms/ServicesForm';
 import UpdateServiceForm from '../Forms/UpdateServiceForm';
@@ -26,10 +26,6 @@ function ServiceList() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-
-  const filteredServices = services.filter(service =>
-    service.name_service.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const handleCreateService = () => {
     setShowCreateForm(true);
@@ -61,15 +57,15 @@ function ServiceList() {
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Service List</h2>
-      {showUpdateForm ? (
+      {showUpdateForm && (
         <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
-        <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
-      ) : (
+      )}
+      {!showUpdateForm && (
         <>
-          {showCreateForm ? (
+          {showCreateForm && (
             <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
-            <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
-          ) : (
+          )}
+          {!showCreateForm && (
             <div className="overflow-x-auto">
               <div className="flex mb-4">
                 <input
@@ -80,7 +76,6 @@ function ServiceList() {
                 />
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                  onClick={handleCreateService}
                   onClick={handleCreateService}
                 >
                   New Service

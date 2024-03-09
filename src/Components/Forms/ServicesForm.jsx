@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import axios from 'axios';
 
 function ServicesForm({ onCreate, onClose }) {
@@ -16,16 +16,14 @@ function ServicesForm({ onCreate, onClose }) {
       formData.append('detail_service', detail);
       formData.append('image_service', image);
 
-      const response = await axios.post('http://127.0.0.1:8000/api/service/', formData);
+      await axios.post('http://127.0.0.1:8000/api/service/', formData);
 
       setMessage('Service created successfully.');
-
       setName('');
       setDetail('');
       setImage(null);
 
       onCreate();
-
       onClose();
     } catch (error) {
       setMessage('Error creating service. Please try again.');
@@ -87,6 +85,5 @@ function ServicesForm({ onCreate, onClose }) {
     </div>
   );
 }
-export default ServicesForm;
 
 export default ServicesForm;
