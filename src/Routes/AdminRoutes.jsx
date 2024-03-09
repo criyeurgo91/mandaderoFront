@@ -10,6 +10,8 @@ import Register from "../Pages/Register/Register";
 import VehicleList from "../Components/Vehicle/VehicleList";
 import DetailUser from "../Pages/User/DetailUser";
 import PageDefault from "../Pages/Default";
+import ServicesForm from "../Components/Forms/ServicesForm";
+import ServiceList from "../Components/Service/ServiceList";
 
 const AdminRoutes = () => {
     return (
@@ -32,8 +34,8 @@ const AdminRoutes = () => {
                         <Route path="/vehicles/createvehicle" element={<VehicleForm />} />
                         <Route path='manders' element={<PageDefault />} />
                         <Route path='manders/createmanders' element={<PageDefault />} />
-                        <Route path='services' element={<PageDefault />} />
-                        <Route path='services/createservice' element={<PageDefault />} />
+                        <Route path='services' element={<ServiceList />} />
+                        <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />
                         <Route path='request/createrequest' element={<PageDefault />} />
                         <Route path='requestmanager' element={<PageDefault />} />
