@@ -3,9 +3,13 @@ import {
   RiHome4Line,
   RiTeamLine,
   RiUserSearchLine,
-  RiAlarmWarningLine,
+  RiSettings2Line ,
   RiLogoutBoxRLine,
-  RiCarLine
+  RiCarLine,
+  RiFileTextLine,
+  RiSteering2Line,
+  RiToolsLine,
+  RiNotification2Line 
 } from "react-icons/ri";
 
 const Sidebar = () => {
@@ -16,8 +20,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-primary-900 h-full border-e-4 border-teal-300 flex flex-col justify-between">
-      <nav className="flex flex-col gap-3 place-self-center py-40">
+    <div className="bg-primary-900 h-full border-e-4 border-teal-300 flex flex-col justify-center">
+      <nav className="flex flex-col gap-3 place-self-center justify-between">
         <Link
           to="/Admin"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
@@ -43,39 +47,36 @@ const Sidebar = () => {
           to="document"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
-          <RiTeamLine />
+          <RiFileTextLine  />
         </Link>
 
         <Link
           to="manders"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
-          <RiTeamLine />
+          <RiSteering2Line  />
         </Link>
 
         <Link
           to="services"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
-          <RiTeamLine />
+          <RiToolsLine />
         </Link>
 
         <Link
           to="request"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
-          <RiAlarmWarningLine />
+          <RiNotification2Line />
         </Link>
-<<<<<<< HEAD
-=======
 
         <Link
           to="requestmanager"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
-          <RiAlarmWarningLine />
+          <RiSettings2Line />
         </Link>
->>>>>>> d960d42b196995eb215394435484188add91b2d3
 
         <Link
           to="vehicles"
@@ -83,10 +84,6 @@ const Sidebar = () => {
         >
           <RiCarLine />
         </Link>
-<<<<<<< HEAD
-      </nav>
-=======
->>>>>>> d960d42b196995eb215394435484188add91b2d3
 
         <div
           onClick={logout}
