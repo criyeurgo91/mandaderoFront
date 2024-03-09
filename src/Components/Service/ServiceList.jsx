@@ -7,20 +7,17 @@ const ServiceList = () => {
   const [services, setServices] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-  const [selectedserviceId, setSelectedServiceId] = useState(null);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
   const [alertMessage, setAlertMessage] = useState('');
-  
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   useEffect(() => {
-    // Fetch data from API when component mounts
     fetchServices();
   }, []);
 
   const fetchServices = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/service/');
-      console.log('Data received:', response.data);
       setServices(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);
@@ -31,18 +28,11 @@ const ServiceList = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredServices = services.filter(service =>
-    service.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  console.log(filteredServices);
-
   const handleCreateService = () => {
-    console.log('Creating service...');
     setShowCreateForm(true);
   };
 
   const handleEditService = (serviceId) => {
-    console.log('Editing service:', serviceId);
     setSelectedServiceId(serviceId);
     setShowUpdateForm(true);
   };
@@ -61,19 +51,19 @@ const ServiceList = () => {
     }
   };
 
+  const filteredServices = services.filter(service => 
+    service.name_service.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Service List</h2>
-      {/* Agrega un console.log aquí para verificar que se está renderizando */}
-      {console.log('showCreateForm:', showCreateForm)}
-      {console.log('showUpdateForm:', showUpdateForm)}
       {showUpdateForm ? (
-        <UpdateServiceForm serviceId={selectedserviceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
+        <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : (
         <>
-        {console.log('showCreateForm:', showCreateForm)}
           {showCreateForm ? (
-            <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(true)} />
+            <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
           ) : (
             <div className="overflow-x-auto">
               <div className="flex mb-4">
@@ -85,7 +75,7 @@ const ServiceList = () => {
                 />
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                  onClick={handleCreateService} // Aquí se usa la función correcta
+                  onClick={handleCreateService}
                 >
                   New Service
                 </button>
@@ -102,19 +92,19 @@ const ServiceList = () => {
                 </thead>
                 <tbody>
                   {filteredServices.map(service => (
-                    <tr key={service.id}>
-                      <td className="border px-4 py-2">{service.name}</td>
-                      <td className="border px-4 py-2">{service.detail}</td>
+                    <tr key={service.id_service}>
+                      <td className="border px-4 py-2">{service.name_service}</td>
+                      <td className="border px-4 py-2">{service.detail_service}</td>
                       <td className="border px-4 py-2">
                         <button
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-                          onClick={() => handleEditService(service.id)}
+                          onClick={() => handleEditService(service.id_service)}
                         >
                           Edit
                         </button>
                         <button
                           className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                          onClick={() => handleDeleteService(service.id)}
+                          onClick={() => handleDeleteService(service.id_service)}
                         >
                           Delete
                         </button>
@@ -132,5 +122,6 @@ const ServiceList = () => {
 };
 
 export default ServiceList;
+
 
 
