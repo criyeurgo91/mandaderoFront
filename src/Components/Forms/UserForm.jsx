@@ -27,12 +27,18 @@ function UserForm({ onCreate, onClose }) {
 
       const accountId = accountResponse.data.id_account;
 
-      await axios.post('http://127.0.0.1:8000/api/user/', {
-        account_id_account: accountId,
-        image_user: image,
-        name_user: name,
-        lastname_user: lastname,
-        phone_user: phone,
+       // Crear un objeto FormData para enviar la imagen
+       const formData = new FormData();
+       formData.append('account_id_account', accountId);
+       formData.append('image_user', image);
+       formData.append('name_user', name);
+       formData.append('lastname_user', lastname);
+       formData.append('phone_user', phone);
+
+       await axios.post('http://127.0.0.1:8000/api/user/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+        },
       });
 
       setMessage('User created successfully.');

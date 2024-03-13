@@ -2,54 +2,75 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const MandersList = () => {
-    const [manders, setManders] = useState([]);
-
+function MandersList() {
+    const [mander, setMander] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredManders, setFilteredManders] = useState([]);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [selectedManderID, setSelectedManderId] = useState(null);
+    const [showCreateForm, setShowCreateForm] = useState(false);
+  
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/mander/')
-            .then(response => {
-                setManders(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching manders:', error);
-            });
+      fetchManders();
     }, []);
+  
+    const fetchManders = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/mander/');
+        const mandersWithUserInfo = await Promise.all(
+          response.data.map(async (mander) => {
+            const userResponse = await axios.get(`http://127.0.0.1:8000/api/user/${mander.user_id_user}/`);
+            return {
+              ...mander,
+              user: userResponse.data,
+            };
+          })
+        );
+        setMander(mandersWithUserInfo);
+        setFilteredManders(mandersWithUserInfo);
+      } catch (error) {
+        console.error('Error fetching manders:', error);
+      }
+    };
+  
+    const handleEditMander = (manderId) => {
+      setSelectedManderId(manderId);
+      setShowUpdateForm(true);
+    };
+  
+    const handleUpdateMander = () => {
+      fetchManders();
+      setShowUpdateForm(false);
+    };
+  
+    const handleDeleteMander = async (manderId) => {
+      try {
+        await axios.delete(`http://127.0.0.1:8000/api/mander/${manderId}/`);
+        fetchManders();
+      } catch (error) {
+        console.error('Error deleting mander:', error);
+      }
+    };
+  
+    const handleSearchMander = (event) => {
+      const searchTerm = event.target.value.toLowerCase();
+      setSearchTerm(searchTerm);
+      const filtered = mander.filter(mander =>
+        mander.user.name_user.toLowerCase().includes(searchTerm) ||
+        mander.user.lastname_user.toLowerCase().includes(searchTerm) ||
+        mander.user.phone_user.toLowerCase().includes(searchTerm)
+      );
+      setFilteredManders(filtered);
+  
+      if (filtered.length === 0) {
+        setAlertMessage("Mandadero doesn't exist");
+      } else {
+        setAlertMessage('');
+      }
+    };
+  
+  }
+      
 
-    return (
-        <div>
-            <h2>Mander List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Image</th>
-                        <th>Has Car</th>
-                        <th>Has Motorcycle</th>
-                        <th>Is Active</th>
-                        <th>Is Validated</th>
-                        <th>Address</th>
-                        <th>CC</th>
-                        <th>User ID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {manders.map(mander => (
-                        <tr key={mander.id}>
-                            <td>{mander.id}</td>
-                            <td>{mander.image_mander}</td>
-                            <td>{mander.ishavecar_mander ? 'Yes' : 'No'}</td>
-                            <td>{mander.ishavemoto_mander ? 'Yes' : 'No'}</td>
-                            <td>{mander.isactive_mander ? 'Yes' : 'No'}</td>
-                            <td>{mander.isvalidate_mander ? 'Yes' : 'No'}</td>
-                            <td>{mander.address_mander}</td>
-                            <td>{mander.cc_mander}</td>
-                            <td>{mander.user_id_user}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
-};
 
 export default MandersList

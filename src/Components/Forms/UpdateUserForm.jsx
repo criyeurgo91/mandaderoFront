@@ -40,11 +40,20 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         ismander_user: isMander,
       };
 
-      const response = await axios.put(`http://127.0.0.1:8000/api/user/${userId}/`, userData);
+      // Crear un objeto FormData para enviar la imagen
+      const formData = new FormData();
+      formData.append('image_user', image);
+      for (const key in userData) {
+        formData.append(key, userData[key]);
+      }
+
+      await axios.put(`http://127.0.0.1:8000/api/user/${userId}/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+        },
+      });
 
       setMessage('User updated successfully.');
-      console.log('User updated successfully.', response.data);
-
       onUpdate();
       onClose();
     } catch (error) {
