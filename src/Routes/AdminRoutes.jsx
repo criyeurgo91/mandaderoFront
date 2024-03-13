@@ -12,6 +12,7 @@ import DocumentForm from "../Components/Forms/DocumentForm";
 import PageDefault from "../Pages/Default";
 import ServicesForm from "../Components/Forms/ServicesForm";
 import ServiceList from "../Components/Service/ServiceList";
+import ViewDocument from "../Pages/Document/ViewDocument";
 //import ViewManders from "../Pages/Manders/ViewManders";
 
 const AdminRoutes = () => {
@@ -36,8 +37,8 @@ const AdminRoutes = () => {
                         <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />
                         <Route path='request/createrequest' element={<PageDefault />} />
-                        <Route path="document" element={<DocumentForm />} />
-                        <Route path='document/createdocument' element={<PageDefault />} />
+                        <Route path="document" element={<ViewDocument />} />
+                        <Route path='document/createdocument' element={<DocumentForm />} />
                         <Route path='requestmanager' element={<PageDefault />} />
                         <Route path='requestmanager/createrequestmanager' element={<PageDefault />} />
                     </Routes>
