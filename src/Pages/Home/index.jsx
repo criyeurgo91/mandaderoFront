@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { FaFingerprint } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import { FaUser, FaUserSecret, FaTasks, FaHourglassHalf, FaCheckCircle, FaUserPlus } from "react-icons/fa";
 
 function Home() {
-
   const [estadisticas, setEstadisticas] = useState(null);
 
   useEffect(() => {
@@ -13,83 +12,32 @@ function Home() {
   }, []);
 
   return (
-    <>
-
-      <div className="bg-white-900 text-white flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-white">INICIO</h2>
-        </div>
-        {estadisticas && (
-          <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg text-black">
-            
-            <div className="flex justify-center py-10 rounded-md border-solid border-2 border-black bg-white shadow-2xl shadow-teal-300 hover:cursor-pointer hover:bg-gray-300 transition duration-300">
-              <div>
-                <figure className="flex justify-center">
-                  <FaFingerprint />
-                </figure>
-                <p className="text-center">Usuarios Registrados en la App </p>
-                <span className="flex justify-center underline">{estadisticas.total_users}</span>
-              </div>
-            </div>
-                        
-            <div className="flex justify-center py-10 rounded-md border-solid border-2 border-black bg-white shadow-2xl shadow-teal-300 hover:cursor-pointer hover:bg-gray-300 transition duration-300">
-              <div>
-                <figure className="flex justify-center">
-                  <FaFingerprint />
-                </figure>
-                <p className="text-center">Mandaderos Registrados </p>
-                <span className="flex justify-center underline">{estadisticas.total_manders}</span>
-              </div>
-            </div>
-                        
-            <div className="flex justify-center py-10 rounded-md border-solid border-2 border-black bg-white shadow-2xl shadow-teal-300 hover:cursor-pointer hover:bg-gray-300 transition duration-300">
-              <div>
-                <figure className="flex justify-center">
-                  <FaFingerprint />
-                </figure>
-                <p className="text-center">Solicitudes Realizadas </p>
-                <span className="flex justify-center underline">{estadisticas.total_requests}</span>
-              </div>
-            </div>
-                        
-            <div className="flex justify-center py-10 rounded-md border-solid border-2 border-black bg-white shadow-2xl shadow-teal-300 hover:cursor-pointer hover:bg-gray-300 transition duration-300">
-              <div>
-                <figure className="flex justify-center">
-                  <FaFingerprint />
-                </figure>
-                <p className="text-center">Solicitudes Pendientes</p>
-                <span className="flex justify-center underline">{estadisticas.pending_requests}</span>
-              </div>
-            </div>
-                        
-            <div className="flex justify-center py-10 rounded-md border-solid border-2 border-black bg-white shadow-2xl shadow-teal-300 hover:cursor-pointer hover:bg-gray-300 transition duration-300">
-              <div>
-                <figure className="flex justify-center">
-                  <FaFingerprint />
-                </figure>
-                <p className="text-center">Solicitudes en Proceso</p>
-                <span className="flex justify-center underline">{estadisticas.processing_requests}</span>
-              </div>
-            </div>
-                        
-            <div className="flex justify-center py-10 rounded-md border-solid border-2 border-black bg-white shadow-2xl shadow-teal-300 hover:cursor-pointer hover:bg-gray-300 transition duration-300">
-              <div>
-                <figure className="flex justify-center">
-                  <FaFingerprint />
-                </figure>
-                <p className="text-center">Solicitudes Finalizadas </p>
-                <span className="flex justify-center underline">{estadisticas.finished_requests}</span>
-              </div>
-            </div>
-
-            
-
-            {/* Repite el mismo patrón para mostrar el resto de estadísticas */}
-          </div>
-        )}
+    <div className="bg-#155e75 text-black flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">INICIO</h2>
       </div>
 
-    </>
+      {estadisticas && (
+        <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg">
+          {renderStatCard("Usuarios Registrados en la App", estadisticas.total_users, <FaUser />)}
+          {renderStatCard("Mandaderos Registrados", estadisticas.total_manders, <FaUserSecret />)}
+          {renderStatCard("Solicitudes Realizadas", estadisticas.total_requests, <FaTasks />)}
+          {renderStatCard("Solicitudes Pendientes", estadisticas.pending_requests, <FaHourglassHalf />)}
+          {renderStatCard("Solicitudes en Proceso", estadisticas.processing_requests, <FaUserPlus />)}
+          {renderStatCard("Solicitudes Finalizadas", estadisticas.finished_requests, <FaCheckCircle />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function renderStatCard(title, value, icon) {
+  return (
+    <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+      <div className="text-3xl mb-2">{icon}</div>
+      <p className="text-center font-semibold">{title}</p>
+      <p className="text-center text-gray-600">{value}</p>
+    </div>
   );
 }
 
