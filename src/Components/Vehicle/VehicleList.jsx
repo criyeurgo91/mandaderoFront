@@ -44,7 +44,7 @@ function VehicleList() {
           New Vehicle
         </Link>
       </div>
-      <table className="w-full">
+      <table className="mx-auto">
         <thead>
           <tr>
             <th className="border px-4 py-2">Brand</th>
