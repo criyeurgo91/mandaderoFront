@@ -44,7 +44,7 @@ function VehicleList() {
           New Vehicle
         </Link>
       </div>
-      <table className="w-full">
+      <table className="mx-auto">
         <thead>
           <tr>
             <th className="border px-4 py-2">Brand</th>
@@ -58,7 +58,7 @@ function VehicleList() {
         </thead>
         <tbody>
           {filteredVehicles.map((vehicle) => (
-            <tr key={vehicle.id}>
+            <tr key={vehicle.id_vehicle}>
               <td className="border px-4 py-2">{vehicle.brand_vehicle}</td>
               <td className="border px-4 py-2">{vehicle.plate_vehicle}</td>
               <td className="border px-4 py-2">{vehicle.model_vehicle}</td>
