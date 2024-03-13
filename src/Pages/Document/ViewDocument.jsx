@@ -24,7 +24,7 @@ const ViewDocument = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-md">
+    <div className="w-full">
       <h2 className="text-lg font-semibold mb-4">View Documents</h2>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
