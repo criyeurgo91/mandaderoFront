@@ -2,7 +2,7 @@ import  { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function MandersList() {
-    const [mander, setMander] = useState([]);
+    const [manders, setMander] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredManders, setFilteredManders] = useState([]);
     const [alertMessage, setAlertMessage] = useState('');

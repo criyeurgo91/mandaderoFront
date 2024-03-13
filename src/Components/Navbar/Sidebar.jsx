@@ -30,12 +30,12 @@ const Sidebar = () => {
           <RiHome4Line />
         </Link>
 
-        <Link
+        {/*<Link
           to="account"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiTeamLine />
-        </Link>
+        </Link>*/}
 
         <Link
           to="users"
@@ -65,12 +65,12 @@ const Sidebar = () => {
           <RiToolsLine />
         </Link>
 
-        <Link
+        {/*<Link
           to="request"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiNotification2Line />
-        </Link>
+      </Link>*/}
 
         <Link
           to="vehicles"
