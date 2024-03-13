@@ -12,6 +12,8 @@ import DocumentForm from "../Components/Forms/DocumentForm";
 import PageDefault from "../Pages/Default";
 import ServicesForm from "../Components/Forms/ServicesForm";
 import ServiceList from "../Components/Service/ServiceList";
+import MandersList from "../Components/Manders/MandersList";
+import ManderForm from "../Components/Forms/ManderForm";
 //import ViewManders from "../Pages/Manders/ViewManders";
 
 const AdminRoutes = () => {
@@ -31,7 +33,8 @@ const AdminRoutes = () => {
                         <Route path='users/detail' element={<DetailUser />} />
                         <Route path='/vehicles/*' element={<VehicleList />} />
                         <Route path="vehicles/createvehicle" element={<PageDefault />} />
-                        <Route path='manders' element={<PageDefault />} />
+                        <Route path='manders' element={<MandersList />} />
+                        <Route path='manders/createmander' element={<ManderForm />} />
                         <Route path='services' element={<ServiceList />} />
                         <Route path='services/createservice' element={<ServicesForm />} />
                         <Route path='request' element={<PageDefault />} />

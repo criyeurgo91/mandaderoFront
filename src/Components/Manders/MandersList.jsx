@@ -51,3 +51,5 @@ export const MandersList = () => {
         </div>
     );
 };
+
+export default MandersList
