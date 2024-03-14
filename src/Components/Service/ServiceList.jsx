@@ -55,7 +55,7 @@ function ServiceList() {
   );
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Service List</h2>
       {showUpdateForm && (
         <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
@@ -70,19 +70,19 @@ function ServiceList() {
               <div className="flex mb-4">
                 <input
                   type="text"
-                  className="w-full px-2 py-2 border rounded-md mr-1"
+                  className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                   placeholder="Search..."
                   onChange={handleSearch}
                 />
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded"
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
                   onClick={handleCreateService}
                 >
                   New Service
                 </button>
               </div>
               <table className="table-auto w-full">
-                <thead>
+                <thead className='bg-gray-200'>
                   <tr>
                     <th className='px-4 py-2'>Name</th>
                     <th className="px-4 py-2">Detail</th>
@@ -91,7 +91,7 @@ function ServiceList() {
                 </thead>
                 <tbody>
                   {filteredServices.map(service => (
-                    <tr key={service.id_service}>
+                    <tr key={service.id_service} className='border border-gray-300'>
                       <td className="border px-4 py-2">{service.name_service}</td>
                       <td className="border px-4 py-2">{service.detail_service}</td>
                       <td className="border px-4 py-2 flex justify-end">

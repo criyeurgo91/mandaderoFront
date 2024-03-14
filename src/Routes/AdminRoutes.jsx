@@ -15,6 +15,7 @@ import ServiceList from "../Components/Service/ServiceList";
 import ViewDocument from "../Pages/Document/ViewDocument";
 import MandersList from "../Components/Manders/MandersList";
 import ManderForm from "../Components/Forms/ManderForm";
+import HeaderComponent from "../Components/Headers/HeaderComponent";
 //import ViewManders from "../Pages/Manders/ViewManders";
 
 const AdminRoutes = () => {
@@ -23,8 +24,12 @@ const AdminRoutes = () => {
             <div className="flex h-screen">
                 <div className="col-span-1">
                     <Sidebar />
+                 </div>
+                <div className='fixed w-full'>
+                    <HeaderComponent /> 
+               
                 </div>
-                <main className="flex-grow overflow-y-auto">
+                <main className="flex-grow overflow-y-auto pt-14">
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='accounts' element={<PageDefault />} />

@@ -44,8 +44,8 @@ function VehicleList() {
           New Vehicle
         </Link>
       </div>
-      <table className="mx-auto">
-        <thead>
+      <table className="w-full">
+        <thead className='bg-gray-200'>
           <tr>
             <th className="border px-4 py-2">Brand</th>
             <th className="border px-4 py-2">Plate</th>
@@ -58,7 +58,7 @@ function VehicleList() {
         </thead>
         <tbody>
           {filteredVehicles.map((vehicle) => (
-            <tr key={vehicle.id_vehicle}>
+            <tr key={vehicle.id_vehicle} className='border border-gray-300'>
               <td className="border px-4 py-2">{vehicle.brand_vehicle}</td>
               <td className="border px-4 py-2">{vehicle.plate_vehicle}</td>
               <td className="border px-4 py-2">{vehicle.model_vehicle}</td>

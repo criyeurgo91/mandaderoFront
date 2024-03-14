@@ -81,7 +81,7 @@ function UserList() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">User List</h2>
       {showUpdateForm ? (
         <UpdateUserForm userId={selectedUserId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
@@ -90,24 +90,24 @@ function UserList() {
           {showCreateForm ? (
             <UserForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
           ) : (
-            <div className="overflow-x-auto">
+            <div className="container mx-auto px-4 py-8">
               <div className="flex mb-4">
                 <input
                   type="text"
-                  className="w-1/2 px-3 py-2 border rounded-md mr-2"
+                  className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                   placeholder="Search..."
                   onChange={handleSearch}
                 />
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
                   onClick={handleCreateUser}
                 >
                   New User
                 </button>
               </div>
               {alertMessage && <div className="text-red-500">{alertMessage}</div>}
-              <table className="table-auto">
-                <thead>
+              <table className="w-full border-collapse border border-gray-300 ">
+                <thead className="bg-gray-200">
                   <tr>
                     <th className="px-4 py-2">Email</th>
                     <th className="px-4 py-2">Name</th>
@@ -118,7 +118,7 @@ function UserList() {
                 </thead>
                 <tbody>
                   {filteredUsers.map(user => (
-                    <tr key={user.id_user}>
+                    <tr key={user.id_user} className='border border-gray-300'>
                       <td className="border px-4 py-2">{user.email}</td>
                       <td className="border px-4 py-2">{user.name_user}</td>
                       <td className="border px-4 py-2">{user.lastname_user}</td>
