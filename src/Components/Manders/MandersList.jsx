@@ -15,10 +15,10 @@ function MandersList() {
   
     const fetchManders = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/mander/');
+        const response = await axios.get('https://manders.azurewebsites.net/api/mander/');
         const mandersWithUserInfo = await Promise.all(
           response.data.map(async (mander) => {
-            const userResponse = await axios.get(`http://127.0.0.1:8000/api/user/${mander.user_id_user}/`);
+            const userResponse = await axios.get(`https://manders.azurewebsites.net/api/user/${mander.user_id_user}/`);
             return {
               ...mander,
               user: userResponse.data,
@@ -44,7 +44,7 @@ function MandersList() {
   
     const handleDeleteMander = async (manderId) => {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/mander/${manderId}/`);
+        await axios.delete(`https://manders.azurewebsites.net/api/mander/${manderId}/`);
         fetchManders();
       } catch (error) {
         console.error('Error deleting mander:', error);

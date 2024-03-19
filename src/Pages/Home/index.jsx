@@ -5,7 +5,7 @@ function Home() {
   const [estadisticas, setEstadisticas] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/estadisticas/')
+    fetch('https://manders.azurewebsites.net/api/estadisticas/')
       .then(response => response.json())
       .then(data => setEstadisticas(data))
       .catch(error => console.error('Error fetching data:', error));

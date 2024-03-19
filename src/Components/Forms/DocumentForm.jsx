@@ -22,7 +22,7 @@ function DocumentForm() {
       formData.append('dateverified_document', dateVerifiedDocument);
       formData.append('user_id_user', userIdUser);
 
-      await axios.post('http://127.0.0.1:8000/api/document/', formData, {
+      await axios.post('https://manders.azurewebsites.net/api/document/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
