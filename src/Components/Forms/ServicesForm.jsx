@@ -16,7 +16,7 @@ function ServicesForm({ onCreate, onClose }) {
       formData.append('detail_service', detail);
       formData.append('image_service', image);
 
-      await axios.post('http://manders.azurewebsites.net/api/service/', formData);
+      await axios.post('https://manders.azurewebsites.net/api/service/', formData);
 
       setMessage('Service created successfully.');
       setName('');

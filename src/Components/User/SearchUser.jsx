@@ -12,7 +12,11 @@ function SearchUser() {
 
   const fetchUsers = async () => {
     try {
+<<<<<<< HEAD
       const response = await axios.get('http://manders.azurewebsites.net/api/user/');
+=======
+      const response = await axios.get('https://manders.azurewebsites.net/api/user/');
+>>>>>>> 3893b8f1328d4dd878f13bd9f60d9a231ddc5091
       setUsers(response.data);
       setFilteredUsers(response.data);
     } catch (error) {

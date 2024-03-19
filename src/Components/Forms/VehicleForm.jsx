@@ -71,7 +71,7 @@ const VehicleForm = () => {
     console.log(formDataToSend);
     try {
       setLoading(true);
-      const response = await axios.post('http://manders.azurewebsites.net/api/vehicle/', formDataToSend);
+      const response = await axios.post('https://manders.azurewebsites.net/api/vehicle/', formDataToSend);
       console.log('Response:', response.data);
       setFormData(initialState);
       setLoading(false);

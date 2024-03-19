@@ -19,7 +19,7 @@ function UserForm({ onCreate, onClose }) {
     event.preventDefault();
 
     try {
-      const accountResponse = await axios.post('http://manders.azurewebsites.net/api/account/', {
+      const accountResponse = await axios.post('https://manders.azurewebsites.net/api/account/', {
         email_account: email,
         password_account: password,
         isadmin_account: formData.isadmin_account ? formData.isadmin_account : false,
@@ -35,7 +35,7 @@ function UserForm({ onCreate, onClose }) {
        formData.append('lastname_user', lastname);
        formData.append('phone_user', phone);
 
-       await axios.post('http://manders.azurewebsites.net/api/user/', formData, {
+       await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },

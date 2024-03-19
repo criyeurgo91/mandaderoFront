@@ -38,14 +38,14 @@ function ManderForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://manders.azurewebsites.net/api/account/', {
+      const response = await axios.post('https://manders.azurewebsites.net/api/account/', {
         email_account: formData.email_account,
         password_account: formData.password_account,
         isadmin_account: formData.isadmin_account,
       });
       const accountId = response.data.id_account;
 
-      const userResponse = await axios.post('http://manders.azurewebsites.net/api/user/', {
+      const userResponse = await axios.post('https://manders.azurewebsites.net/api/user/', {
         account_id_account: accountId,
         image_user: formData.image_user,
         name_user: formData.name_user,
@@ -55,7 +55,7 @@ function ManderForm() {
       });
       const userId = userResponse.data.id_user;
 
-      const manderResponse = await axios.post('http://manders.azurewebsites.net/api/mander/', {
+      const manderResponse = await axios.post('https://manders.azurewebsites.net/api/mander/', {
         user_id_user: userId,
         image_mander: formData.image_mander,
         ishavecar_mander: formData.ishavecar_mander ? formData.ishavecar_mander : false, // Check si está marcado

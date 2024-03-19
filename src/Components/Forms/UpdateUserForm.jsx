@@ -16,7 +16,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(`http://manders.azurewebsites.net/api/user/${userId}`);
+      const response = await axios.get(`https://manders.azurewebsites.net/api/user/${userId}`);
       setUser(response.data);
       setName(response.data.name_user);
       setLastname(response.data.lastname_user);
@@ -47,7 +47,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         formData.append(key, userData[key]);
       }
 
-      await axios.put(`http://manders.azurewebsites.net/api/user/${userId}/`, formData, {
+      await axios.put(`https://manders.azurewebsites.net/api/user/${userId}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },

@@ -16,7 +16,7 @@ function ServiceList() {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://manders.azurewebsites.net/api/service/');
+      const response = await axios.get('https://manders.azurewebsites.net/api/service/');
       setServices(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);
@@ -43,7 +43,7 @@ function ServiceList() {
 
   const handleDeleteService = async (serviceId) => {
     try {
-      await axios.delete(`http://manders.azurewebsites.net/api/service/${serviceId}`);
+      await axios.delete(`https://manders.azurewebsites.net/api/service/${serviceId}`);
       fetchServices();
     } catch (error) {
       console.error('Error deleting service:', error);

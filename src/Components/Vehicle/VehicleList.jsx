@@ -12,7 +12,11 @@ function VehicleList() {
 
   const fetchVehicles = async () => {
     try {
+<<<<<<< HEAD
       const response = await axios.get('http://manders.azurewebsites.net/api/vehicle/');
+=======
+      const response = await axios.get('https://manders.azurewebsites.net/api/vehicle/');
+>>>>>>> 3893b8f1328d4dd878f13bd9f60d9a231ddc5091
       setVehicles(response.data);
     } catch (error) {
       console.error('Error fetching vehicles:', error);
