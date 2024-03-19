@@ -17,10 +17,10 @@ function SinginForm() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/account/', {
+      const response = await axios.post('http://manders.azurewebsites.net/api/account/', {
         email_account: email,
         password_account: password,
-        isadmin_account: isAdmin,
+        isadmin_account: formData.isadmin_account ? formData.isadmin_account : false,
       });
 
       if (response.status === 201) {
@@ -86,6 +86,7 @@ function SinginForm() {
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="isAdmin">
             <input
               id="isAdmin"
+              name='isAdmin'
               type="checkbox"
               className="mr-2"
               checked={isAdmin}

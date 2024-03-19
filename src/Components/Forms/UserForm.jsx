@@ -19,10 +19,10 @@ function UserForm({ onCreate, onClose }) {
     event.preventDefault();
 
     try {
-      const accountResponse = await axios.post('http://127.0.0.1:8000/api/account/', {
+      const accountResponse = await axios.post('http://manders.azurewebsites.net/api/account/', {
         email_account: email,
         password_account: password,
-        isadmin_account: isAdmin,
+        isadmin_account: formData.isadmin_account ? formData.isadmin_account : false,
       });
 
       const accountId = accountResponse.data.id_account;
@@ -35,7 +35,7 @@ function UserForm({ onCreate, onClose }) {
        formData.append('lastname_user', lastname);
        formData.append('phone_user', phone);
 
-       await axios.post('http://127.0.0.1:8000/api/user/', formData, {
+       await axios.post('http://manders.azurewebsites.net/api/user/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },
@@ -154,6 +154,8 @@ function UserForm({ onCreate, onClose }) {
           <label className="flex items-center">
             <input
               type="checkbox"
+              id='isAdmin'
+              name='isAdmin'
               className="form-checkbox"
               checked={isAdmin}
               onChange={(event) => setIsAdmin(event.target.checked)}

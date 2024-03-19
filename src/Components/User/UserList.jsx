@@ -18,10 +18,10 @@ function UserList() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/user/');
+      const response = await axios.get('http://manders.azurewebsites.net/api/user/');
       const usersWithAccountInfo = await Promise.all(
         response.data.map(async (user) => {
-          const accountResponse = await axios.get(`http://127.0.0.1:8000/api/account/${user.account_id_account}/`);
+          const accountResponse = await axios.get(`http://manders.azurewebsites.net/api/account/${user.account_id_account}/`);
           return {
             ...user,
             email: accountResponse.data.email_account,
@@ -47,7 +47,7 @@ function UserList() {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/user/${userId}/`);
+      await axios.delete(`http://manders.azurewebsites.net/api/user/${userId}/`);
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
