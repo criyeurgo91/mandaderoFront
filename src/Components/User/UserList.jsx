@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UpdateUserForm from '../Forms/UpdateUserForm';
 import UserForm from '../Forms/UserForm';
@@ -9,8 +9,9 @@ function UserList() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [showCreateForm, setShowCreateForm] = useState(false); 
+  const [selectedUser, setSelectedUser] = useState(null); // Modificado para contener todo el objeto de usuario seleccionado
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [isMander, setIsMander] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -18,17 +19,10 @@ function UserList() {
 
   const fetchUsers = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get('http://manders.azurewebsites.net/api/user/');
-      const usersWithAccountInfo = await Promise.all(
-        response.data.map(async (user) => {
-          const accountResponse = await axios.get(`http://manders.azurewebsites.net/api/account/${user.account_id_account}/`);
-=======
       const response = await axios.get('https://manders.azurewebsites.net/api/user/');
       const usersWithAccountInfo = await Promise.all(
         response.data.map(async (user) => {
           const accountResponse = await axios.get(`https://manders.azurewebsites.net/api/account/${user.account_id_account}/`);
->>>>>>> 3893b8f1328d4dd878f13bd9f60d9a231ddc5091
           return {
             ...user,
             email: accountResponse.data.email_account,
@@ -42,8 +36,8 @@ function UserList() {
     }
   };
 
-  const handleEdit = (userId) => {
-    setSelectedUserId(userId);
+  const handleEdit = (user) => { // Recibe el objeto de usuario completo
+    setSelectedUser(user); // Establece el usuario seleccionado
     setShowUpdateForm(true);
   };
 
@@ -54,11 +48,7 @@ function UserList() {
 
   const handleDelete = async (userId) => {
     try {
-<<<<<<< HEAD
-      await axios.delete(`http://manders.azurewebsites.net/api/user/${userId}/`);
-=======
       await axios.delete(`https://manders.azurewebsites.net/api/user/${userId}/`);
->>>>>>> 3893b8f1328d4dd878f13bd9f60d9a231ddc5091
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -95,8 +85,9 @@ function UserList() {
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">User List</h2>
       {showUpdateForm ? (
-        <UpdateUserForm userId={selectedUserId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
-      ) : (
+  <UpdateUserForm userId={selectedUser} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} /> // Cambiar a userId={selectedUser}
+
+) : (
         <>
           {showCreateForm ? (
             <UserForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
@@ -159,6 +150,5 @@ function UserList() {
     </div>
   );
 }
-
 
 export default UserList;

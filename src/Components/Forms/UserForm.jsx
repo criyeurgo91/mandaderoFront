@@ -10,6 +10,7 @@ function UserForm({ onCreate, onClose }) {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isMander, setIsMander] = useState(false);
 
   useEffect(() => {
     // Aquí puedes realizar cualquier acción que necesites cuando se monte el componente
@@ -22,20 +23,21 @@ function UserForm({ onCreate, onClose }) {
       const accountResponse = await axios.post('https://manders.azurewebsites.net/api/account/', {
         email_account: email,
         password_account: password,
-        isadmin_account: formData.isadmin_account ? formData.isadmin_account : false,
+        isadmin_account: isAdmin ? isAdmin : false, // Utiliza la variable 'isAdmin' directamente
       });
 
       const accountId = accountResponse.data.id_account;
 
-       // Crear un objeto FormData para enviar la imagen
-       const formData = new FormData();
-       formData.append('account_id_account', accountId);
-       formData.append('image_user', image);
-       formData.append('name_user', name);
-       formData.append('lastname_user', lastname);
-       formData.append('phone_user', phone);
+      // Crear un objeto FormData para enviar la imagen
+      const formData = new FormData();
+      formData.append('account_id_account', accountId);
+      formData.append('image_user', image);
+      formData.append('name_user', name);
+      formData.append('lastname_user', lastname);
+      formData.append('phone_user', phone);
+      formData.append('ismander_user', isMander);
 
-       await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
+      await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },
@@ -51,6 +53,7 @@ function UserForm({ onCreate, onClose }) {
       setLastname('');
       setPhone('');
       setIsAdmin(false);
+      setIsMander(false);
 
       // Llamar a la función onCreate para actualizar la lista de usuarios
       onCreate();
@@ -161,6 +164,19 @@ function UserForm({ onCreate, onClose }) {
               onChange={(event) => setIsAdmin(event.target.checked)}
             />
             <span className="ml-2 text-gray-700">Is Admin?</span>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              id='isMander'
+              name='isMander'
+              className="form-checkbox"
+              checked={isMander}
+              onChange={(event) => setIsMander(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is Mander?</span>
           </label>
         </div>
         <button

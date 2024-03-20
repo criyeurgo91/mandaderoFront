@@ -14,11 +14,7 @@ const ViewDocument = () => {
 
   const fetchData = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get('http://manders.azurewebsites.net/api/document/');
-=======
       const response = await axios.get('https://manders.azurewebsites.net/api/document/');
->>>>>>> 3893b8f1328d4dd878f13bd9f60d9a231ddc5091
       setDocuments(response.data);
     } catch (error) {
       console.error('Error fetching documents:', error);
