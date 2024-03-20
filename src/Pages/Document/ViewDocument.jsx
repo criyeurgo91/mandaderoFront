@@ -14,11 +14,7 @@ const ViewDocument = () => {
 
   const fetchData = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get('http://manders.azurewebsites.net/api/document/');
-=======
       const response = await axios.get('https://manders.azurewebsites.net/api/document/');
->>>>>>> 3893b8f1328d4dd878f13bd9f60d9a231ddc5091
       setDocuments(response.data);
     } catch (error) {
       console.error('Error fetching documents:', error);
@@ -69,7 +65,7 @@ const ViewDocument = () => {
             </thead>
             <tbody>
               {filteredDocument.map((document) => (
-                <tr key={document.id} className="border border-gray-300">
+                <tr key={document.id_document} className="border border-gray-300">
                   <td className="border border-gray-300 px-4 py-2">{document.image_document}</td>
                   <td className="border border-gray-300 px-4 py-2">{document.isdocument_vehicle ? 'Yes' : 'No'}</td>
                   <td className="border border-gray-300 px-4 py-2">{document.isverified_document ? 'Yes' : 'No'}</td>
