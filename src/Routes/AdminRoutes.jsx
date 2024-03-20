@@ -24,10 +24,10 @@ const AdminRoutes = () => {
             <div className="flex h-screen">
                 <div className="col-span-1">
                     <Sidebar />
-                 </div>
+                </div>
                 <div className='fixed w-full'>
-                    <HeaderComponent /> 
-               
+                    <HeaderComponent />
+
                 </div>
                 <main className="flex-grow overflow-y-auto pt-14">
                     <Routes>

@@ -18,10 +18,14 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
     try {
       const response = await axios.get(`https://manders.azurewebsites.net/api/user/${userId}`);
       setUser(response.data);
-      setName(response.data.name_user);
-      setLastname(response.data.lastname_user);
-      setPhone(response.data.phone_user);
-      setIsMander(response.data.ismander_user);
+      if (response.data) {
+        setName(response.data.name_user);
+        setLastname(response.data.lastname_user);
+        setPhone(response.data.phone_user);
+        setIsMander(response.data.ismander_user);
+        // Set the image URL if available
+        setImage(response.data.image_user);
+      }
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -40,7 +44,6 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         ismander_user: isMander,
       };
 
-      // Crear un objeto FormData para enviar la imagen
       const formData = new FormData();
       formData.append('image_user', image);
       for (const key in userData) {
@@ -49,7 +52,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
 
       await axios.put(`https://manders.azurewebsites.net/api/user/${userId}/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+          'Content-Type': 'multipart/form-data',
         },
       });
 
@@ -76,6 +79,10 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
               Image:
             </label>
+            {/* Display the image if available */}
+            {image && (
+              <img src={image} alt="User Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
+            )}
             <input
               id="image"
               type="file"
