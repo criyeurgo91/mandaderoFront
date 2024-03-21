@@ -1,168 +1,293 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ManderForm() {
-  const [formData, setFormData] = useState({
-    email_account: '',
-    password_account: '',
-    name_user: '',
-    lastname_user: '',
-    phone_user: '',
-    ismander_user: false,
-    image_mander: null,
-    address_mander: '',
-    cc_mander: '',
-    ishavecar_mander: false,
-    ishavemoto_mander: false,
-    isactive_mander: false,
-    isvalidate_mander: false,
-  });
+function ManderForm({ onCreate, onClose }) {
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [image, setImage] = useState(null);
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [phone, setPhone] = useState('');
+  const [isMander, setIsMander] = useState(false);
+  const [address, setAddress] = useState('');
+  const [cc, setCc] = useState('');
+  const [ishavecar, setIshavecar] = useState(false);
+  const [ishavemoto, setIshavemoto] = useState(false);
+  const [isactivemander, setIsactivemander] = useState(false);
+  const [isvalidatemander, setIsvalidatemander] = useState(false);
   const [message, setMessage] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
 
-  const handleImageChange = (e) => {
-    setFormData({
-      ...formData,
-      image_mander: e.target.files[0],
-    });
-  };
+  useEffect(() => {
+    // Aquí puedes realizar cualquier acción que necesites cuando se monte el componente
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     try {
-      const response = await axios.post('https://manders.azurewebsites.net/api/account/', {
-        email_account: formData.email_account,
-        password_account: formData.password_account,
-        isadmin_account: formData.isadmin_account,
+      const accountResponse = await axios.post('https://manders.azurewebsites.net/api/account/', {
+        email_account: email,
+        password_account: password,
+        isadmin_account: isAdmin ? isAdmin : false, // Utiliza la variable 'isAdmin' directamente
       });
-      const accountId = response.data.id_account;
 
-      const userResponse = await axios.post('https://manders.azurewebsites.net/api/user/', {
-        account_id_account: accountId,
-        image_user: formData.image_user,
-        name_user: formData.name_user,
-        lastname_user: formData.lastname_user,
-        phone_user: formData.phone_user,
-        ismander_user: formData.ismander_user ? formData.ismander_user : false, // Check si está marcado
+      const accountId = accountResponse.data.id_account;
+
+      // Crear un objeto FormData para el user
+      const formData = new FormData();
+      formData.append('account_id_account', accountId);
+      formData.append('image_user', image);
+      formData.append('name_user', name);
+      formData.append('lastname_user', lastname);
+      formData.append('phone_user', phone);
+      formData.append('ismander_user', isMander);
+
+      const userResponse = await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+        },
       });
-      const userId = userResponse.data.id_user;
 
-      const manderResponse = await axios.post('https://manders.azurewebsites.net/api/mander/', {
-        user_id_user: userId,
-        image_mander: formData.image_mander,
-        ishavecar_mander: formData.ishavecar_mander ? formData.ishavecar_mander : false, // Check si está marcado
-        ishavemoto_mander: formData.ishavemoto_mander ? formData.ishavemoto_mander : false, // Check si está marcado
-        address_mander: formData.address_mander,
-        cc_mander: formData.cc_mander,
-        isactive_mander: formData.isactive_mander ? formData.isactive_mander : false, // Check si está marcado
-        isvalidate_mander: formData.isvalidate_mander ? formData.isvalidate_mander : false, // Check si está marcado
+      const userId = userResponse.data.id_user
+
+      //crear un objeto para el mander
+      const formDataMander = new FormData()
+      formDataMander.append('user_id_user', userId)
+      formDataMander.append('image_mander', image)
+      formDataMander.append('ishavecar_mander', ishavecar)
+      formDataMander.append('ishavemoto_mander', ishavemoto)
+      formDataMander.append('isactive_mander', isactivemander)
+      formDataMander.append('address_mander', address)
+      formDataMander.append('cc_mander', cc)
+
+      await axios.post('https://manders.azurewebsites.net/api/mander/', formDataMander, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+        },
       });
-      const manderId = manderResponse.data.id_mander;
 
-      console.log('Mander, user, account:', manderResponse.data, userResponse.data, response.data);
-      // Manejo de respuesta exitosa
+      setMessage('Mander created successfully.');
 
-      // Limpiar Formulario
-      setFormData({
-        email_account: '',
-        password_account: '',
-        name_user: '',
-        lastname_user: '',
-        phone_user: '',
-        ismander_user: false,
-        image_mander: null,
-        address_mander: '',
-        cc_mander: '',
-        ishavecar_mander: false,
-        ishavemoto_mander: false,
-        isactive_mander: false,
-        isvalidate_mander: false,
-      });
-      setMessage('Mander created successfully');
+      // Limpiar los campos después de enviar el formulario
+      setEmail('');
+      setPassword('');
+      setImage(null);
+      setName('');
+      setLastname('');
+      setPhone('');
+      setIsMander(false);
+      setAddress('')
+      setCc('')
+      setIshavecar(false)
+      setIshavemoto(false)
+      setIsvalidatemander(false)
+      setIsactivemander(false)
+      
+      // Llamar a la función onCreate para actualizar la lista de usuarios
+      onCreate();
+
+      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
+      onClose();
+
     } catch (error) {
-      console.error('Error creating Mander, User, Account:', error);
-      // Manejo de error
+      setMessage('Error creating Mander. Please try again.');
+      console.error('Error creating Mander:', error);
     }
   };
 
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-4 text-center">Crear Mander</h1>
+      {message && (
+        <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
+          {message}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
 
         {/* Campos para la cuenta */}
-        <div>
-          <label htmlFor="email_account" className="block">Email:</label>
-          <input type="email" id="email_account" name="email_account" value={formData.email_account} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            Email:
+          </label>
+          <input
+            id="email"
+            type="email"
+            className="w-full px-3 py-2 border rounded-md"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
         </div>
-        <div>
-          <label htmlFor="password_account" className="block">Contraseña:</label>
-          <input type="password" id="password_account" name="password_account" value={formData.password_account} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            Password:
+          </label>
+          <input
+            id="password"
+            type="password"
+            className="w-full px-3 py-2 border rounded-md"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
         </div>
-
         {/* Campos para el usuario */}
-        <div>
-          <label htmlFor="name_user" className="block">Nombre:</label>
-          <input type="text" id="name_user" name="name_user" value={formData.name_user} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            Name:
+          </label>
+          <input
+            id="name"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            required
+          />
         </div>
-        <div>
-          <label htmlFor="lastname_user" className="block">Apellido:</label>
-          <input type="text" id="lastname_user" name="lastname_user" value={formData.lastname_user} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastname">
+            Lastname:
+          </label>
+          <input
+            id="lastname"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={lastname}
+            onChange={(event) => setLastname(event.target.value)}
+            required
+          />
         </div>
-        <div>
-          <label htmlFor="phone_user" className="block">Teléfono:</label>
-          <input type="text" id="phone_user" name="phone_user" value={formData.phone_user} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+            Phone:
+          </label>
+          <input
+            id="phone"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            required
+          />
         </div>
 
-        <div>
-          <label htmlFor="ismander_user" className="form-checkbox">Is Mander?:</label>
-          <input type="checkbox" name='ismander_user' id='ismander_user' onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              id='isMander'
+              name='isMander'
+              className="form-checkbox"
+              checked={isMander}
+              onChange={(event) => setIsMander(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is Mander?</span>
+          </label>
         </div>
 
         {/* Campos para la imagen */}
-        <div>
-          <label htmlFor="image_mander" className="block">Imagen:</label>
-          <input type="file" id="image_mander" name="image_mander" onChange={handleImageChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_mander">
+            Image:
+          </label>
+          <input
+            id="image_mander"
+            type="file"
+            className="w-full px-3 py-2 border rounded-md"
+            onChange={(event) => setImage(event.target.files[0])}
+            accept="image/*"
+          />
         </div>
 
         {/* Campos para el mandadero */}
-        <div>
-          <label htmlFor="cc_mander" className="block">Cédula:</label>
-          <input type="text" id="cc_mander" name="cc_mander" value={formData.cc_mander} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cc_mander">
+            Document:
+          </label>
+          <input
+            id="cc_mander"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={cc}
+            onChange={(event) => setCc(event.target.value)}
+            required
+          />
         </div>
-        <div>
-          <label htmlFor="address_mander" className="block">Dirección:</label>
-          <input type="text" id="address_mander" name="address_mander" value={formData.address_mander} onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="addresss_mander">
+            Address:
+          </label>
+          <input
+            id="address_mander"
+            type="text"
+            className="w-full px-3 py-2 border rounded-md"
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+            required
+          />
         </div>
 
-        <div>
-          <label htmlFor="ishavemoto_mander" className="form-checkbox">Is have a Bike?:</label>
-          <input type="checkbox" name='ishavemoto_mander' id='ishavemoto_mander' onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              id='ishavemoto'
+              name='ishavemoto'
+              className="form-checkbox"
+              checked={ishavemoto}
+              onChange={(event) => setIshavemoto(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is have a Bike?</span>
+          </label>
         </div>
-        <div>
-          <label htmlFor="ishavecar_mander" className="form-checkbox">Is have a Car?:</label>
-          <input type="checkbox" name='ishavecar_mander' id='ishavecar_mander' onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              id='ishavecar'
+              name='ishavecar'
+              className="form-checkbox"
+              checked={ishavecar}
+              onChange={(event) => setIshavecar(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is have a Car?</span>
+          </label>
         </div>
-        <div>
-          <label htmlFor="isactive_mander" className="form-checkbox">Is Active?:</label>
-          <input type="checkbox" name='isactive_mander' id='isactive_mander' onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              id='isactivemander'
+              name='isactivemander'
+              className="form-checkbox"
+              checked={isactivemander}
+              onChange={(event) => setIsactivemander(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is Active?</span>
+          </label>
         </div>
-        <div>
-          <label htmlFor="isvalidate_mander" className="form-checkbox">Is Validate?:</label>
-          <input type="checkbox" name='isvalidate_mander' id='isvalidate_mander' onChange={handleChange} className="border border-gray-300 rounded px-3 py-2 w-full" />
+        <div className="mb-4">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              id='isvalidated'
+              name='isvalidated'
+              className="form-checkbox"
+              checked={isvalidatemander}
+              onChange={(event) => setIsvalidatemander(event.target.checked)}
+            />
+            <span className="ml-2 text-gray-700">Is Validated?</span>
+          </label>
         </div>
 
         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear Mander</button>
       </form>
-      {message && <p className="text-green-500">{message}</p>}
     </div>
   );
 }
