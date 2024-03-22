@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const userdefault = 1; // se debe enviar un id de usuario por defecto.
 
-const VehicleForm = () => {
+const VehicleForm = ({ onCreate, onClose }) => {
   const initialState = {
     image_vehicle: null,
     brand_vehicle: "",
@@ -77,6 +77,12 @@ const VehicleForm = () => {
       setLoading(false);
       alert('Formulario enviado exitosamente');
       window.location.href = '/Admin/vehicles';
+
+      // Llamar a la función onCreate para actualizar la lista de usuarios
+      onCreate();
+
+      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
+      onClose();
 
     } catch (error) {
       console.error('Error:', error);
