@@ -101,7 +101,7 @@ function MandersList() {
           <div className="flex mb-4">
             <input
               type="text"
-              className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+              className="w-1/2 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
               placeholder="Search..."
               onChange={handleSearchMander}
             />
@@ -112,13 +112,14 @@ function MandersList() {
               New Mander
             </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {filteredManders.map((mander, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-4">
+              <div key={index} className="bg-white rounded-lg shadow-md p-2">
                 <img
                   src={mander.image_mander}
                   alt={`Image of ${mander.user.name_user} ${mander.user.lastname_user}`}
                   className="w-full h-auto mb-2 rounded-lg"
+                  
                 />
                 <p className="text-sm mb-1"><span className="font-bold">User:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Email:</span> {mander.user.email_account}</p>

@@ -41,7 +41,7 @@ const ViewDocument = () => {
         <input
           type="text"
           placeholder="Search by type document"
-          className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+          className="w-1/2 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
           onChange={handleSearch}
         />
         <button
