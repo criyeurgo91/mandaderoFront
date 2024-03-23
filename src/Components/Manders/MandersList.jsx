@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ManderForm from '../Forms/ManderForm';
+import UpdateManderForm from '../Forms/UpdateManderForm';
+import VehicleForm from '../Forms/VehicleForm'
 
 function MandersList() {
   const [manders, setManders] = useState([]);
@@ -8,6 +10,9 @@ function MandersList() {
   const [filteredManders, setFilteredManders] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [selectedMander, setSelectedMander] = useState(null); 
+  const [showVehicleForm, setShowVehicleForm] = useState(false);
 
   useEffect(() => {
     fetchManders();
@@ -32,19 +37,24 @@ function MandersList() {
     }
   };
 
-  const handleEditMander = (manderId) => {
-    // Aquí puedes definir la lógica para editar un mander
-    console.log('Edit mander with ID:', manderId);
+  const handleEditMander = (user) => { // Recibe el objeto de mandadero completo
+    setSelectedMander(user); // Establece el mandadero seleccionado
+    setShowUpdateForm(true);
   };
 
-  const handleDeleteMander = async (manderId) => {
+  const handleUpdate = () => {
+    fetchManders();
+    setShowUpdateForm(false);
+  };
+
+  /*const handleDeleteMander = async (manderId) => {
     try {
       await axios.delete(`https://manders.azurewebsites.net/api/mander/${manderId}/`);
       fetchManders();
     } catch (error) {
       console.error('Error deleting mander:', error);
     }
-  };
+  };*/
 
   const handleSearchMander = (event) => {
     const searchTerm = event.target.value.toLowerCase();
@@ -72,11 +82,19 @@ function MandersList() {
     setShowCreateForm(false);
   };
 
+  const handleCreateVehicle = () => {
+    setShowVehicleForm(true); 
+  };
+
   return (
     <div className="container mx-auto px-4">
       <h2 className="text-2xl font-bold mb-4">Mander List</h2>
       {alertMessage && <div className="text-red-500">{alertMessage}</div>}
-      {showCreateForm ? (
+      {showVehicleForm ? (
+        <VehicleForm onCreate={handleCreateVehicle} onClose={() => setShowVehicleForm(false)} />
+      ) : showUpdateForm ? (
+        <UpdateManderForm manderId={selectedMander} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
+      ) : showCreateForm ? (
         <ManderForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
       ) : (
         <>
@@ -98,10 +116,10 @@ function MandersList() {
             {filteredManders.map((mander, index) => (
               <div key={index} className="bg-white rounded-lg shadow-md p-4">
                 <img
-                   src={mander.image_mander}
-                    alt={`Image of ${mander.user.name_user} ${mander.user.lastname_user}`}
-                    className="w-full h-auto mb-2 rounded-lg"
-                 />
+                  src={mander.image_mander}
+                  alt={`Image of ${mander.user.name_user} ${mander.user.lastname_user}`}
+                  className="w-full h-auto mb-2 rounded-lg"
+                />
                 <p className="text-sm mb-1"><span className="font-bold">User:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Email:</span> {mander.user.email_account}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander.user.phone_user}</p>
@@ -113,15 +131,15 @@ function MandersList() {
                 <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander.cc_mander}</p>
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-                  onClick={() => handleEditMander(mander.id)}
+                  onClick={() => handleEditMander(mander.id_mander)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => handleDeleteMander(mander.id)}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                  onClick={() => handleCreateVehicle()}
                 >
-                  Delete
+                  Vehicle
                 </button>
               </div>
             ))}
@@ -130,6 +148,8 @@ function MandersList() {
       )}
     </div>
   );
+  
+  
 }
 
 export default MandersList;

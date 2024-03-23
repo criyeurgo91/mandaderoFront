@@ -9,7 +9,7 @@ function UserList() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null); // Modificado para contener todo el objeto de usuario seleccionado
+  const [selectedUser, setSelectedUser] = useState(null); 
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [isMander, setIsMander] = useState(false);
 
@@ -46,14 +46,14 @@ function UserList() {
     setShowUpdateForm(false);
   };
 
-  const handleDelete = async (userId) => {
+  /*const handleDelete = async (userId) => {
     try {
       await axios.delete(`https://manders.azurewebsites.net/api/user/${userId}/`);
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
     }
-  };
+  };*/
 
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
@@ -131,12 +131,6 @@ function UserList() {
                           onClick={() => handleEdit(user.id_user)}
                         >
                           Edit
-                        </button>
-                        <button
-                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                          onClick={() => handleDelete(user.id_user)}
-                        >
-                          Delete
                         </button>
                       </td>
                     </tr>
