@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function DocumentForm() {
@@ -7,8 +7,22 @@ function DocumentForm() {
   const [isVerifiedDocument, setIsVerifiedDocument] = useState(false);
   const [typeDocument, setTypeDocument] = useState(null);
   const [dateVerifiedDocument, setDateVerifiedDocument] = useState(null);
-  const [userIdUser, setUserIdUser] = useState(null);
+  const [userIdUser, setUserIdUser] = useState('');
   const [message, setMessage] = useState('');
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://manders.azurewebsites.net/api/user/');
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,13 +44,13 @@ function DocumentForm() {
 
       setMessage('Document added successfully.');
 
-    
+     
       setImageDocument(null);
       setIsDocumentVehicle(false);
       setIsVerifiedDocument(false);
-      setTypeDocument(null);
-      setDateVerifiedDocument(null);
-      setUserIdUser(null);
+      setTypeDocument('');
+      setDateVerifiedDocument('');
+      setUserIdUser('');
 
     } catch (error) {
       setMessage('Error adding document. Please try again.');
@@ -62,9 +76,7 @@ function DocumentForm() {
             type="file"
             className="w-full px-3 py-2 border rounded-md"
             onChange={(event) => setImageDocument(event.target.files[0])}
-  
             required
-            
           />
         </div>
         <div className="mb-4">
@@ -90,7 +102,7 @@ function DocumentForm() {
           />
         </div>
         <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_document">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_document">
             Document Type:
           </label>
           <select
@@ -108,7 +120,6 @@ function DocumentForm() {
             <option value="TECNOMECANICA">Tecnomecanica</option>
             <option value="RECIBO">Recibo</option>
           </select>
-          
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dateverified_document">
@@ -123,17 +134,23 @@ function DocumentForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user_id_user">
-            User ID:
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user">
+            User:
           </label>
-          <input
-            id="user_id_user"
-            type="text"
+          <select
+            id="user"
             className="w-full px-3 py-2 border rounded-md"
             value={userIdUser}
             onChange={(event) => setUserIdUser(event.target.value)}
             required
-          />
+          >
+            <option value="">Select User</option>
+            {users.map((user) => (
+              <option key={user.id_user} value={user.id_user}>
+                {user.name_user} {user.lastname_user}
+              </option>
+            ))}
+          </select>
         </div>
         <button
           type="submit"

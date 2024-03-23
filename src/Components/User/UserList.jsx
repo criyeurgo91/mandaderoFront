@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import UpdateUserForm from '../Forms/UpdateUserForm';
 import UserForm from '../Forms/UserForm';
-
+import  '../../Components/User/Index.css'
 function UserList() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -82,21 +82,22 @@ function UserList() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-gray-300">
       <h2 className="text-2xl font-bold mb-4">User List</h2>
       {showUpdateForm ? (
-  <UpdateUserForm userId={selectedUser} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} /> // Cambiar a userId={selectedUser}
-
-) : (
+        <UpdateUserForm userId={selectedUser} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} /> // Cambiar a userId={selectedUser}
+      ) : (
         <>
           {showCreateForm ? (
-            <UserForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <UserForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
+            </div>
           ) : (
             <div className="container mx-auto px-4 py-8">
               <div className="flex mb-4">
                 <input
                   type="text"
-                  className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                  className="flex-1 border-2 border-gray-700 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                   placeholder="Search..."
                   onChange={handleSearch}
                 />
@@ -108,19 +109,19 @@ function UserList() {
                 </button>
               </div>
               {alertMessage && <div className="text-red-500">{alertMessage}</div>}
-              <table className="w-full border-collapse border border-gray-300 ">
-                <thead className="bg-gray-200">
+              <table className="w-full border-collapse border border-black custom-table">
+                <thead className="bg-gray-500">
                   <tr>
-                    <th className="px-4 py-2">Email</th>
-                    <th className="px-4 py-2">Name</th>
-                    <th className="px-4 py-2">Lastname</th>
-                    <th className="px-4 py-2">Phone</th>
-                    <th className="px-4 py-2">Actions</th>
+                    <th className="px-4 py-2 border">Email</th>
+                    <th className="px-4 py-2 border">Name</th>
+                    <th className="px-4 py-2 border">Lastname</th>
+                    <th className="px-4 py-2 border">Phone</th>
+                    <th className="px-4 py-2 border">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredUsers.map(user => (
-                    <tr key={user.id_user} className='border border-gray-300'>
+                    <tr key={user.id_user} className='border border-black'>
                       <td className="border px-4 py-2">{user.email}</td>
                       <td className="border px-4 py-2">{user.name_user}</td>
                       <td className="border px-4 py-2">{user.lastname_user}</td>
@@ -143,6 +144,10 @@ function UserList() {
       )}
     </div>
   );
+  
+  
+  
+  
 }
 
 export default UserList;

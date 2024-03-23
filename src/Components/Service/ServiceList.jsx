@@ -1,7 +1,8 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import ServicesForm from '../Forms/ServicesForm';
+import { FiPlus } from 'react-icons/fi';
 import UpdateServiceForm from '../Forms/UpdateServiceForm';
+import ServicesForm from '../Forms/ServicesForm';
 
 function ServiceList() {
   const [services, setServices] = useState([]);
@@ -55,67 +56,69 @@ function ServiceList() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Service List</h2>
-      {showUpdateForm && (
-        <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
-      )}
-      {!showUpdateForm && (
-        <>
-          {showCreateForm && (
-            <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
-          )}
-          {!showCreateForm && (
-            <div className="overflow-x-auto">
-              <div className="flex mb-4">
-                <input
-                  type="text"
-                  className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
-                  placeholder="Search..."
-                  onChange={handleSearch}
-                />
-                <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
-                  onClick={handleCreateService}
-                >
-                  New Service
-                </button>
-              </div>
-              <table className="table-auto w-full">
-                <thead className='bg-gray-200'>
-                  <tr>
-                    <th className='px-4 py-2'>Name</th>
-                    <th className="px-4 py-2">Detail</th>
-                    <th className="px-4 py-2">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredServices.map(service => (
-                    <tr key={service.id_service} className='border border-gray-300'>
-                      <td className="border px-4 py-2">{service.name_service}</td>
-                      <td className="border px-4 py-2">{service.detail_service}</td>
-                      <td className="border px-4 py-2 flex justify-end">
-                        <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-                          onClick={() => handleEditService(service.id_service)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                          onClick={() => handleDeleteService(service.id_service)}
-                        >
-                          Delete
-                        </button>
-                      </td>
+    <div className="bg-slate-400 text-black min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-4">Service List</h1>
+        {showUpdateForm && (
+          <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
+        )}
+        {!showUpdateForm && (
+          <>
+            {showCreateForm && (
+              <ServicesForm onCreate={fetchServices} onClose={() => setShowCreateForm(false)} />
+            )}
+            {!showCreateForm && (
+              <div className="overflow-x-auto">
+                <div className="flex mb-4">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="flex-1 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                    onChange={handleSearch}
+                  />
+                  <button
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2 flex items-center"
+                    onClick={handleCreateService}
+                  >
+                    <FiPlus className="mr-2" /> New Service
+                  </button>
+                </div>
+                <table className="w-full bg-white shadow-md rounded my-6">
+                  <thead className='bg-gray-200'>
+                    <tr>
+                      <th className="border px-4 py-2">Name</th>
+                      <th className="border px-4 py-2">Detail</th>
+                      <th className="border px-4 py-2">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </>
-      )}
+                  </thead>
+                  <tbody>
+                    {filteredServices.map(service => (
+                      <tr key={service.id_service} className='border border-gray-300'>
+                        <td className="border px-4 py-2">{service.name_service}</td>
+                        <td className="border px-4 py-2">{service.detail_service}</td>
+                        <td className="border px-4 py-2 flex justify-end">
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                            onClick={() => handleEditService(service.id_service)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                            onClick={() => handleDeleteService(service.id_service)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

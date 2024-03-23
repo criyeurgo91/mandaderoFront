@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function UserForm({ onCreate, onClose }) {
@@ -8,12 +8,11 @@ function UserForm({ onCreate, onClose }) {
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isMander, setIsMander] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // Aquí puedes realizar cualquier acción que necesites cuando se monte el componente
+    
   }, []);
 
   const handleSubmit = async (event) => {
@@ -23,29 +22,26 @@ function UserForm({ onCreate, onClose }) {
       const accountResponse = await axios.post('https://manders.azurewebsites.net/api/account/', {
         email_account: email,
         password_account: password,
-        isadmin_account: isAdmin ? isAdmin : false, // Utiliza la variable 'isAdmin' directamente
+        isadmin_account: isAdmin,
       });
 
       const accountId = accountResponse.data.id_account;
 
-      // Crear un objeto FormData para enviar la imagen
       const formData = new FormData();
       formData.append('account_id_account', accountId);
       formData.append('image_user', image);
       formData.append('name_user', name);
       formData.append('lastname_user', lastname);
       formData.append('phone_user', phone);
-      formData.append('ismander_user', isMander);
 
       await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+          'Content-Type': 'multipart/form-data',
         },
       });
 
       setMessage('User created successfully.');
 
-      // Limpiar los campos después de enviar el formulario
       setEmail('');
       setPassword('');
       setImage(null);
@@ -53,14 +49,9 @@ function UserForm({ onCreate, onClose }) {
       setLastname('');
       setPhone('');
       setIsAdmin(false);
-      setIsMander(false);
 
-      // Llamar a la función onCreate para actualizar la lista de usuarios
       onCreate();
-
-      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
       onClose();
-
     } catch (error) {
       setMessage('Error creating user. Please try again.');
       console.error('Error creating user:', error);
@@ -68,7 +59,7 @@ function UserForm({ onCreate, onClose }) {
   };
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto p-6 bg-gray-400 rounded-lg shadow-md">
       <h2 className="text-lg font-semibold mb-4">Create User</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
@@ -157,26 +148,11 @@ function UserForm({ onCreate, onClose }) {
           <label className="flex items-center">
             <input
               type="checkbox"
-              id='isAdmin'
-              name='isAdmin'
               className="form-checkbox"
               checked={isAdmin}
               onChange={(event) => setIsAdmin(event.target.checked)}
             />
             <span className="ml-2 text-gray-700">Is Admin?</span>
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              id='isMander'
-              name='isMander'
-              className="form-checkbox"
-              checked={isMander}
-              onChange={(event) => setIsMander(event.target.checked)}
-            />
-            <span className="ml-2 text-gray-700">Is Mander?</span>
           </label>
         </div>
         <button
