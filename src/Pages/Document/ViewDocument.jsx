@@ -5,6 +5,7 @@ import axios from 'axios';
 const ViewDocument = () => {
   const [documents, setDocuments] = useState([]);
   const [searchDoc, setSearchDoc] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -27,6 +28,14 @@ const ViewDocument = () => {
 
   const handleVerifyDocument = () => {
     navigate('/document/createdocument');
+  };
+
+  const handleImageClick = (imageSrc) => {
+    setSelectedImage(imageSrc);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null);
   };
 
   const filteredDocument = documents.filter((document) =>
@@ -66,7 +75,14 @@ const ViewDocument = () => {
         <tbody>
           {filteredDocument.map((document) => (
             <tr key={document.id_document} className="border border-gray-300">
-              <td className="border border-gray-300 px-4 py-2">{document.image_document}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                <img
+                  src={document.image_document}
+                  alt="Document"
+                  className="h-16 w-16 cursor-pointer"
+                  onClick={() => handleImageClick(document.image_document)}
+                />
+              </td>
               <td className="border border-gray-300 px-4 py-2">{document.isdocument_vehicle ? 'Yes' : 'No'}</td>
               <td className="border border-gray-300 px-4 py-2">{document.isverified_document ? 'Yes' : 'No'}</td>
               <td className="border border-gray-300 px-4 py-2">{document.type_document}</td>
@@ -76,6 +92,12 @@ const ViewDocument = () => {
           ))}
         </tbody>
       </table>
+
+      {selectedImage && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center">
+          <img src={selectedImage} alt="Selected Document" className="max-w-full max-h-full" onClick={handleCloseModal} />
+        </div>
+      )}
     </div>
   );
 }
