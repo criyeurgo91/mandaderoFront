@@ -87,7 +87,8 @@ function MandersList() {
   };
 
   return (
-    <div className="container mx-auto px-20 bg-slate-400">
+    <div className="bg-slate-400 text- min-h-screen">
+      <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-5">Mander List</h2>
       {alertMessage && <div className="text-red-500">{alertMessage}</div>}
       {showVehicleForm ? (
@@ -147,6 +148,7 @@ function MandersList() {
           </div>
         </>
       )}
+      </div>
     </div>
   );
   

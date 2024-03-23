@@ -45,14 +45,15 @@ const ViewDocument = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gray-200">
-      <h2 className="text-3xl font-bold mb-6 text-black">View Documents</h2>
+    <div className=" bg-slate-400 text- min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-5">View Documents</h2>
 
       <div className="flex items-center justify-between mb-6">
         <input
           type="text"
           placeholder="Search by document type"
-          className="w-3/4 border border-gray-700 bg-white h-10 px-4 rounded-lg text-sm focus:outline-none"
+          className="flex-1 border-2 border-gray-300 bg-white h-10 px-6 rounded-lg text-sm focus:outline-none"
           onChange={handleSearch}
         />
         <button
@@ -102,6 +103,7 @@ const ViewDocument = () => {
           <img src={selectedImage} alt="Selected Document" className="max-w-full max-h-full" onClick={handleCloseModal} />
         </div>
       )}
+      </div>
     </div>
   );
 };

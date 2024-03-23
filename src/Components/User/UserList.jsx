@@ -82,8 +82,9 @@ function UserList() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gray-300">
-      <h2 className="text-2xl font-bold mb-4">User List</h2>
+    <div className="bg-slate-400 text- min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-5">User List</h2>
       {showUpdateForm ? (
         <UpdateUserForm userId={selectedUser} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} /> // Cambiar a userId={selectedUser}
       ) : (
@@ -142,6 +143,7 @@ function UserList() {
           )}
         </>
       )}
+      </div>
     </div>
   );
   
