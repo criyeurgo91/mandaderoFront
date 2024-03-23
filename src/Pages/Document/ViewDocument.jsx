@@ -49,15 +49,15 @@ const ViewDocument = () => {
       <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-5">View Documents</h2>
 
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex mb-4">
         <input
           type="text"
           placeholder="Search by document type"
-          className="flex-1 border-2 border-gray-300 bg-white h-10 px-6 rounded-lg text-sm focus:outline-none"
+          className="w-1/2 border-2 border-gray-300 bg-white h-10 px-6 rounded-lg text-sm focus:outline-none"
           onChange={handleSearch}
         />
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
           onClick={handleVerifyDocument}
         >
           Verify Document

@@ -102,7 +102,7 @@ function MandersList() {
           <div className="flex mb-4">
             <input
               type="text"
-              className="flex-1 border-2 border-gray-300 bg-white h-10 px-6 rounded-lg text-sm focus:outline-none"
+              className="w-1/2 border-2 border-gray-300 bg-white h-10 px-6 rounded-lg text-sm focus:outline-none"
               placeholder="Search..."
               onChange={handleSearchMander}
             />
