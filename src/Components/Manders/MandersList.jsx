@@ -3,6 +3,7 @@ import axios from 'axios';
 import ManderForm from '../Forms/ManderForm';
 import UpdateManderForm from '../Forms/UpdateManderForm';
 import VehicleForm from '../Forms/VehicleForm'
+import apiUrl from '../../config/apiConfig';
 
 function MandersList() {
   const [manders, setManders] = useState([]);
@@ -20,10 +21,10 @@ function MandersList() {
 
   const fetchManders = async () => {
     try {
-      const response = await axios.get('https://manders.azurewebsites.net/api/mander/');
+      const response = await axios.get(`${apiUrl}/api/mander/`);
       const mandersWithUserInfo = await Promise.all(
         response.data.map(async (mander) => {
-          const userResponse = await axios.get(`https://manders.azurewebsites.net/api/user/${mander.user_id_user}/`);
+          const userResponse = await axios.get(`${apiUrl}/api/user/${mander.user_id_user}/`);
           return {
             ...mander,
             user: userResponse.data,
@@ -49,7 +50,7 @@ function MandersList() {
 
   /*const handleDeleteMander = async (manderId) => {
     try {
-      await axios.delete(`https://manders.azurewebsites.net/api/mander/${manderId}/`);
+      await axios.delete(`${apiUrl}/api/mander/${manderId}/`);
       fetchManders();
     } catch (error) {
       console.error('Error deleting mander:', error);

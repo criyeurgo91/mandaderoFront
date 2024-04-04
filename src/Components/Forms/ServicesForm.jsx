@@ -1,5 +1,6 @@
 import  { useState } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function ServicesForm({ onCreate, onClose }) {
   const [name, setName] = useState('');
@@ -16,7 +17,7 @@ function ServicesForm({ onCreate, onClose }) {
       formData.append('detail_service', detail);
       formData.append('image_service', image);
 
-      await axios.post('https://manders.azurewebsites.net/api/service/', formData);
+      await axios.post(`${apiUrl}/api/service/`, formData);
 
       setMessage('Service created successfully.');
       setName('');

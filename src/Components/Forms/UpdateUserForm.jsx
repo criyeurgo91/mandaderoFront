@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function UpdateUserForm({ userId, onUpdate, onClose }) {
   const [user, setUser] = useState(null);
@@ -16,7 +17,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(`https://manders.azurewebsites.net/api/user/${userId}`);
+      const response = await axios.get(`${apiUrl}/api/user/${userId}`);
       setUser(response.data);
       if (response.data) {
         setName(response.data.name_user);
@@ -50,7 +51,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         formData.append(key, userData[key]);
       }
 
-      await axios.put(`https://manders.azurewebsites.net/api/user/${userId}/`, formData, {
+      await axios.put(`${apiUrl}/api/user/${userId}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

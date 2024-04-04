@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function UserForm({ onCreate, onClose }) {
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ function UserForm({ onCreate, onClose }) {
     event.preventDefault();
 
     try {
-      const accountResponse = await axios.post('https://manders.azurewebsites.net/api/account/', {
+      const accountResponse = await axios.post(`${apiUrl}/api/account/`, {
         email_account: email,
         password_account: password,
         isadmin_account: isAdmin,
@@ -34,7 +35,7 @@ function UserForm({ onCreate, onClose }) {
       formData.append('lastname_user', lastname);
       formData.append('phone_user', phone);
 
-      await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
+      await axios.post(`${apiUrl}/api/user/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

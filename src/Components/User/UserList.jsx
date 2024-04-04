@@ -3,6 +3,8 @@ import axios from 'axios';
 import UpdateUserForm from '../Forms/UpdateUserForm';
 import UserForm from '../Forms/UserForm';
 import  '../../Components/User/Index.css'
+import apiUrl from '../../config/apiConfig';
+
 function UserList() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,10 +21,10 @@ function UserList() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://manders.azurewebsites.net/api/user/');
+      const response = await axios.get(`${apiUrl}/api/user/`);
       const usersWithAccountInfo = await Promise.all(
         response.data.map(async (user) => {
-          const accountResponse = await axios.get(`https://manders.azurewebsites.net/api/account/${user.account_id_account}/`);
+          const accountResponse = await axios.get(`${apiUrl}/api/account/${user.account_id_account}/`);
           return {
             ...user,
             email: accountResponse.data.email_account,
@@ -48,7 +50,7 @@ function UserList() {
 
   /*const handleDelete = async (userId) => {
     try {
-      await axios.delete(`https://manders.azurewebsites.net/api/user/${userId}/`);
+      await axios.delete(`${apiUrl}/api/user/${userId}/`);
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);

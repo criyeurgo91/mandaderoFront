@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { FaUser, FaUserSecret, FaTasks, FaHourglassHalf, FaCheckCircle, FaUserPlus } from "react-icons/fa";
+import apiUrl from '../../config/apiConfig';
 
 function Home() {
   const [estadisticas, setEstadisticas] = useState(null);
 
   useEffect(() => {
-    fetch('https://manders.azurewebsites.net/api/estadisticas/')
+    fetch(`${apiUrl}/api/estadisticas/`)
       .then(response => response.json())
       .then(data => setEstadisticas(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -33,7 +34,7 @@ function Home() {
 
 function renderStatCard(title, value, icon) {
   return (
-    <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md hover:bg-gray-300 transition duration-300">
+    <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md ">
       <div className="text-3xl mb-2">{icon}</div>
       <p className="text-center font-semibold">{title}</p>
       <p className="text-center text-gray-600">{value}</p>
