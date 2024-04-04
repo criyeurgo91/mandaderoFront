@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  react:
+    build: .
+    ports:
+        - "80:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    networks:
+        - mynetwork
+networks:
+  mynetwork:
