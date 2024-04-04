@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function UpdateManderForm({ manderId, onUpdate, onClose }) {
   const [image, setImage] = useState(null);
@@ -14,7 +15,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
 
   useEffect(() => {
     
-    axios.get(`https://manders.azurewebsites.net/api/mander/${manderId}`)
+    axios.get(`${apiUrl}/api/mander/${manderId}`)
       .then(response => {
         const manderData = response.data;
         setAddress(manderData.address_mander);
@@ -44,7 +45,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
       formData.append('isactive_mander', isactivemander);
       formData.append('isvalidate_mander', isvalidatemander);
 
-      await axios.put(`https://manders.azurewebsites.net/api/mander/${manderId}/`, formData, {
+      await axios.put(`${apiUrl}/api/mander/${manderId}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },

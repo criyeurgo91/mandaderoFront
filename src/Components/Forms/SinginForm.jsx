@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function SinginForm() {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function SinginForm() {
     }
 
     try {
-      const response = await axios.post('http://manders.azurewebsites.net/api/account/', {
+      const response = await axios.post(`${apiUrl}/api/account/`, {
         email_account: email,
         password_account: password,
         isadmin_account: formData.isadmin_account ? formData.isadmin_account : false,

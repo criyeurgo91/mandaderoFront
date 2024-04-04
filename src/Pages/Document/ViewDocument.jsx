@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 const ViewDocument = () => {
   const [documents, setDocuments] = useState([]);
@@ -15,8 +16,8 @@ const ViewDocument = () => {
 
   const fetchData = async () => {
     try {
-      const documentsResponse = await axios.get('https://manders.azurewebsites.net/api/document/');
-      const usersResponse = await axios.get('https://manders.azurewebsites.net/api/user/');
+      const documentsResponse = await axios.get(`${apiUrl}/api/document/`);
+      const usersResponse = await axios.get(`${apiUrl}/api/user/`);
       setDocuments(documentsResponse.data);
       setUsers(usersResponse.data);
     } catch (error) {

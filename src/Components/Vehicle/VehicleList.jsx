@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import apiUrl from '../../config/apiConfig';
 
 function VehicleList() {
   const [vehicles, setVehicles] = useState([]);
@@ -12,7 +13,7 @@ function VehicleList() {
 
   const fetchVehicles = async () => {
     try {
-      const response = await axios.get('https://manders.azurewebsites.net/api/vehicle/');
+      const response = await axios.get(`${apiUrl}/api/vehicle/`);
       setVehicles(response.data);
     } catch (error) {
       console.error('Error fetching vehicles:', error);

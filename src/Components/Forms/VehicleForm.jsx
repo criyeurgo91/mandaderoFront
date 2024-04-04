@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 const userdefault = 1; // se debe enviar un id de usuario por defecto.
 
@@ -68,7 +69,7 @@ const VehicleForm = () => {
     
     try {
       setLoading(true);
-      const response = await axios.post('https://manders.azurewebsites.net/api/vehicle/', formDataToSend);
+      const response = await axios.post(`${apiUrl}/api/vehicle/`, formDataToSend);
       console.log('Response:', response.data);
       setFormData(initialState);
       setLoading(false);

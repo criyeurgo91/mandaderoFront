@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { FaUser, FaUserSecret, FaTasks, FaHourglassHalf, FaCheckCircle, FaUserPlus } from "react-icons/fa";
+import apiUrl from '../../config/apiConfig';
 
 function Home() {
   const [estadisticas, setEstadisticas] = useState(null);
 
   useEffect(() => {
-    fetch('https://manders.azurewebsites.net/api/estadisticas/')
+    fetch(`${apiUrl}/api/estadisticas/`)
       .then(response => response.json())
       .then(data => setEstadisticas(data))
       .catch(error => console.error('Error fetching data:', error));

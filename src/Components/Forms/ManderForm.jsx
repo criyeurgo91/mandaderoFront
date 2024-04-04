@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function ManderForm({ onCreate, onClose }) {
 
@@ -29,7 +30,7 @@ function ManderForm({ onCreate, onClose }) {
     event.preventDefault();
 
     try {
-      const accountResponse = await axios.post('https://manders.azurewebsites.net/api/account/', {
+      const accountResponse = await axios.post(`${apiUrl}/api/account/`, {
         email_account: email,
         password_account: password,
         isadmin_account: isAdmin ? isAdmin : false, // Utiliza la variable 'isAdmin' directamente
@@ -46,7 +47,7 @@ function ManderForm({ onCreate, onClose }) {
       formData.append('phone_user', phone);
       formData.append('ismander_user', isMander);
 
-      const userResponse = await axios.post('https://manders.azurewebsites.net/api/user/', formData, {
+      const userResponse = await axios.post(`${apiUrl}/api/user/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },
@@ -64,7 +65,7 @@ function ManderForm({ onCreate, onClose }) {
       formDataMander.append('address_mander', address)
       formDataMander.append('cc_mander', cc)
 
-      await axios.post('https://manders.azurewebsites.net/api/mander/', formDataMander, {
+      await axios.post(`${apiUrl}/api/mander/`, formDataMander, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },

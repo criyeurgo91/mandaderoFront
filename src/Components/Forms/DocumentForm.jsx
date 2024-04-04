@@ -1,5 +1,6 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function DocumentForm() {
   const [imageDocument, setImageDocument] = useState(null);
@@ -17,7 +18,7 @@ function DocumentForm() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://manders.azurewebsites.net/api/user/');
+      const response = await axios.get(`${apiUrl}/api/user/`);
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -36,7 +37,7 @@ function DocumentForm() {
       formData.append('dateverified_document', dateVerifiedDocument);
       formData.append('user_id_user', userIdUser);
 
-      await axios.post('https://manders.azurewebsites.net/api/document/', formData, {
+      await axios.post(`${apiUrl}/api/document/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

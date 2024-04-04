@@ -1,5 +1,6 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
   const [name, setName] = useState('');
@@ -13,7 +14,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
 
   const fetchServiceData = async () => {
     try {
-      const response = await axios.get(`https://manders.azurewebsites.net/api/service/${serviceId}`);
+      const response = await axios.get(`${apiUrl}/api/service/${serviceId}`);
       setName(response.data.name_service);
       setDetail(response.data.detail_service);
     } catch (error) {
@@ -30,7 +31,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
       formData.append('detail_service', detail);
       formData.append('image_service', image); // Agregar la imagen al FormData
 
-      const response = await axios.put(`https://manders.azurewebsites.net/api/service/${serviceId}/`, formData);
+      const response = await axios.put(`${apiUrl}/api/service/${serviceId}/`, formData);
 
       setMessage('Service updated successfully.');
       console.log('Service updated successfully.', response.data);
