@@ -4,6 +4,7 @@ import ManderForm from '../Forms/ManderForm';
 import UpdateManderForm from '../Forms/UpdateManderForm';
 import VehicleForm from '../Forms/VehicleForm'
 import apiUrl from '../../config/apiConfig';
+import DocumentForm from '../../Components/Forms/DocumentForm'
 
 function MandersList() {
   const [manders, setManders] = useState([]);
@@ -14,6 +15,7 @@ function MandersList() {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedMander, setSelectedMander] = useState(null); 
   const [showVehicleForm, setShowVehicleForm] = useState(false);
+  const [showDocumentForm, setShowDocumentForm] = useState(false);
 
   useEffect(() => {
     fetchManders();
@@ -87,6 +89,10 @@ function MandersList() {
     setShowVehicleForm(true); 
   };
 
+  const handleCreateDocument = () => {
+    setShowDocumentForm(true); 
+  };
+
   return (
     <div className="bg-slate-400 text- min-h-screen">
       <div className="container mx-auto px-4 py-8">
@@ -98,7 +104,11 @@ function MandersList() {
         <UpdateManderForm manderId={selectedMander} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : showCreateForm ? (
         <ManderForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
-      ) : (
+      ) :
+      showDocumentForm ? (
+        <DocumentForm onCreate={handleCreateDocument} onClose={() => setShowDocumentForm(false)} />
+      ) :
+      (
         <>
           <div className="flex mb-4">
             <input
@@ -124,7 +134,6 @@ function MandersList() {
                   className="w-32 h-auto mb-2 rounded-lg mx-auto"
                 />
                 <p className="text-sm mb-1"><span className="font-bold">User:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Email:</span> {mander.user.email_account}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander.user.phone_user}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Has Car:</span> {mander.ishavecar_mander ? 'Yes' : 'No'}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Has Motorcycle:</span> {mander.ishavemoto_mander ? 'Yes' : 'No'}</p>
@@ -133,16 +142,28 @@ function MandersList() {
                 <p className="text-sm mb-1"><span className="font-bold">Address:</span> {mander.address_mander}</p>
                 <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander.cc_mander}</p>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
                   onClick={() => handleEditMander(mander.id_mander)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
                   onClick={() => handleCreateVehicle()}
                 >
                   Vehicle
+                </button>
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
+                  onClick={() => handleCreateDocument()}
+                >
+                  Document
+                </button>
+                <button
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-2"
+                  onClick={() => handleDetail()}
+                >
+                  Detail
                 </button>
               </div>
             ))}

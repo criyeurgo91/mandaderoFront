@@ -2,7 +2,7 @@ import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
-function DocumentForm() {
+function DocumentForm({ onCreate, onClose }) {
   const [imageDocument, setImageDocument] = useState(null);
   const [isDocumentVehicle, setIsDocumentVehicle] = useState(false);
   const [isVerifiedDocument, setIsVerifiedDocument] = useState(false);
@@ -52,6 +52,12 @@ function DocumentForm() {
       setTypeDocument('');
       setDateVerifiedDocument('');
       setUserIdUser('');
+
+      // Llamar a la función onCreate para actualizar la lista de usuarios
+      onCreate();
+
+      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
+      onClose();
 
     } catch (error) {
       setMessage('Error adding document. Please try again.');
@@ -155,9 +161,16 @@ function DocumentForm() {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Add Document
+        </button>
+        <button
+          type="reset"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          onClick={onClose}
+        >
+          Cancel
         </button>
       </form>
     </div>
