@@ -93,7 +93,14 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+        >
+          Update
+        </button>
+        <button
+          type="reset"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          onClick={onClose}
         >
           Update
         </button>

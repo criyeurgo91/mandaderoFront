@@ -57,7 +57,7 @@ function ServiceList() {
   );
 
   return (
-    <div className="bg-slate-400 text-black min-h-screen">
+    <div className="bg-white text-black min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">Service List</h1>
         {showUpdateForm && (
@@ -87,9 +87,12 @@ function ServiceList() {
                 <table className="w-full bg-white shadow-md rounded my-6">
                   <thead className='bg-gray-200'>
                     <tr>
+                    
                       <th className="border px-4 py-2">Name</th>
                       <th className="border px-4 py-2">Detail</th>
+                      <th className="border px-4 py-2">Image</th>
                       <th className="border px-4 py-2">Actions</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -97,6 +100,11 @@ function ServiceList() {
                       <tr key={service.id_service} className='border border-gray-300'>
                         <td className="border px-4 py-2">{service.name_service}</td>
                         <td className="border px-4 py-2">{service.detail_service}</td>
+                        <td className="border px-4 py-2">
+                            {service.image_service && (
+                        <img src={service.image_service} alt={service.name_service} className="w-16 h-16 object-cover" />
+                          )}
+                       </td>
                         <td className="border px-4 py-2 flex justify-end">
                           <button
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"

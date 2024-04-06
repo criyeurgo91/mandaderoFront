@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
+
 function ManderForm({ onCreate, onClose }) {
 
   const [email, setEmail] = useState('');
@@ -65,11 +66,13 @@ function ManderForm({ onCreate, onClose }) {
       formDataMander.append('address_mander', address)
       formDataMander.append('cc_mander', cc)
 
-      await axios.post(`${apiUrl}/api/mander/`, formDataMander, {
+      const manderResponse = await axios.post(`${apiUrl}/api/mander/`, formDataMander, {
         headers: {
           'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
         },
       });
+
+      const manderId = manderResponse.data.id_mander
 
       setMessage('Mander created successfully.');
 
@@ -87,6 +90,8 @@ function ManderForm({ onCreate, onClose }) {
       setIshavemoto(false)
       setIsvalidatemander(false)
       setIsactivemander(false)
+
+      
       
       // Llamar a la función onCreate para actualizar la lista de usuarios
       onCreate();
@@ -102,6 +107,7 @@ function ManderForm({ onCreate, onClose }) {
 
   return (
     <div className="container mx-auto">
+      
       <h1 className="text-3xl font-bold mb-4 text-center">Crear Mander</h1>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
@@ -287,7 +293,13 @@ function ManderForm({ onCreate, onClose }) {
           </label>
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear Mander</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
+          Crear Mander
+        </button>
+        <button type="reset" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+        onClick={onClose}>
+          Cancel
+        </button>
       </form>
     </div>
   );

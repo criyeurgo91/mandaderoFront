@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
-function SinginForm() {
+function SinginForm({onCreate,onclose}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
@@ -36,6 +36,10 @@ function SinginForm() {
       setEmail('');
       setPassword('');
       setIsAdmin(false);
+
+      onCreate()
+      onclose()
+
     } catch (error) {
       console.error('Error creating account:', error);
     }
@@ -101,6 +105,13 @@ function SinginForm() {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Submit
+        </button>
+        <button
+          type="reset"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+        onClick={onclose}
+        >
+          Cancel
         </button>
       </form>
     </div>

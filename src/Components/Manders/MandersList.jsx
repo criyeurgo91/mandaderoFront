@@ -4,6 +4,10 @@ import ManderForm from '../Forms/ManderForm';
 import UpdateManderForm from '../Forms/UpdateManderForm';
 import VehicleForm from '../Forms/VehicleForm'
 import apiUrl from '../../config/apiConfig';
+import DocumentForm from '../../Components/Forms/DocumentForm'
+import DetailMander from './DetailMander';
+
+
 
 function MandersList() {
   const [manders, setManders] = useState([]);
@@ -14,6 +18,10 @@ function MandersList() {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedMander, setSelectedMander] = useState(null); 
   const [showVehicleForm, setShowVehicleForm] = useState(false);
+  const [showDocumentForm, setShowDocumentForm] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+  const [detailManderId, setDetailManderId] = useState(null)
+  
 
   useEffect(() => {
     fetchManders();
@@ -87,18 +95,37 @@ function MandersList() {
     setShowVehicleForm(true); 
   };
 
+  const handleCreateDocument = () => {
+    setShowDocumentForm(true); 
+  };
+
+  const handleShowDetail = (manderId,userId) => { // Cambios aquí para almacenar el ID del mander seleccionado
+    setShowDetail(true); 
+    setDetailManderId(manderId); // Almacena el ID del mander seleccionado
+  };
+
+
   return (
-    <div className="bg-slate-400 text- min-h-screen">
+    <div className="bg-white text- min-h-screen">
       <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-5">Mander List</h2>
       {alertMessage && <div className="text-red-500">{alertMessage}</div>}
       {showVehicleForm ? (
-        <VehicleForm onCreate={handleCreateVehicle} onClose={() => setShowVehicleForm(false)} />
+        <VehicleForm manderId={selectedMander } onCreate={handleCreateVehicle} onClose={() => setShowVehicleForm(false)} />
       ) : showUpdateForm ? (
         <UpdateManderForm manderId={selectedMander} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : showCreateForm ? (
         <ManderForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
-      ) : (
+      ) :
+      
+      showDocumentForm ? (
+        <DocumentForm onCreate={handleCreateDocument} onClose={() => setShowDocumentForm(false)} />
+      ) 
+      :
+      showDetail ? (
+        <DetailMander manderId={detailManderId} onClose={() => setShowDetail(false)} />
+      ) :
+      (
         <>
           <div className="flex mb-4">
             <input
@@ -124,7 +151,6 @@ function MandersList() {
                   className="w-32 h-auto mb-2 rounded-lg mx-auto"
                 />
                 <p className="text-sm mb-1"><span className="font-bold">User:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Email:</span> {mander.user.email_account}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander.user.phone_user}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Has Car:</span> {mander.ishavecar_mander ? 'Yes' : 'No'}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Has Motorcycle:</span> {mander.ishavemoto_mander ? 'Yes' : 'No'}</p>
@@ -132,18 +158,32 @@ function MandersList() {
                 <p className="text-sm mb-1"><span className="font-bold">Is Validated:</span> {mander.isvalidate_mander ? 'Yes' : 'No'}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Address:</span> {mander.address_mander}</p>
                 <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander.cc_mander}</p>
+                
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
                   onClick={() => handleEditMander(mander.id_mander)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => handleCreateVehicle()}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
+                  onClick={() => handleCreateVehicle(mander.user.id_user)}
                 >
                   Vehicle
                 </button>
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
+                  onClick={() => handleCreateDocument()}
+                >
+                  Document
+                </button>
+                <button
+    className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-2"
+    onClick={() => handleShowDetail(mander.id_mander)}
+>
+    Detail
+</button>
+                
               </div>
             ))}
           </div>
