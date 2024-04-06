@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
+
 function UserForm({ onCreate, onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,11 +36,13 @@ function UserForm({ onCreate, onClose }) {
       formData.append('lastname_user', lastname);
       formData.append('phone_user', phone);
 
-      await axios.post(`${apiUrl}/api/user/`, formData, {
+       const userResponse = await axios.post(`${apiUrl}/api/user/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      const userId = userResponse.data.id_user
 
       setMessage('User created successfully.');
 
@@ -158,9 +161,16 @@ function UserForm({ onCreate, onClose }) {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Submit
+        </button>
+        <button
+          type="reset"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          onClick={onClose}
+        >
+          Cancel
         </button>
       </form>
     </div>

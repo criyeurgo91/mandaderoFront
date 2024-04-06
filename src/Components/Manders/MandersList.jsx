@@ -6,6 +6,8 @@ import VehicleForm from '../Forms/VehicleForm'
 import apiUrl from '../../config/apiConfig';
 import DocumentForm from '../../Components/Forms/DocumentForm'
 
+
+
 function MandersList() {
   const [manders, setManders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +18,7 @@ function MandersList() {
   const [selectedMander, setSelectedMander] = useState(null); 
   const [showVehicleForm, setShowVehicleForm] = useState(false);
   const [showDocumentForm, setShowDocumentForm] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
 
   useEffect(() => {
     fetchManders();
@@ -93,21 +96,28 @@ function MandersList() {
     setShowDocumentForm(true); 
   };
 
+  const handleShowDetail = () => {
+    setShowDetail(!showDetail); // Cambiar el estado de showDetail al contrario de su estado actual
+  };
+
+
   return (
     <div className="bg-slate-400 text- min-h-screen">
       <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-5">Mander List</h2>
       {alertMessage && <div className="text-red-500">{alertMessage}</div>}
       {showVehicleForm ? (
-        <VehicleForm onCreate={handleCreateVehicle} onClose={() => setShowVehicleForm(false)} />
+        <VehicleForm manderId={selectedMander } onCreate={handleCreateVehicle} onClose={() => setShowVehicleForm(false)} />
       ) : showUpdateForm ? (
         <UpdateManderForm manderId={selectedMander} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
       ) : showCreateForm ? (
         <ManderForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
       ) :
+      
       showDocumentForm ? (
         <DocumentForm onCreate={handleCreateDocument} onClose={() => setShowDocumentForm(false)} />
-      ) :
+      ) 
+      :
       (
         <>
           <div className="flex mb-4">
@@ -141,6 +151,7 @@ function MandersList() {
                 <p className="text-sm mb-1"><span className="font-bold">Is Validated:</span> {mander.isvalidate_mander ? 'Yes' : 'No'}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Address:</span> {mander.address_mander}</p>
                 <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander.cc_mander}</p>
+                
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
                   onClick={() => handleEditMander(mander.id_mander)}
@@ -149,7 +160,7 @@ function MandersList() {
                 </button>
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
-                  onClick={() => handleCreateVehicle()}
+                  onClick={() => handleCreateVehicle(mander.user.id_user)}
                 >
                   Vehicle
                 </button>
@@ -159,12 +170,7 @@ function MandersList() {
                 >
                   Document
                 </button>
-                <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-2"
-                  onClick={() => handleDetail()}
-                >
-                  Detail
-                </button>
+                
               </div>
             ))}
           </div>
