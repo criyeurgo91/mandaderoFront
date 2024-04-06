@@ -16,6 +16,7 @@ import ViewDocument from "../Pages/Document/ViewDocument";
 import MandersList from "../Components/Manders/MandersList";
 import ManderForm from "../Components/Forms/ManderForm";
 import HeaderComponent from "../Components/Headers/HeaderComponent";
+import RequestList from "../Components/Request/RequestList";
 //import ViewManders from "../Pages/Manders/ViewManders";
 
 const AdminRoutes = () => {
@@ -43,7 +44,7 @@ const AdminRoutes = () => {
                         <Route path='manders/createmander' element={<ManderForm />} />
                         <Route path='services' element={<ServiceList />} />
                         <Route path='services/createservice' element={<ServicesForm />} />
-                        <Route path='request' element={<PageDefault />} />
+                        <Route path='request' element={<RequestList />} />
                         <Route path='request/createrequest' element={<PageDefault />} />
                         <Route path="document" element={<ViewDocument />} />
                         <Route path='document/createdocument' element={<DocumentForm />} />

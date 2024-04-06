@@ -5,6 +5,7 @@ import UpdateManderForm from '../Forms/UpdateManderForm';
 import VehicleForm from '../Forms/VehicleForm'
 import apiUrl from '../../config/apiConfig';
 import DocumentForm from '../../Components/Forms/DocumentForm'
+import DetailMander from './DetailMander';
 
 
 
@@ -19,6 +20,8 @@ function MandersList() {
   const [showVehicleForm, setShowVehicleForm] = useState(false);
   const [showDocumentForm, setShowDocumentForm] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const [detailManderId, setDetailManderId] = useState(null)
+  
 
   useEffect(() => {
     fetchManders();
@@ -96,8 +99,9 @@ function MandersList() {
     setShowDocumentForm(true); 
   };
 
-  const handleShowDetail = () => {
-    setShowDetail(!showDetail); // Cambiar el estado de showDetail al contrario de su estado actual
+  const handleShowDetail = (manderId,userId) => { // Cambios aquí para almacenar el ID del mander seleccionado
+    setShowDetail(true); 
+    setDetailManderId(manderId); // Almacena el ID del mander seleccionado
   };
 
 
@@ -118,6 +122,9 @@ function MandersList() {
         <DocumentForm onCreate={handleCreateDocument} onClose={() => setShowDocumentForm(false)} />
       ) 
       :
+      showDetail ? (
+        <DetailMander manderId={detailManderId} onClose={() => setShowDetail(false)} />
+      ) :
       (
         <>
           <div className="flex mb-4">
@@ -170,6 +177,12 @@ function MandersList() {
                 >
                   Document
                 </button>
+                <button
+    className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-2"
+    onClick={() => handleShowDetail(mander.id_mander)}
+>
+    Detail
+</button>
                 
               </div>
             ))}

@@ -45,7 +45,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          to="document"
+          to="request"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
         >
           <RiFileTextLine />
