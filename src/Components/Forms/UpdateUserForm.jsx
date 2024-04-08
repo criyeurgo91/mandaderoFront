@@ -6,7 +6,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
   const [user, setUser] = useState(null);
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
-  const [lastname, setLastname] = useState('');
+  const [lastname, setLastname] = useState(''); 
   const [phone, setPhone] = useState('');
   const [isMander, setIsMander] = useState(false);
   const [message, setMessage] = useState('');
@@ -24,13 +24,18 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         setLastname(response.data.lastname_user);
         setPhone(response.data.phone_user);
         setIsMander(response.data.ismander_user);
-        // Set the image URL if available
-        setImage(response.data.image_user);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
   };
+
+  const handleImageChange = (event) => {
+  const newImageFile = event.target.files[0];
+  setNewImage(newImageFile);
+  // Actualiza el estado de la imagen para mostrar una vista previa si lo deseas
+  setImage(URL.createObjectURL(newImageFile));
+};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,15 +43,18 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
     try {
       const userData = {
         account_id_account: user.account_id_account,
-        image_user: image,
         name_user: name,
         lastname_user: lastname,
         phone_user: phone,
         ismander_user: isMander,
       };
 
+      // Si se seleccionó una nueva imagen, agregarla a los datos del usuario
+      if (image) {
+        userData.image_user = image;
+      }
+
       const formData = new FormData();
-      formData.append('image_user', image);
       for (const key in userData) {
         formData.append(key, userData[key]);
       }
@@ -76,19 +84,20 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
       )}
       {user && (
         <form onSubmit={handleSubmit}>
+          {/* Mantenemos la lógica para mostrar la imagen actual */}
+          {user.image_user && (
+            <img src={user.image_user} alt="User Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
+          )}
+          {/* Agregamos el botón para editar la imagen si se desea reemplazar */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
-              Image:
+            <label htmlFor="image" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Edit Image
             </label>
-            {/* Display the image if available */}
-            {image && (
-              <img src={image} alt="User Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
-            )}
             <input
               id="image"
               type="file"
-              className="w-full px-3 py-2 border rounded-md"
-              onChange={(event) => setImage(event.target.files[0])}
+              className="hidden"
+              onChange={handleImageChange}
               accept="image/*"
             />
           </div>

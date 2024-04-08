@@ -20,6 +20,9 @@ function ManderForm({ onCreate, onClose }) {
   const [isvalidatemander, setIsvalidatemander] = useState(false);
   const [message, setMessage] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [errorEmail, setErrorEmail] = useState('')
+  const [errorPassword, setErrorPassword] = useState('')
+  const [errorPhone, setErrorPhone] = useState('')
   
 
 
@@ -105,6 +108,44 @@ function ManderForm({ onCreate, onClose }) {
     }
   };
 
+  const handleChangePassword = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+
+    if (newPassword.length < 8) {
+      setErrorPassword('La contraseña debe tener entre 8 y 20 caracteres.');
+    }else{
+      setErrorPassword('')
+    } 
+    
+  };
+
+  const handleChangeEmail = (event) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(newEmail)) {
+      setErrorEmail("ingresa un correo electrónico válido");
+    }else{
+      setErrorEmail('')
+    }
+  };
+
+  const handleChangePhone = (event) => {
+    const newphone = event.target.value;
+    setPhone(newphone);
+
+    const phonePattern = /^\d{10}$/;
+
+    if (!phonePattern.test(newphone)) {
+      setErrorPhone("ingresa un numero de telefono valido");
+    }else{
+      setErrorPhone('')
+    }
+  };
+
   return (
     <div className="container mx-auto">
       
@@ -126,9 +167,11 @@ function ManderForm({ onCreate, onClose }) {
             type="email"
             className="w-full px-3 py-2 border rounded-md"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={handleChangeEmail}
             required
+            
           />
+          {errorEmail && <p className="text-red-500">{errorEmail}</p>}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -137,11 +180,14 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="password"
             type="password"
+            minLength={8}
+            maxLength={20}
             className="w-full px-3 py-2 border rounded-md"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handleChangePassword}
             required
           />
+          {errorPassword && <p className="text-red-500">{errorPassword}</p>}
         </div>
         {/* Campos para el usuario */}
         <div className="mb-4">
@@ -179,9 +225,10 @@ function ManderForm({ onCreate, onClose }) {
             type="text"
             className="w-full px-3 py-2 border rounded-md"
             value={phone}
-            onChange={(event) => setPhone(event.target.value)}
+            onChange={handleChangePhone}
             required
           />
+          {errorPhone && <p className="text-red-500">{errorPhone}</p>}
         </div>
 
         <div className="mb-4">
@@ -215,7 +262,7 @@ function ManderForm({ onCreate, onClose }) {
         {/* Campos para el mandadero */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cc_mander">
-            Document:
+            Document Number:
           </label>
           <input
             id="cc_mander"

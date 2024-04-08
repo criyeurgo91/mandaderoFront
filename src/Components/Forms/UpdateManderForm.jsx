@@ -11,10 +11,11 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
   const [isactivemander, setIsactivemander] = useState(false);
   const [isvalidatemander, setIsvalidatemander] = useState(false);
   const [message, setMessage] = useState('');
-  const [userIdUser, setUserIdUser] = useState('')
+  const [userIdUser, setUserIdUser] = useState('');
+  const [currentImage, setCurrentImage] = useState(null); // Agregar estado para almacenar la imagen actual
 
   useEffect(() => {
-    
+    // Obtener los datos del mandadero al cargar el componente
     axios.get(`${apiUrl}/api/mander/${manderId}`)
       .then(response => {
         const manderData = response.data;
@@ -25,6 +26,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
         setIsactivemander(manderData.isactive_mander);
         setIsvalidatemander(manderData.isvalidate_mander);
         setUserIdUser(manderData.user_id_user);
+        setCurrentImage(manderData.image_mander); // Actualizar el estado de la imagen actual
       })
       .catch(error => {
         console.error('Error fetching Mander data:', error);
@@ -47,17 +49,14 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
 
       await axios.put(`${apiUrl}/api/mander/${manderId}/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+          'Content-Type': 'multipart/form-data', // Especificar que se envía una imagen
         },
       });
 
       setMessage('Mander updated successfully.');
 
-      // Llamar a la función onUpdate para actualizar la lista de Manders
-      onUpdate();
-
-      // Llamar a la función onClose para cerrar el formulario después de una actualización exitosa
-      onClose();
+      onUpdate(); // Llamar a la función onUpdate para actualizar la lista de Manders
+      onClose(); // Llamar a la función onClose para cerrar el formulario después de una actualización exitosa
 
     } catch (error) {
       setMessage('Error updating Mander. Please try again.');
@@ -75,6 +74,12 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
       )}
       <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
         {/* Campos para la imagen */}
+        {currentImage && (
+          <div className="mb-4">
+            <p className="font-bold mb-2">Current Image:</p>
+            <img src={currentImage} alt="Current Mander Image" className="w-full h-auto" />
+          </div>
+        )}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_mander">
             Image:
@@ -169,13 +174,10 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
           </label>
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
-        >
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
           Update Mander
         </button>
-        <button type="reset" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-        onClick={onClose}
-        >
+        <button type="reset" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2" onClick={onClose}>
           Cancel
         </button>
       </form>
