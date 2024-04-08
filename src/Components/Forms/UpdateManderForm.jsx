@@ -12,10 +12,9 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
   const [isvalidatemander, setIsvalidatemander] = useState(false);
   const [message, setMessage] = useState('');
   const [userIdUser, setUserIdUser] = useState('');
-  const [currentImage, setCurrentImage] = useState(null); // Agregar estado para almacenar la imagen actual
+  const [currentImage, setCurrentImage] = useState(null);
 
   useEffect(() => {
-    // Obtener los datos del mandadero al cargar el componente
     axios.get(`${apiUrl}/api/mander/${manderId}`)
       .then(response => {
         const manderData = response.data;
@@ -26,43 +25,65 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
         setIsactivemander(manderData.isactive_mander);
         setIsvalidatemander(manderData.isvalidate_mander);
         setUserIdUser(manderData.user_id_user);
-        setCurrentImage(manderData.image_mander); // Actualizar el estado de la imagen actual
+        setCurrentImage(manderData.image_mander);
       })
       .catch(error => {
         console.error('Error fetching Mander data:', error);
       });
   }, [manderId]);
 
+  const handleChangeImage = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCurrentImage(reader.result);
+    };
+    reader.readAsDataURL(selectedImage);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     try {
       const formData = new FormData();
       formData.append('user_id_user', userIdUser);
-      formData.append('image_mander', image);
       formData.append('address_mander', address);
       formData.append('cc_mander', cc);
       formData.append('ishavecar_mander', ishavecar);
       formData.append('ishavemoto_mander', ishavemoto);
       formData.append('isactive_mander', isactivemander);
       formData.append('isvalidate_mander', isvalidatemander);
+      
+      // Si el usuario selecciona una nueva imagen, se adjunta al formData
+    if (image) {
+      formData.append('image_mander', image);
+    } else if (currentImage) { // Si no se selecciona una nueva imagen pero hay una imagen actual, se convierte en un archivo y se envía
+      // Convertir la imagen actual en un archivo
+      const response = await fetch(currentImage);
+      const blob = await response.blob();
+      const file = new File([blob], 'current_image.jpg');
 
+      formData.append('image_mander', file);
+    }
+  
       await axios.put(`${apiUrl}/api/mander/${manderId}/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Especificar que se envía una imagen
+          'Content-Type': 'multipart/form-data',
         },
       });
-
+  
       setMessage('Mander updated successfully.');
-
-      onUpdate(); // Llamar a la función onUpdate para actualizar la lista de Manders
-      onClose(); // Llamar a la función onClose para cerrar el formulario después de una actualización exitosa
-
+  
+      onUpdate();
+      onClose();
     } catch (error) {
       setMessage('Error updating Mander. Please try again.');
       console.error('Error updating Mander:', error);
     }
   };
+  
 
   return (
     <div className="container mx-auto">
@@ -73,27 +94,33 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
         </div>
       )}
       <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
-        {/* Campos para la imagen */}
-        {currentImage && (
+        <div className="flex flex-col mb-4">
+          {currentImage && (
+            <div className="mb-4">
+              <p className="font-bold mb-2">Avatar:</p>
+              <img src={currentImage} alt="Mander Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
+            </div>
+          )}
+          {image && !currentImage && (
+            <div className="mb-4">
+              <p className="font-bold mb-2">Selected Image:</p>
+              <img src={URL.createObjectURL(image)} alt="Selected Image" className="w-24 h-24 mb-2 object-cover rounded-full" />
+            </div>
+          )}
           <div className="mb-4">
-            <p className="font-bold mb-2">Current Image:</p>
-            <img src={currentImage} alt="Current Mander Image" className="w-full h-auto" />
+            <label htmlFor="image" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Edit
+            </label>
+            <input
+              id="image"
+              type="file"
+              className="hidden"
+              onChange={handleChangeImage}
+              accept="image/*"
+            />
           </div>
-        )}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_mander">
-            Image:
-          </label>
-          <input
-            id="image_mander"
-            type="file"
-            className="w-full px-3 py-2 border rounded-md"
-            onChange={(event) => setImage(event.target.files[0])}
-            accept="image/*"
-          />
         </div>
 
-        {/* Campos para el mandadero */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cc_mander">
             Document:

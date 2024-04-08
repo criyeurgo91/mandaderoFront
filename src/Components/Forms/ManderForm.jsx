@@ -8,6 +8,7 @@ function ManderForm({ onCreate, onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
@@ -146,6 +147,15 @@ function ManderForm({ onCreate, onClose }) {
     }
   };
 
+  const handleChangeImage = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+
+    // Mostrar la vista previa de la imagen
+    const imageUrl = URL.createObjectURL(selectedImage);
+    setPreviewImage(imageUrl);
+  };
+
   return (
     <div className="container mx-auto">
       
@@ -245,19 +255,23 @@ function ManderForm({ onCreate, onClose }) {
           </label>
         </div>
 
-        {/* Campos para la imagen */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_mander">
-            Image:
-          </label>
-          <input
-            id="image_mander"
-            type="file"
-            className="w-full px-3 py-2 border rounded-md"
-            onChange={(event) => setImage(event.target.files[0])}
-            accept="image/*"
-          />
-        </div>
+        {/* Campo para la imagen */}
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_mander">
+          Image:
+        </label>
+        <input
+          id="image_mander"
+          type="file"
+          className="w-full px-3 py-2 border rounded-md"
+          onChange={handleChangeImage}
+          accept="image/*"
+        />
+        {/* Vista previa de la imagen */}
+        {previewImage && (
+          <img src={previewImage} alt="Preview" className="w-24 h-24 mb-4 mt-4 object-cover rounded-full" style={{ maxHeight: '200px' }} />
+        )}
+      </div>
 
         {/* Campos para el mandadero */}
         <div className="mb-4">

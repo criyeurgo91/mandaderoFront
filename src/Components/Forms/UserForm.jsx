@@ -7,6 +7,7 @@ function UserForm({ onCreate, onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
@@ -52,6 +53,7 @@ function UserForm({ onCreate, onClose }) {
       setEmail('');
       setPassword('');
       setImage(null);
+      setPreviewImage(null);
       setName('');
       setLastname('');
       setPhone('');
@@ -89,6 +91,12 @@ function UserForm({ onCreate, onClose }) {
     }else{
       setErrorEmail('')
     }
+  };
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+    setPreviewImage(URL.createObjectURL(selectedImage)); 
   };
 
   const handleChangePhone = (event) => {
@@ -153,9 +161,12 @@ function UserForm({ onCreate, onClose }) {
             id="image"
             type="file"
             className="w-full px-3 py-2 border rounded-md"
-            onChange={(event) => setImage(event.target.files[0])}
+            onChange={handleImageChange}
             accept="image/*"
           />
+          {previewImage && (
+            <img src={previewImage} alt="Preview" className="w-24 h-24 mb-4 mt-4 object-cover rounded-full" />
+          )}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">

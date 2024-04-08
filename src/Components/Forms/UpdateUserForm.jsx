@@ -5,6 +5,7 @@ import apiUrl from '../../config/apiConfig';
 function UpdateUserForm({ userId, onUpdate, onClose }) {
   const [user, setUser] = useState(null);
   const [image, setImage] = useState(null);
+  const [newImage, setNewImage] = useState(null)
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState(''); 
   const [phone, setPhone] = useState('');
@@ -24,6 +25,9 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         setLastname(response.data.lastname_user);
         setPhone(response.data.phone_user);
         setIsMander(response.data.ismander_user);
+        if (response.data.image_user) {
+          setImage(response.data.image_user);
+        }
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -50,8 +54,8 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
       };
 
       // Si se seleccionó una nueva imagen, agregarla a los datos del usuario
-      if (image) {
-        userData.image_user = image;
+      if (newImage) {
+        userData.image_user = newImage;
       }
 
       const formData = new FormData();
@@ -84,9 +88,9 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
       )}
       {user && (
         <form onSubmit={handleSubmit}>
-          {/* Mantenemos la lógica para mostrar la imagen actual */}
-          {user.image_user && (
-            <img src={user.image_user} alt="User Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
+         {/* Mantenemos la lógica para mostrar la imagen actual */}
+         {image && (
+            <img src={image} alt="User Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
           )}
           {/* Agregamos el botón para editar la imagen si se desea reemplazar */}
           <div className="mb-4">
