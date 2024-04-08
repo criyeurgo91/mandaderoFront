@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
-const VehicleForm = ({onCreate,onClose}) => {
+const VehicleForm = ({manderId,onCreate,onClose}) => {
   const [formData, setFormData] = useState({
     image_vehicle: null,
     brand_vehicle: "",
@@ -20,13 +20,14 @@ const VehicleForm = ({onCreate,onClose}) => {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/user/`);
-        const users = response.data;
-        if (users.length > 0) {
-          const userId = users[0].id_user; // Obtener el ID del primer usuario (puedes ajustar esto según tu lógica)
-          setUserId(userId); // Guardar el ID del usuario
+        // Realizar la lógica para obtener el userId aquí...
+        const response = await axios.get(`${apiUrl}/api/user/${manderId}`);
+        const user = response.data;
+        if (user) {
+          const userId = user.id_user;
+          setUserId(userId);
         } else {
-          console.error('No users found.');
+          console.error('No user found.');
         }
       } catch (error) {
         console.error('Error:', error);
@@ -34,7 +35,7 @@ const VehicleForm = ({onCreate,onClose}) => {
     };
 
     fetchUserId();
-  }, []);
+  }, [manderId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,8 +68,8 @@ const VehicleForm = ({onCreate,onClose}) => {
       alert('Por favor, complete todos los campos correctamente antes de enviar.');
       return;
     }
-    if (!userId) {
-      console.error('No userId available.');
+    if (!manderId) {
+      console.error('No manderId available.');
       return;
     }
 
@@ -80,7 +81,7 @@ const VehicleForm = ({onCreate,onClose}) => {
     formDataToSend.append('color_vehicle', formData.color_vehicle);
     formDataToSend.append('type_vehicle', formData.type_vehicle);
     formDataToSend.append('isverified_vehicle', formData.isverified_vehicle);
-    formDataToSend.append('user_id_user', userId);
+    formDataToSend.append('user_id_user', manderId)
 
     try {
       setLoading(true);
