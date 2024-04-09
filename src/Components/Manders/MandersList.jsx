@@ -91,17 +91,22 @@ function MandersList() {
     setShowCreateForm(false);
   };
 
-  const handleCreateVehicle = () => {
-    setShowVehicleForm(true); 
+  const handleCreateVehicle = (manderId) => {
+    if (manderId) {
+      setSelectedMander(manderId);
+      setShowVehicleForm(true); 
+    } else {
+      // Mostrar algún tipo de mensaje de error o manejar de otra manera cuando manderId es null
+    }
   };
 
   const handleCreateDocument = () => {
     setShowDocumentForm(true); 
   };
 
-  const handleShowDetail = (manderId,userId) => { // Cambios aquí para almacenar el ID del mander seleccionado
+  const handleShowDetail = (manderId) => { 
     setShowDetail(true); 
-    setDetailManderId(manderId); // Almacena el ID del mander seleccionado
+    setDetailManderId(manderId); 
   };
 
 

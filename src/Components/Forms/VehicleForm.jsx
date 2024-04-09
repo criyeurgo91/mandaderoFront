@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
-const VehicleForm = ({manderId,onCreate,onClose}) => {
+const VehicleForm = ({ manderId, onCreate, onClose }) => {
   const [formData, setFormData] = useState({
     image_vehicle: null,
     brand_vehicle: "",
@@ -11,30 +11,24 @@ const VehicleForm = ({manderId,onCreate,onClose}) => {
     color_vehicle: "",
     type_vehicle: null,
     isverified_vehicle: false,
+    user_id_user: manderId // Asignando el ID del mander al formulario
   });
 
   const [loading, setLoading] = useState(false);
   const [plateError, setPlateError] = useState('');
-  const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
+  const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
 
   useEffect(() => {
-    const fetchUserId = async () => {
+    const fetchUserData = async () => {
       try {
-        // Realizar la lógica para obtener el userId aquí...
         const response = await axios.get(`${apiUrl}/api/user/${manderId}`);
-        const user = response.data;
-        if (user) {
-          const userId = user.id_user;
-          setUserId(userId);
-        } else {
-          console.error('No user found.');
-        }
+        setUser(response.data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching user data:', error);
       }
     };
 
-    fetchUserId();
+    fetchUserData();
   }, [manderId]);
 
   const handleInputChange = (e) => {
@@ -68,20 +62,11 @@ const VehicleForm = ({manderId,onCreate,onClose}) => {
       alert('Por favor, complete todos los campos correctamente antes de enviar.');
       return;
     }
-    if (!manderId) {
-      console.error('No manderId available.');
-      return;
-    }
 
     const formDataToSend = new FormData();
-    formDataToSend.append('image_vehicle', formData.image_vehicle);
-    formDataToSend.append('brand_vehicle', formData.brand_vehicle);
-    formDataToSend.append('plate_vehicle', formData.plate_vehicle);
-    formDataToSend.append('model_vehicle', formData.model_vehicle);
-    formDataToSend.append('color_vehicle', formData.color_vehicle);
-    formDataToSend.append('type_vehicle', formData.type_vehicle);
-    formDataToSend.append('isverified_vehicle', formData.isverified_vehicle);
-    formDataToSend.append('user_id_user', manderId)
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, value);
+    });
 
     try {
       setLoading(true);
@@ -95,12 +80,13 @@ const VehicleForm = ({manderId,onCreate,onClose}) => {
         color_vehicle: "",
         type_vehicle: null,
         isverified_vehicle: false,
+        user_id_user: manderId // Restaurando el ID del mander al formulario después del envío
       });
       setLoading(false);
       alert('Formulario enviado exitosamente');
 
-      onCreate()
-      onClose()
+      onCreate();
+      onClose();
 
     } catch (error) {
       console.error('Error:', error);
