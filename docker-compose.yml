@@ -4,10 +4,9 @@ services:
   react:
     build: .
     ports:
-        - "80:80"
-    volumes:
-      - ./dist:/usr/share/nginx/html
+      - "80:80"
     networks:
-        - mynetwork
+      - mynetwork
+
 networks:
   mynetwork:
