@@ -7,30 +7,30 @@ const DetailMander = ({ manderId, onCreate, onClose }) => {
   const [documentData, setDocumentData] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
 
-  // Función para obtener los datos del mander, usuario, documento y vehículo
   const fetchData = async () => {
     try {
       const manderResponse = await fetch(`${apiUrl}/api/mander/${manderId}`);
       const manderData = await manderResponse.json();
       setManderData(manderData);
-
-      const userResponse = await fetch(`${apiUrl}/api/user/${manderData.user_id_user}`);
-      const userData = await userResponse.json();
+  
+      const userDataResponse = await fetch(`${apiUrl}/api/user/${manderData.user_id_user}`);
+      const userData = await userDataResponse.json();
       setUserData(userData);
-
-      if (userData){
-      const documentResponse = await fetch(`${apiUrl}/api/document/?user_id_user=${userData.id_user}`);
+  
+      // Obtener documentos específicos para este mander
+      const documentResponse = await fetch(`${apiUrl}/api/document/?user_id_user=${manderData.user_id_user}`);
       const documentData = await documentResponse.json();
       setDocumentData(documentData);
-
-      const vehicleResponse = await fetch(`${apiUrl}/api/vehicle/?user_id_user=${userData.id_user}`);
+  
+      // Obtener vehículos específicos para este mander
+      const vehicleResponse = await fetch(`${apiUrl}/api/vehicle/?user_id_user=${manderData.user_id_user}`);
       const vehicleData = await vehicleResponse.json();
       setVehicleData(vehicleData);
-      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  
 
   useEffect(() => {
     const fetchDataAndCreate = async () => {
