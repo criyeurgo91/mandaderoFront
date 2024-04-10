@@ -17,6 +17,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [plateError, setPlateError] = useState('');
   const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
+  const [previewImage, setPreviewImage] = useState(null)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -50,11 +51,14 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setPreviewImage(URL.createObjectURL(file));
     setFormData({
       ...formData,
       image_vehicle: file
     });
   };
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,18 +126,18 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
   ];
 
   return (
-    <div className="bg-slate-500 min-h-screen flex justify-center items-center">
-      <div className="max-w-md w-full mx-auto p-4">
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
+      <div>
+        <div>
           <h1 className="text-2xl text-center font-bold mb-4">Form Vehicles</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Type:</label>
+              <label className="block text-white text-sm font-bold mb-2">Type:</label>
               <select
                 name="type_vehicle"
                 value={formData.type_vehicle}
                 onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
                 <option value="">Select Type</option>
                 <option value="car" className="hover:bg-gray-100 cursor-pointer">Carro</option>
@@ -142,12 +146,12 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Brand:</label>
+              <label className="block text-white text-sm font-bold mb-2">Brand:</label>
               <select
                 name="brand_vehicle"
                 value={formData.brand_vehicle || ""}
                 onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
                 <option value="">Seleciona la Marca</option>
                 {vehicleBrandsToShow.map((brand, index) => (
@@ -158,23 +162,23 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Plate:</label>
+              <label className="block text-white text-sm font-bold mb-2">Plate:</label>
               <input
                 type="text"
                 name="plate_vehicle"
                 value={formData.plate_vehicle || ""}
                 onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
               />
               {plateError && <p className="text-red-500 text-xs italic">{plateError}</p>}
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Model:</label>
+              <label className="block text-white text-sm font-bold mb-2">Model:</label>
               <select
                 name="model_vehicle"
                 value={formData.model_vehicle || ""}
                 onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
                 <option value="">Select Model</option>
                 {years.map((year) => (
@@ -185,12 +189,12 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Color:</label>
+              <label className="block text-white text-sm font-bold mb-2">Color:</label>
               <select
                 name="color_vehicle"
                 value={formData.color_vehicle || ""}
                 onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
                 {colors.map((color, index) => (
                   <option key={index} value={color}>
@@ -200,25 +204,26 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+              <label className="block text-white text-sm font-bold mb-2">Image:</label>
               <input
                 type="file"
                 name="image_vehicle"
                 onChange={handleFileChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
+              {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
             </div>
             <div className="flex items-center justify-between">
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 {loading ? 'Loading...' : 'Submit'}
               </button>
               <button
           type="reset"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={onClose}
         >
           Cancel

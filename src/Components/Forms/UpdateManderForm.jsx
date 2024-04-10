@@ -56,11 +56,10 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
       formData.append('isactive_mander', isactivemander);
       formData.append('isvalidate_mander', isvalidatemander);
       
-      // Si el usuario selecciona una nueva imagen, se adjunta al formData
+      
     if (image) {
       formData.append('image_mander', image);
-    } else if (currentImage) { // Si no se selecciona una nueva imagen pero hay una imagen actual, se convierte en un archivo y se envía
-      // Convertir la imagen actual en un archivo
+    } else if (currentImage) {
       const response = await fetch(currentImage);
       const blob = await response.blob();
       const file = new File([blob], 'current_image.jpg');
@@ -86,7 +85,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
   
 
   return (
-    <div className="container mx-auto">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-4 text-center">Update Mander</h1>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
@@ -108,7 +107,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
             </div>
           )}
           <div className="mb-4">
-            <label htmlFor="image" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <label htmlFor="image" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Edit
             </label>
             <input
@@ -121,8 +120,8 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cc_mander">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="cc_mander">
             Document:
           </label>
           <input
@@ -134,8 +133,8 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="addresss_mander">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="addresss_mander">
             Address:
           </label>
           <input
@@ -158,7 +157,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={ishavemoto}
               onChange={(event) => setIshavemoto(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is have a Bike?</span>
+            <span className="ml-2 text-white">Is have a Bike?</span>
           </label>
         </div>
         <div className="mb-4">
@@ -171,7 +170,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={ishavecar}
               onChange={(event) => setIshavecar(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is have a Car?</span>
+            <span className="ml-2 text-white">Is have a Car?</span>
           </label>
         </div>
         <div className="mb-4">
@@ -184,7 +183,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={isactivemander}
               onChange={(event) => setIsactivemander(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Active?</span>
+            <span className="ml-2 text-white">Is Active?</span>
           </label>
         </div>
         <div className="mb-4">
@@ -197,14 +196,14 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={isvalidatemander}
               onChange={(event) => setIsvalidatemander(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Validated?</span>
+            <span className="ml-2 text-white">Is Validated?</span>
           </label>
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
+        <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
           Update Mander
         </button>
-        <button type="reset" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2" onClick={onClose}>
+        <button type="reset" className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2" onClick={onClose}>
           Cancel
         </button>
       </form>

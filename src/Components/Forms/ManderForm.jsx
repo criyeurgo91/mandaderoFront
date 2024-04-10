@@ -28,7 +28,7 @@ function ManderForm({ onCreate, onClose }) {
 
 
   useEffect(() => {
-    // Aquí puedes realizar cualquier acción que necesites cuando se monte el componente
+    
   }, []);
 
   const handleSubmit = async (event) => {
@@ -38,12 +38,12 @@ function ManderForm({ onCreate, onClose }) {
       const accountResponse = await axios.post(`${apiUrl}/api/account/`, {
         email_account: email,
         password_account: password,
-        isadmin_account: isAdmin ? isAdmin : false, // Utiliza la variable 'isAdmin' directamente
+        isadmin_account: isAdmin ? isAdmin : false, 
       });
 
       const accountId = accountResponse.data.id_account;
 
-      // Crear un objeto FormData para el user
+      
       const formData = new FormData();
       formData.append('account_id_account', accountId);
       formData.append('image_user', image);
@@ -54,25 +54,26 @@ function ManderForm({ onCreate, onClose }) {
 
       const userResponse = await axios.post(`${apiUrl}/api/user/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+          'Content-Type': 'multipart/form-data', 
         },
       });
 
       const userId = userResponse.data.id_user
 
-      //crear un objeto para el mander
+      
       const formDataMander = new FormData()
       formDataMander.append('user_id_user', userId)
       formDataMander.append('image_mander', image)
       formDataMander.append('ishavecar_mander', ishavecar)
       formDataMander.append('ishavemoto_mander', ishavemoto)
       formDataMander.append('isactive_mander', isactivemander)
+      formDataMander.append('isvalidate_mander', isvalidatemander)
       formDataMander.append('address_mander', address)
       formDataMander.append('cc_mander', cc)
 
       const manderResponse = await axios.post(`${apiUrl}/api/mander/`, formDataMander, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Indicar que se envía una imagen
+          'Content-Type': 'multipart/form-data', 
         },
       });
 
@@ -80,7 +81,7 @@ function ManderForm({ onCreate, onClose }) {
 
       setMessage('Mander created successfully.');
 
-      // Limpiar los campos después de enviar el formulario
+      
       setEmail('');
       setPassword('');
       setImage(null);
@@ -95,12 +96,7 @@ function ManderForm({ onCreate, onClose }) {
       setIsvalidatemander(false)
       setIsactivemander(false)
 
-      
-      
-      // Llamar a la función onCreate para actualizar la lista de usuarios
       onCreate();
-
-      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
       onClose();
 
     } catch (error) {
@@ -151,13 +147,13 @@ function ManderForm({ onCreate, onClose }) {
     const selectedImage = event.target.files[0];
     setImage(selectedImage);
 
-    // Mostrar la vista previa de la imagen
+    
     const imageUrl = URL.createObjectURL(selectedImage);
     setPreviewImage(imageUrl);
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
       
       <h1 className="text-3xl font-bold mb-4 text-center">Crear Mander</h1>
       {message && (
@@ -168,8 +164,8 @@ function ManderForm({ onCreate, onClose }) {
       <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
 
         {/* Campos para la cuenta */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
             Email:
           </label>
           <input
@@ -183,8 +179,8 @@ function ManderForm({ onCreate, onClose }) {
           />
           {errorEmail && <p className="text-red-500">{errorEmail}</p>}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
             Password:
           </label>
           <input
@@ -200,8 +196,8 @@ function ManderForm({ onCreate, onClose }) {
           {errorPassword && <p className="text-red-500">{errorPassword}</p>}
         </div>
         {/* Campos para el usuario */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Name:
           </label>
           <input
@@ -213,8 +209,8 @@ function ManderForm({ onCreate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastname">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="lastname">
             Lastname:
           </label>
           <input
@@ -226,8 +222,8 @@ function ManderForm({ onCreate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="phone">
             Phone:
           </label>
           <input
@@ -251,7 +247,7 @@ function ManderForm({ onCreate, onClose }) {
               checked={isMander}
               onChange={(event) => setIsMander(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Mander?</span>
+            <span className="ml-2 text-white">Is Mander?</span>
           </label>
         </div>
 
@@ -274,8 +270,8 @@ function ManderForm({ onCreate, onClose }) {
       </div>
 
         {/* Campos para el mandadero */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cc_mander">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="cc_mander">
             Document Number:
           </label>
           <input
@@ -287,8 +283,8 @@ function ManderForm({ onCreate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="addresss_mander">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="addresss_mander">
             Address:
           </label>
           <input
@@ -311,7 +307,7 @@ function ManderForm({ onCreate, onClose }) {
               checked={ishavemoto}
               onChange={(event) => setIshavemoto(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is have a Bike?</span>
+            <span className="ml-2 text-white">Is have a Bike?</span>
           </label>
         </div>
         <div className="mb-4">
@@ -324,7 +320,7 @@ function ManderForm({ onCreate, onClose }) {
               checked={ishavecar}
               onChange={(event) => setIshavecar(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is have a Car?</span>
+            <span className="ml-2 text-white">Is have a Car?</span>
           </label>
         </div>
         <div className="mb-4">
@@ -337,7 +333,7 @@ function ManderForm({ onCreate, onClose }) {
               checked={isactivemander}
               onChange={(event) => setIsactivemander(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Active?</span>
+            <span className="ml-2 text-white">Is Active?</span>
           </label>
         </div>
         <div className="mb-4">
@@ -350,14 +346,14 @@ function ManderForm({ onCreate, onClose }) {
               checked={isvalidatemander}
               onChange={(event) => setIsvalidatemander(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Validated?</span>
+            <span className="ml-2 text-white">Is Validated?</span>
           </label>
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
+        <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
           Crear Mander
         </button>
-        <button type="reset" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+        <button type="reset" className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
         onClick={onClose}>
           Cancel
         </button>

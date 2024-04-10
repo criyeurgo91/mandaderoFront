@@ -111,7 +111,7 @@ function MandersList() {
 
 
   return (
-    <div className="bg-white text- min-h-screen">
+    <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-5">Mander List</h2>
       {alertMessage && <div className="text-red-500">{alertMessage}</div>}
@@ -135,12 +135,12 @@ function MandersList() {
           <div className="flex mb-4">
             <input
               type="text"
-              className="w-1/2 border-2 border-gray-300 bg-white h-10 px-6 rounded-lg text-sm focus:outline-none"
+              className="w-1/2 border-2 border-gray-500 bg-black h-10 px-6 rounded-lg text-sm focus:outline-none"
               placeholder="Search..."
               onChange={handleSearchMander}
             />
             <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+              className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
               onClick={handleCreateMander}
             >
               New Mander
@@ -149,13 +149,13 @@ function MandersList() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             
             {filteredManders.map((mander, index) => (
-              <div key={index} className="bg-slate-300 rounded-lg shadow-md p-2 border border-black ">
+              <div key={index} className="bg-stone-700 rounded-lg shadow-md p-2 border border-black ">
                 <img
                   src={mander.image_mander}
                   alt={`Image of ${mander.user.name_user} ${mander.user.lastname_user}`}
-                  className="w-32 h-auto mb-2 rounded-lg mx-auto"
+                  className=" mt-2 w-auto h-36 mb-2 rounded-lg mx-auto "
                 />
-                <p className="text-sm mb-1"><span className="font-bold">User:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
+                <p className="text-sm mb-1"><span className="font-bold">Mander:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander.user.phone_user}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Has Car:</span> {mander.ishavecar_mander ? 'Yes' : 'No'}</p>
                 <p className="text-sm mb-1"><span className="font-bold">Has Motorcycle:</span> {mander.ishavemoto_mander ? 'Yes' : 'No'}</p>
@@ -165,25 +165,25 @@ function MandersList() {
                 <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander.cc_mander}</p>
                 
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
+                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
                   onClick={() => handleEditMander(mander.id_mander)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
+                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
                   onClick={() => handleCreateVehicle(mander.user.id_user)}
                 >
                   Vehicle
                 </button>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
+                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
                   onClick={() => handleCreateDocument()}
                 >
                   Document
                 </button>
                 <button
-    className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-2"
+    className="bg-green-900 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-2"
     onClick={() => handleShowDetail(mander.id_mander)}
 >
     Detail

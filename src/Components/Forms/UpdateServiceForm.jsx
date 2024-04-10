@@ -1,11 +1,12 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
 function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
   const [name, setName] = useState('');
   const [detail, setDetail] = useState('');
-  const [image, setImage] = useState(null); // Nuevo estado para manejar la imagen
+  const [image, setImage] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -17,6 +18,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
       const response = await axios.get(`${apiUrl}/api/service/${serviceId}`);
       setName(response.data.name_service);
       setDetail(response.data.detail_service);
+      setCurrentImage(response.data.image_service);
     } catch (error) {
       console.error('Error fetching service data:', error);
     }
@@ -29,7 +31,16 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
       const formData = new FormData();
       formData.append('name_service', name);
       formData.append('detail_service', detail);
-      formData.append('image_service', image); // Agregar la imagen al FormData
+      
+      if (image) {
+        formData.append('image_service', image);
+      } else if (currentImage) {
+        const response = await fetch(currentImage);
+        const blob = await response.blob();
+        const file = new File([blob], 'current_image.jpg');
+  
+        formData.append('image_service', file);
+      }
 
       const response = await axios.put(`${apiUrl}/api/service/${serviceId}/`, formData);
 
@@ -45,7 +56,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
   };
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
       <h2 className="text-lg font-semibold mb-4">Update Service</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
@@ -53,8 +64,8 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
         </div>
       )}
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Name:
           </label>
           <input
@@ -66,8 +77,8 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="detail">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="detail">
             Detail:
           </label>
           <input
@@ -79,27 +90,44 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
             required
           />
         </div>
+        
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
-            Image:
-          </label>
-          <input
-            id="image"
-            type="file"
-            className="w-full px-3 py-2 border rounded-md"
-            onChange={(event) => setImage(event.target.files[0])}
-            accept="image/*"
-          />
+        {currentImage && !image && (
+        <div className="mb-4">
+          <img src={currentImage} alt="Current Image" className="mb-2" style={{ maxWidth: '50%' }} />
+          <p className="text-white text-sm">Current Image</p>
         </div>
+        )}
+        {image && (
+          <div className="mb-4">
+            <img src={URL.createObjectURL(image)} alt="Selected Image" className="mb-2" style={{ maxWidth: '50%' }} />
+            <p className="text-white text-sm">Selected Image</p>
+          </div>
+        )}
+        <label htmlFor="image" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Edit
+        </label>
+        <input
+          id="image"
+          type="file"
+          className="hidden"
+          onChange={(event) => {
+            const selectedImage = event.target.files[0];
+            setImage(selectedImage);
+            setCurrentImage(URL.createObjectURL(selectedImage));
+          }}
+          accept="image/*"
+        />
+      </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Update
         </button>
         <button
           type="reset"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={onClose}
         >
           Cancel

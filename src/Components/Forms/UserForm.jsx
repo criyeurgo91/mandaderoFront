@@ -114,7 +114,7 @@ function UserForm({ onCreate, onClose }) {
 
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-gray-400 rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
       <h2 className="text-lg font-semibold mb-4">Create User</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
@@ -122,8 +122,8 @@ function UserForm({ onCreate, onClose }) {
         </div>
       )}
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
             Email:
           </label>
           <input
@@ -137,8 +137,8 @@ function UserForm({ onCreate, onClose }) {
           />
           {errorEmail && <p className="text-red-500">{errorEmail}</p>}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
             Password:
           </label>
           <input
@@ -153,8 +153,8 @@ function UserForm({ onCreate, onClose }) {
           />
           {errorPassword && <p className="text-red-500">{errorPassword}</p>}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+        <div className="mb-4 ">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="image">
             Image:
           </label>
           <input
@@ -168,8 +168,8 @@ function UserForm({ onCreate, onClose }) {
             <img src={previewImage} alt="Preview" className="w-24 h-24 mb-4 mt-4 object-cover rounded-full" />
           )}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Name:
           </label>
           <input
@@ -181,8 +181,8 @@ function UserForm({ onCreate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastname">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="lastname">
             Lastname:
           </label>
           <input
@@ -194,8 +194,8 @@ function UserForm({ onCreate, onClose }) {
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="phone">
             Phone:
           </label>
           <input
@@ -216,18 +216,18 @@ function UserForm({ onCreate, onClose }) {
               checked={isAdmin}
               onChange={(event) => setIsAdmin(event.target.checked)}
             />
-            <span className="ml-2 text-gray-700">Is Admin?</span>
+            <span className="ml-2 text-white">Is Admin?</span>
           </label>
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Submit
         </button>
         <button
           type="reset"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={onClose}
         >
           Cancel

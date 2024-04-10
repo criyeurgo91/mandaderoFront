@@ -21,11 +21,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-primary-900 h-full border-e-4 border-teal-300 flex flex-col justify-center">
+    <div className="bg-black h-full border-e-4 border-black flex flex-col justify-center">
       <nav className="flex flex-col gap-3 place-self-center justify-between">
         <Link
           to="/Admin"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-stone-500"
         >
           <RiHome4Line />
         </Link>
@@ -39,28 +39,28 @@ const Sidebar = () => {
 
         <Link
           to="users"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500"
         >
           <RiUserSearchLine />
         </Link>
 
         <Link
-          to="request"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
-        >
-          <RiFileTextLine />
-        </Link>
-
-        <Link
           to="manders"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500"
         >
           <RiSteering2Line />
         </Link>
 
         <Link
+          to="request"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500"
+        >
+          <RiFileTextLine />
+        </Link>
+
+        <Link
           to="services"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500"
         >
           <RiToolsLine />
         </Link>
@@ -83,7 +83,7 @@ const Sidebar = () => {
 
       <div
         onClick={logout}
-        className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300 cursor-pointer"
+        className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500 cursor-pointer"
       >
         <RiLogoutBoxRLine />
       </div>

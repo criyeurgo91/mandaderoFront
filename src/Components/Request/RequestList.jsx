@@ -3,6 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../config/apiConfig'
 
 
+
 function RequestList (){
 
     const [request, setRequest] = useState([]);
@@ -31,19 +32,19 @@ function RequestList (){
 
       return (
 
-        <div className="bg-white text-black min-h-screen">
+        <div className="bg-stone-900 text-white min-h-screen">
           <div className="container mx-auto px-4 py-8">
             <h1 className="text-2xl font-bold mb-4">Request List</h1>
             <input
                     type="text"
                     placeholder="Search..."
-                    className="w-1/2 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                    className="w-1/2 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
                     onChange={handleSearch}
                   />
             
                     </div>
-                    <table className="w-full bg-white shadow-md rounded my-6">
-                      <thead className='bg-gray-200'>
+                    <table className="w-full border-collapse border border-black custom-table">
+                      <thead className='bg-stone-600'>
                         <tr>
                         
                     
@@ -54,7 +55,7 @@ function RequestList (){
                       </thead>
                       <tbody>
                         {filteredRequest.map(request => (
-                          <tr key={request.id_service} className='border border-gray-300'>
+                          <tr key={request.id_service} className='border border-black'>
                             <td className="border px-4 py-2">{request.detail_request}</td>
                             <td className="border px-4 py-2">{request.status_request}</td>
                             <td className="border px-4 py-2">

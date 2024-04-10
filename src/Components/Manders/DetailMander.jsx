@@ -50,7 +50,7 @@ const DetailMander = ({ manderId, onClose }) => {
   
 
   return (
-    <div className="bg-white text-black p-4 flex flex-wrap justify-between">
+    <div className="bg-stone-900 text-white p-4 flex flex-wrap justify-between">
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -75,6 +75,7 @@ const DetailMander = ({ manderId, onClose }) => {
                 <div className="space-y-4">
                   {vehicleData.map(vehicle => (
                     <div key={vehicle.id_vehicle} className="p-4 border border-gray-200 rounded-lg">
+                      <img src={vehicle.image_vehicle} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-44 h-auto mb-2 rounded-lg mx-auto" />
                       <p><span className="font-bold">Brand:</span> {vehicle.brand_vehicle}</p>
                       <p><span className="font-bold">Plate:</span> {vehicle.plate_vehicle}</p>
                       <p><span className="font-bold">Model:</span> {vehicle.model_vehicle}</p>
@@ -92,6 +93,7 @@ const DetailMander = ({ manderId, onClose }) => {
                 <div className="space-y-4">
                   {documentData.map(document => (
                     <div key={document.id_document} className="p-4 border border-gray-200 rounded-lg">
+                      <img src={document.image_document} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-44 h-auto mb-2 rounded-lg mx-auto" />
                       <p><span className="font-bold">Type:</span> {document.type_document || 'Not available'}</p>
                       <p><span className="font-bold">Is Verified:</span> {document.isverified_document ? 'Yes' : 'No'}</p>
                     </div>

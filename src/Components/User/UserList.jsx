@@ -38,8 +38,8 @@ function UserList() {
     }
   };
 
-  const handleEdit = (user) => { // Recibe el objeto de usuario completo
-    setSelectedUser(user); // Establece el usuario seleccionado
+  const handleEdit = (user) => { 
+    setSelectedUser(user); 
     setShowUpdateForm(true);
   };
 
@@ -84,15 +84,15 @@ function UserList() {
   };
 
   return (
-    <div className="bg-white text- min-h-screen">
+    <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-5">User List</h2>
       {showUpdateForm ? (
-        <UpdateUserForm userId={selectedUser} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} /> // Cambiar a userId={selectedUser}
+        <UpdateUserForm userId={selectedUser} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} /> 
       ) : (
         <>
           {showCreateForm ? (
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-stone-900 rounded-lg shadow-md p-6">
               <UserForm onCreate={handleCreate} onClose={() => setShowCreateForm(false)} />
             </div>
           ) : (
@@ -100,20 +100,20 @@ function UserList() {
               <div className="flex mb-4">
                 <input
                   type="text"
-                  className="w-1/2 border-2 border-gray-700 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                  className="w-1/2 border-2 border-gray-700 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
                   placeholder="Search..."
                   onChange={handleSearch}
                 />
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+                  className="bg-green-950 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
                   onClick={handleCreateUser}
                 >
                   New User
                 </button>
               </div>
-              {alertMessage && <div className="text-red-500">{alertMessage}</div>}
+              {alertMessage && <div className="text-red-950">{alertMessage}</div>}
               <table className="w-full border-collapse border border-black custom-table">
-                <thead className="bg-gray-500">
+                <thead className="bg-stone-600">
                   <tr>
                     <th className="px-4 py-2 border">Email</th>
                     <th className="px-4 py-2 border">Name</th>
@@ -131,7 +131,7 @@ function UserList() {
                       <td className="border px-4 py-2">{user.phone_user}</td>
                       <td className="border px-4 py-2">
                         <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                          className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
                           onClick={() => handleEdit(user.id_user)}
                         >
                           Edit

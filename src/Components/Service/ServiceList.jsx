@@ -57,7 +57,7 @@ function ServiceList() {
   );
 
   return (
-    <div className="bg-white text-black min-h-screen">
+    <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">Service List</h1>
         {showUpdateForm && (
@@ -74,18 +74,18 @@ function ServiceList() {
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="w-1/2 border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                    className="w-1/2 border-2 border-gray-500 bg-black text-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                     onChange={handleSearch}
                   />
                   <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2 flex items-center"
+                    className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2 flex items-center"
                     onClick={handleCreateService}
                   >
                     <FiPlus className="mr-2" /> New Service
                   </button>
                 </div>
-                <table className="w-full bg-white shadow-md rounded my-6">
-                  <thead className='bg-gray-200'>
+                <table className="w-full bg-stone-900 shadow-md rounded my-6">
+                  <thead className='bg-stone-600'>
                     <tr>
                     
                       <th className="border px-4 py-2">Name</th>
@@ -105,15 +105,15 @@ function ServiceList() {
                         <img src={service.image_service} alt={service.name_service} className="w-16 h-16 object-cover" />
                           )}
                        </td>
-                        <td className="border px-4 py-2 flex justify-end">
+                        <td className=" px-8 py-2  items-center">
                           <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-4"
                             onClick={() => handleEditService(service.id_service)}
                           >
                             Edit
                           </button>
                           <button
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                            className="bg-red-900 hover:bg-red-700 text-white font-bold py-1 px-2 rounded "
                             onClick={() => handleDeleteService(service.id_service)}
                           >
                             Delete

@@ -4,6 +4,7 @@ import apiUrl from '../../config/apiConfig';
 
 function DocumentForm({ onCreate, onClose }) {
   const [imageDocument, setImageDocument] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null)
   const [isDocumentVehicle, setIsDocumentVehicle] = useState(false);
   const [isVerifiedDocument, setIsVerifiedDocument] = useState(false);
   const [typeDocument, setTypeDocument] = useState(null);
@@ -23,6 +24,12 @@ function DocumentForm({ onCreate, onClose }) {
     } catch (error) {
       console.error('Error fetching users:', error);
     }
+  };
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    setImageDocument(selectedImage);
+    setPreviewImage(URL.createObjectURL(selectedImage));
   };
 
   const handleSubmit = async (event) => {
@@ -47,6 +54,7 @@ function DocumentForm({ onCreate, onClose }) {
 
      
       setImageDocument(null);
+      setPreviewImage(null);
       setIsDocumentVehicle(false);
       setIsVerifiedDocument(false);
       setTypeDocument('');
@@ -66,7 +74,7 @@ function DocumentForm({ onCreate, onClose }) {
   };
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
       <h2 className="text-lg font-semibold mb-4">Add Document</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
@@ -75,19 +83,20 @@ function DocumentForm({ onCreate, onClose }) {
       )}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_document">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="image_document">
             Document Image:
           </label>
           <input
             id="image_document"
             type="file"
             className="w-full px-3 py-2 border rounded-md"
-            onChange={(event) => setImageDocument(event.target.files[0])}
+            onChange={handleImageChange}
             required
           />
+          {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-white text-sm font-bold mb-2">
             Is Document Vehicle?
           </label>
           <input
@@ -98,7 +107,7 @@ function DocumentForm({ onCreate, onClose }) {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-white text-sm font-bold mb-2">
             Is Verified Document?
           </label>
           <input
@@ -108,8 +117,8 @@ function DocumentForm({ onCreate, onClose }) {
             onChange={(event) => setIsVerifiedDocument(event.target.checked)}
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type_document">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="type_document">
             Document Type:
           </label>
           <select
@@ -128,8 +137,8 @@ function DocumentForm({ onCreate, onClose }) {
             <option value="RECIBO">Recibo</option>
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dateverified_document">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="dateverified_document">
             Date Verified Document:
           </label>
           <input
@@ -140,8 +149,8 @@ function DocumentForm({ onCreate, onClose }) {
             onChange={(event) => setDateVerifiedDocument(event.target.value)}
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="user">
             User:
           </label>
           <select
@@ -161,13 +170,13 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Add Document
         </button>
         <button
           type="reset"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={onClose}
         >
           Cancel

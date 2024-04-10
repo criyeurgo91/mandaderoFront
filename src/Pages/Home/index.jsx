@@ -13,7 +13,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="bg-white text-black flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
+    <div className="bg-stone-900 text-white flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Home</h2>
       </div>
@@ -34,10 +34,10 @@ function Home() {
 
 function renderStatCard(title, value, icon) {
   return (
-    <div className="flex flex-col justify-center items-center p-6 bg-white rounded-lg shadow-md ">
+    <div className="flex flex-col justify-center items-center p-6 bg-black rounded-lg shadow-md ">
       <div className="text-3xl mb-2">{icon}</div>
       <p className="text-center font-semibold">{title}</p>
-      <p className="text-center text-gray-600">{value}</p>
+      <p className="text-center text-white">{value}</p>
     </div>
   );
 }
