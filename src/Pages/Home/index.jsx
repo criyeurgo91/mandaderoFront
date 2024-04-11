@@ -20,12 +20,12 @@ function Home() {
 
       {estadisticas && (
         <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg">
-          {renderStatCard("Usuarios Registrados en la App", estadisticas.total_users, <FaUser />)}
-          {renderStatCard("Mandaderos Registrados", estadisticas.total_manders, <FaUserSecret />)}
-          {renderStatCard("Solicitudes Realizadas", estadisticas.total_requests, <FaTasks />)}
-          {renderStatCard("Solicitudes Pendientes", estadisticas.pending_requests, <FaHourglassHalf />)}
-          {renderStatCard("Solicitudes en Proceso", estadisticas.processing_requests, <FaUserPlus />)}
-          {renderStatCard("Solicitudes Finalizadas", estadisticas.finished_requests, <FaCheckCircle />)}
+          {renderStatCard("Registered Users", estadisticas.total_users, <FaUser />)}
+          {renderStatCard("Registered Manders", estadisticas.total_manders, <FaUserSecret />)}
+          {renderStatCard("Requests Made", estadisticas.total_requests, <FaTasks />)}
+          {renderStatCard("Pending Requests", estadisticas.pending_requests, <FaHourglassHalf />)}
+          {renderStatCard("Requests in Progress", estadisticas.processing_requests, <FaUserPlus />)}
+          {renderStatCard("Completed Requests", estadisticas.finished_requests, <FaCheckCircle />)}
         </div>
       )}
     </div>

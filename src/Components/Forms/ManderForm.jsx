@@ -110,7 +110,7 @@ function ManderForm({ onCreate, onClose }) {
     setPassword(newPassword);
 
     if (newPassword.length < 8) {
-      setErrorPassword('La contraseña debe tener entre 8 y 20 caracteres.');
+      setErrorPassword('The password must be between 8 and 20 characters');
     }else{
       setErrorPassword('')
     } 
@@ -124,7 +124,7 @@ function ManderForm({ onCreate, onClose }) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(newEmail)) {
-      setErrorEmail("ingresa un correo electrónico válido");
+      setErrorEmail("Enter a valid email");
     }else{
       setErrorEmail('')
     }
@@ -137,7 +137,7 @@ function ManderForm({ onCreate, onClose }) {
     const phonePattern = /^\d{10}$/;
 
     if (!phonePattern.test(newphone)) {
-      setErrorPhone("ingresa un numero de telefono valido");
+      setErrorPhone("Enter a valid number phone");
     }else{
       setErrorPhone('')
     }
@@ -155,7 +155,7 @@ function ManderForm({ onCreate, onClose }) {
   return (
     <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
       
-      <h1 className="text-3xl font-bold mb-4 text-center">Crear Mander</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">Create Mander</h1>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
           {message}
@@ -171,6 +171,7 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="email"
             type="email"
+            placeholder='example@example.'
             className="w-full px-3 py-2 border rounded-md"
             value={email}
             onChange={handleChangeEmail}
@@ -203,6 +204,7 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="name"
             type="text"
+            placeholder='Enter your name'
             className="w-full px-3 py-2 border rounded-md"
             value={name}
             onChange={(event) => setName(event.target.value)}
@@ -216,6 +218,7 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="lastname"
             type="text"
+            placeholder='Enter your lastname'
             className="w-full px-3 py-2 border rounded-md"
             value={lastname}
             onChange={(event) => setLastname(event.target.value)}
@@ -229,6 +232,7 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="phone"
             type="text"
+            placeholder='Enter your number phone'
             className="w-full px-3 py-2 border rounded-md"
             value={phone}
             onChange={handleChangePhone}
@@ -247,13 +251,13 @@ function ManderForm({ onCreate, onClose }) {
               checked={isMander}
               onChange={(event) => setIsMander(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is Mander?</span>
+            <span className="ml-2 text-white">Mander</span>
           </label>
         </div>
 
         {/* Campo para la imagen */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image_mander">
+        <label className="block text-white text-sm font-bold mb-2" htmlFor="image_mander">
           Image:
         </label>
         <input
@@ -277,6 +281,7 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="cc_mander"
             type="text"
+            placeholder='Enter your number document'
             className="w-full px-3 py-2 border rounded-md"
             value={cc}
             onChange={(event) => setCc(event.target.value)}
@@ -290,6 +295,7 @@ function ManderForm({ onCreate, onClose }) {
           <input
             id="address_mander"
             type="text"
+            placeholder='Enter your address'
             className="w-full px-3 py-2 border rounded-md"
             value={address}
             onChange={(event) => setAddress(event.target.value)}
@@ -297,7 +303,11 @@ function ManderForm({ onCreate, onClose }) {
           />
         </div>
 
-        <div className="mb-4">
+        <div>
+        <span className='font-bold '>
+          Vehicle Type:
+        </span>
+        <div className="mb-4 mt-2">
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -307,7 +317,7 @@ function ManderForm({ onCreate, onClose }) {
               checked={ishavemoto}
               onChange={(event) => setIshavemoto(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is have a Bike?</span>
+            <span className="ml-2 text-white">Bike</span>
           </label>
         </div>
         <div className="mb-4">
@@ -320,10 +330,15 @@ function ManderForm({ onCreate, onClose }) {
               checked={ishavecar}
               onChange={(event) => setIshavecar(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is have a Car?</span>
+            <span className="ml-2 text-white">Car</span>
           </label>
         </div>
-        <div className="mb-4">
+        </div>
+        <div>
+          <span className='font-bold'>
+            Status:
+          </span>
+        <div className="mb-4 mt-2">
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -333,7 +348,7 @@ function ManderForm({ onCreate, onClose }) {
               checked={isactivemander}
               onChange={(event) => setIsactivemander(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is Active?</span>
+            <span className="ml-2 text-white">Active</span>
           </label>
         </div>
         <div className="mb-4">
@@ -346,17 +361,19 @@ function ManderForm({ onCreate, onClose }) {
               checked={isvalidatemander}
               onChange={(event) => setIsvalidatemander(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is Validated?</span>
+            <span className="ml-2 text-white">Validate</span>
           </label>
         </div>
-
+        </div>
+        <div className='flex justify-between items-center'>
         <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">
-          Crear Mander
+          Submit
         </button>
         <button type="reset" className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
         onClick={onClose}>
           Cancel
         </button>
+        </div>
       </form>
     </div>
   );

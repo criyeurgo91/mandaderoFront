@@ -45,9 +45,6 @@ const DetailMander = ({ manderId, onClose }) => {
       setLoading(false);
     }
   };
-  
-  
-  
 
   return (
     <div className="bg-stone-900 text-white p-4 flex flex-wrap justify-between">
@@ -57,16 +54,29 @@ const DetailMander = ({ manderId, onClose }) => {
         manderData && userData && (
           <>
             <div className="w-full md:w-1/2 lg:w-1/4 mb-4">
-              <img src={manderData.image_mander} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-32 h-auto mb-2 rounded-lg mx-auto" />
+              <img src={manderData.image_mander} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
               <div className="text-center">
                 <p className="text-lg font-bold">{userData.name_user} {userData.lastname_user}</p>
-                <p>{userData.phone_user}</p>
-                <p>{manderData.address_mander}</p>
-                <p>Has Car: {manderData.ishavecar_mander ? 'Yes' : 'No'}</p>
-                <p>Has Motorcycle: {manderData.ishavemoto_mander ? 'Yes' : 'No'}</p>
-                <p>Is Active: {manderData.isactive_mander ? 'Yes' : 'No'}</p>
-                <p>Is Validated: {manderData.isvalidate_mander ? 'Yes' : 'No'}</p>
                 <p>CC: {manderData.cc_mander}</p>
+                <span className='font-bold'>
+                  Phone:
+                </span>
+                <p>{userData.phone_user}</p>
+                <span className='font-bold'>
+                  Address:
+                </span>
+                <p>{manderData.address_mander}</p>
+                <span className='font-bold'>
+                  Vehicle Registered:
+                </span>
+                <p>Car: {manderData.ishavecar_mander ? 'Yes' : 'No'}</p>
+                <p>Bike: {manderData.ishavemoto_mander ? 'Yes' : 'No'}</p>
+                <span className='font-bold'>
+                  Status:
+                </span>
+                <p>Active: {manderData.isactive_mander ? 'Yes' : 'No'}</p>
+                <p>Validated: {manderData.isvalidate_mander ? 'Yes' : 'No'}</p>
+                
               </div>
             </div>
             <div className="w-full md:w-1/2 lg:w-1/4 mb-4">
@@ -75,7 +85,7 @@ const DetailMander = ({ manderId, onClose }) => {
                 <div className="space-y-4">
                   {vehicleData.map(vehicle => (
                     <div key={vehicle.id_vehicle} className="p-4 border border-gray-200 rounded-lg">
-                      <img src={vehicle.image_vehicle} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-44 h-auto mb-2 rounded-lg mx-auto" />
+                      <img src={vehicle.image_vehicle} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
                       <p><span className="font-bold">Brand:</span> {vehicle.brand_vehicle}</p>
                       <p><span className="font-bold">Plate:</span> {vehicle.plate_vehicle}</p>
                       <p><span className="font-bold">Model:</span> {vehicle.model_vehicle}</p>
@@ -93,9 +103,9 @@ const DetailMander = ({ manderId, onClose }) => {
                 <div className="space-y-4">
                   {documentData.map(document => (
                     <div key={document.id_document} className="p-4 border border-gray-200 rounded-lg">
-                      <img src={document.image_document} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-44 h-auto mb-2 rounded-lg mx-auto" />
+                      <img src={document.image_document} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
                       <p><span className="font-bold">Type:</span> {document.type_document || 'Not available'}</p>
-                      <p><span className="font-bold">Is Verified:</span> {document.isverified_document ? 'Yes' : 'No'}</p>
+                      <p><span className="font-bold">Verified:</span> {document.isverified_document ? 'Yes' : 'No'}</p>
                     </div>
                   ))}
                 </div>

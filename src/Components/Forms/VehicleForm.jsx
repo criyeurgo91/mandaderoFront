@@ -106,7 +106,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
 
   const vehicleBrandsBike = [
     'Yamaha',  'Kawasaki', 'Suzuki',  
-    'Honda', 'KTM',  'Suzuki ', 
+    'Honda', 'KTM',  'Suzuki ', 'Ducati',
     'Bajaj', 'Hero','Auteco','Akt','Victory','Tvs','Kymco','Pulsar',
   ];
 
@@ -114,15 +114,15 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
 
   const years = [];
   const currentYear = new Date().getFullYear();
-  for (let year = 1999; year <= currentYear; year++) {
+  for (let year = 1990; year <= currentYear; year++) {
     years.push(year);
   }
 
   const colors = [
-    "Selecciona el Color",
-    "Blanco", "Negro", "Gris", "Plata", "Rojo", "Azul", "Amarillo",
-    "Verde", "Naranja", "Marrón", "Beige", "Blanco Perla", "Negro Mate",
-    "Gris Oscuro", "Azul Marino", "Rojo Carmesí", "Amarillo Brillante","Multicolor",
+    
+    "White", "Black", "Gray", "Silver", "Red", "Blue", "Yellow",
+    "Green", "Orange", "Brown", "Beige", "Pearl White", "Matte Black",
+    "Dark Gray", "Navy Blue", "Crimson Red", "Bright Yellow", "Multicolor",
   ];
 
   return (
@@ -131,7 +131,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
         <div>
           <h1 className="text-2xl text-center font-bold mb-4">Form Vehicles</h1>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="mb-4 text_black">
               <label className="block text-white text-sm font-bold mb-2">Type:</label>
               <select
                 name="type_vehicle"
@@ -153,7 +153,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
-                <option value="">Seleciona la Marca</option>
+                <option value="">Select Brand</option>
                 {vehicleBrandsToShow.map((brand, index) => (
                   <option key={index} value={brand}>
                     {brand}
@@ -165,6 +165,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               <label className="block text-white text-sm font-bold mb-2">Plate:</label>
               <input
                 type="text"
+                placeholder='enter plate'
                 name="plate_vehicle"
                 value={formData.plate_vehicle || ""}
                 onChange={handleInputChange}
@@ -196,6 +197,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
+                <option value="">Select Color</option>
                 {colors.map((color, index) => (
                   <option key={index} value={color}>
                     {color}

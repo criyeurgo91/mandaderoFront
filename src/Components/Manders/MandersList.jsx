@@ -156,16 +156,23 @@ function MandersList() {
                   className=" mt-2 w-auto h-36 mb-2 rounded-lg mx-auto "
                 />
                 <p className="text-sm mb-1"><span className="font-bold">Mander:</span> {mander.user.name_user} {mander.user.lastname_user}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander.user.phone_user}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Has Car:</span> {mander.ishavecar_mander ? 'Yes' : 'No'}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Has Motorcycle:</span> {mander.ishavemoto_mander ? 'Yes' : 'No'}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Is Active:</span> {mander.isactive_mander ? 'Yes' : 'No'}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Is Validated:</span> {mander.isvalidate_mander ? 'Yes' : 'No'}</p>
-                <p className="text-sm mb-1"><span className="font-bold">Address:</span> {mander.address_mander}</p>
                 <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander.cc_mander}</p>
+                <p className="text-sm mb-1"><span className="font-bold">Address:</span> {mander.address_mander}</p>
+                <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander.user.phone_user}</p>
+                <div>
+                  <span className='font-bold'> Registered Vehicle:</span>
+                <p className="text-sm mb-1"><span className="font-bold">Car:</span> {mander.ishavecar_mander ? 'Yes' : 'No'}</p>
+                <p className="text-sm mb-1"><span className="font-bold">Bike:</span> {mander.ishavemoto_mander ? 'Yes' : 'No'}</p>
+                </div>
+                <div>
+                  <span className='font-bold'> Status:</span>
+                <p className="text-sm mb-1"><span className="font-bold">Active:</span> {mander.isactive_mander ? 'Yes' : 'No'}</p>
+                <p className="text-sm mb-1"><span className="font-bold">Validated:</span> {mander.isvalidate_mander ? 'Yes' : 'No'}</p>
+                </div>
+                
                 
                 <button
-                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2"
+                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2 mt-2"
                   onClick={() => handleEditMander(mander.id_mander)}
                 >
                   Edit

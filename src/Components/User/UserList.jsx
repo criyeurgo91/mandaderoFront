@@ -130,12 +130,14 @@ function UserList() {
                       <td className="border px-4 py-2">{user.lastname_user}</td>
                       <td className="border px-4 py-2">{user.phone_user}</td>
                       <td className="border px-4 py-2">
+                        <div className='flex justify-center'>
                         <button
-                          className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                          className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded "
                           onClick={() => handleEdit(user.id_user)}
                         >
                           Edit
                         </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

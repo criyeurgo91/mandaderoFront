@@ -146,8 +146,11 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
             required
           />
         </div>
-
-        <div className="mb-4">
+        <div>
+          <span className='font-bold'>
+            Type Vehicle:
+          </span>
+        <div className="mb-4 mt-2">
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -157,7 +160,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={ishavemoto}
               onChange={(event) => setIshavemoto(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is have a Bike?</span>
+            <span className="ml-2 text-white">Bike</span>
           </label>
         </div>
         <div className="mb-4">
@@ -170,10 +173,15 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={ishavecar}
               onChange={(event) => setIshavecar(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is have a Car?</span>
+            <span className="ml-2 text-white">Car</span>
           </label>
         </div>
-        <div className="mb-4">
+        </div>
+        <div>
+          <span className='font-bold'>
+            Status:
+          </span>
+        <div className="mb-4 mt-2">
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -183,7 +191,7 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={isactivemander}
               onChange={(event) => setIsactivemander(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is Active?</span>
+            <span className="ml-2 text-white">Active</span>
           </label>
         </div>
         <div className="mb-4">
@@ -196,8 +204,9 @@ function UpdateManderForm({ manderId, onUpdate, onClose }) {
               checked={isvalidatemander}
               onChange={(event) => setIsvalidatemander(event.target.checked)}
             />
-            <span className="ml-2 text-white">Is Validated?</span>
+            <span className="ml-2 text-white">Validated</span>
           </label>
+        </div>
         </div>
 
         <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2">

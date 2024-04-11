@@ -29,7 +29,7 @@ const HeaderComponent = () => {
         <div>
           <h1>
             <NavLink to="" className="text-xl font-bold">
-              Mandaderos
+              Dashboard
             </NavLink>
           </h1>
           <div className="text-sm mt-2">

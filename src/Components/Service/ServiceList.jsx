@@ -105,19 +105,14 @@ function ServiceList() {
                         <img src={service.image_service} alt={service.name_service} className="w-16 h-16 object-cover" />
                           )}
                        </td>
-                        <td className=" px-8 py-2  items-center">
+                        <td className=" flex justify-center items-center mt-6 ">
                           <button
                             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-4"
                             onClick={() => handleEditService(service.id_service)}
                           >
                             Edit
                           </button>
-                          <button
-                            className="bg-red-900 hover:bg-red-700 text-white font-bold py-1 px-2 rounded "
-                            onClick={() => handleDeleteService(service.id_service)}
-                          >
-                            Delete
-                          </button>
+                          
                         </td>
                       </tr>
                     ))}

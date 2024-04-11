@@ -97,7 +97,7 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">
-            Is Document Vehicle?
+            Document Vehicle
           </label>
           <input
             type="checkbox"
@@ -108,7 +108,7 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">
-            Is Verified Document?
+            Verified Document
           </label>
           <input
             type="checkbox"

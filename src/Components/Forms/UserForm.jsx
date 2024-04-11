@@ -73,7 +73,7 @@ function UserForm({ onCreate, onClose }) {
     setPassword(newPassword);
 
     if (newPassword.length < 8) {
-      setErrorPassword('La contraseña debe tener entre 8 y 20 caracteres.');
+      setErrorPassword('The password must be between 8 and 20 characters');
     }else{
       setErrorPassword('')
     } 
@@ -87,7 +87,7 @@ function UserForm({ onCreate, onClose }) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(newEmail)) {
-      setErrorEmail("ingresa un correo electrónico válido");
+      setErrorEmail("please enter a valid email");
     }else{
       setErrorEmail('')
     }
@@ -106,7 +106,7 @@ function UserForm({ onCreate, onClose }) {
     const phonePattern = /^\d{10}$/;
 
     if (!phonePattern.test(newphone)) {
-      setErrorPhone("ingresa un numero de telefono valido");
+      setErrorPhone("please enter a valid number phone");
     }else{
       setErrorPhone('')
     }
@@ -129,6 +129,7 @@ function UserForm({ onCreate, onClose }) {
           <input
             id="email"
             type="email"
+            placeholder='example@example.'
             className="w-full px-3 py-2 border rounded-md"
             value={email}
             onChange={handleChangeEmail}
@@ -175,6 +176,7 @@ function UserForm({ onCreate, onClose }) {
           <input
             id="name"
             type="text"
+            placeholder='Enter your name'
             className="w-full px-3 py-2 border rounded-md"
             value={name}
             onChange={(event) => setName(event.target.value)}
@@ -188,6 +190,7 @@ function UserForm({ onCreate, onClose }) {
           <input
             id="lastname"
             type="text"
+            placeholder='Enter your Lastname'
             className="w-full px-3 py-2 border rounded-md"
             value={lastname}
             onChange={(event) => setLastname(event.target.value)}
@@ -201,6 +204,7 @@ function UserForm({ onCreate, onClose }) {
           <input
             id="phone"
             type="text"
+            placeholder='Phone Number'
             className="w-full px-3 py-2 border rounded-md"
             value={phone}
             onChange={handleChangePhone}
