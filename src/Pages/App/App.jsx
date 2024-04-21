@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminRoutes from '../../Routes/AdminRoutes';
-import ManderList from '../../Components/Manders/MandersList'
 import StateContext from '../../Context/StateContext';
+import LoginForm from '../../Components/Login/Login';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path='/*' element={<AdminRoutes />} />
+          <Route path='/Login/' element={<LoginForm />} />
           <Route path='/Admin/*' element={<AdminRoutes />} />
         </Routes>
       </BrowserRouter>
