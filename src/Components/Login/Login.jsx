@@ -4,7 +4,7 @@ import axiosInstance from '../../Logic/AxiosInstance';
 import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,6 +23,7 @@ const LoginForm = () => {
         localStorage.setItem('token', response.data.token); // Almacena el token en localStorage
         console.log('Acceso permitido como administrador');
         navigate('/Admin/');
+        onLogin()
       } else {
         setError(response.data.detail);
       }

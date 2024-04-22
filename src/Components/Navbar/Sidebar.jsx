@@ -16,8 +16,10 @@ const Sidebar = () => {
   const navigate = useNavigate();
   
   const logout = () => {
+    // Elimina cualquier información de sesión almacenada
     sessionStorage.removeItem("userName");
-    navigate("/Login");
+    // Redirige al usuario a la página de inicio de sesión
+    navigate("/");
   };
 
   return (
