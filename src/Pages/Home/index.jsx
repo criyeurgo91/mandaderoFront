@@ -6,10 +6,18 @@ function Home() {
   const [estadisticas, setEstadisticas] = useState(null);
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/estadisticas/`)
-      .then(response => response.json())
-      .then(data => setEstadisticas(data))
-      .catch(error => console.error('Error fetching data:', error));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/estadisticas/`);
+        const data = await response.json();
+        setEstadisticas(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+
+    };
+
+    fetchData();
   }, []);
 
   return (
