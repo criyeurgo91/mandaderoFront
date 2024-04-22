@@ -17,7 +17,7 @@ const Sidebar = () => {
   
   const logout = () => {
     sessionStorage.removeItem("userName");
-    navigate("/public");
+    navigate("/");
   };
 
   return (

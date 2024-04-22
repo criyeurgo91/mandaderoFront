@@ -1,5 +1,4 @@
-
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Navbar/Sidebar";
 import Home from "../Pages/Home";
 import UserList from "../Components/User/UserList";
@@ -17,9 +16,14 @@ import MandersList from "../Components/Manders/MandersList";
 import ManderForm from "../Components/Forms/ManderForm";
 import HeaderComponent from "../Components/Headers/HeaderComponent";
 import RequestList from "../Components/Request/RequestList";
-//import ViewManders from "../Pages/Manders/ViewManders";
 
-const AdminRoutes = () => {
+const AdminRoutes = ({ isAuthenticated }) => {
+    const navigate = useNavigate();
+    if (!isAuthenticated) {
+        navigate("/");
+        return null; 
+    }
+
     return (
         <>
             <div className="flex h-screen">
@@ -28,28 +32,27 @@ const AdminRoutes = () => {
                 </div>
                 <div className='fixed w-full'>
                     <HeaderComponent />
-
                 </div>
                 <main className="flex-grow overflow-y-auto pt-14">
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='accounts' element={<PageDefault />} />
-                        <Route path='accounts/createaccount' element={<Register />} />
-                        <Route path='users' element={<UserList />} />
-                        <Route path='users/createUser' element={<UserForm />} />
-                        <Route path='users/detail' element={<DetailUser />} />
+                        <Route path='/accounts' element={<PageDefault />} />
+                        <Route path='/accounts/createaccount' element={<Register />} />
+                        <Route path='/users' element={<UserList />} />
+                        <Route path='/users/createUser' element={<UserForm />} />
+                        <Route path='/users/detail' element={<DetailUser />} />
                         <Route path='/vehicles/*' element={<VehicleList />} />
-                        <Route path="vehicles/createvehicle" element={<VehicleForm />} />
-                        <Route path='manders' element={<MandersList />} />
-                        <Route path='manders/createmander' element={<ManderForm />} />
-                        <Route path='services' element={<ServiceList />} />
-                        <Route path='services/createservice' element={<ServicesForm />} />
-                        <Route path='request' element={<RequestList />} />
-                        <Route path='request/createrequest' element={<PageDefault />} />
-                        <Route path="document" element={<ViewDocument />} />
-                        <Route path='document/createdocument' element={<DocumentForm />} />
-                        <Route path='requestmanager' element={<PageDefault />} />
-                        <Route path='requestmanager/createrequestmanager' element={<PageDefault />} />
+                        <Route path="/vehicles/createvehicle" element={<VehicleForm />} />
+                        <Route path='/manders' element={<MandersList />} />
+                        <Route path='/manders/createmander' element={<ManderForm />} />
+                        <Route path='/services' element={<ServiceList />} />
+                        <Route path='/services/createservice' element={<ServicesForm />} />
+                        <Route path='/request' element={<RequestList />} />
+                        <Route path='/request/createrequest' element={<PageDefault />} />
+                        <Route path="/document" element={<ViewDocument />} />
+                        <Route path='/document/createdocument' element={<DocumentForm />} />
+                        <Route path='/requestmanager' element={<PageDefault />} />
+                        <Route path='/requestmanager/createrequestmanager' element={<PageDefault />} />
                     </Routes>
                 </main>
             </div>
