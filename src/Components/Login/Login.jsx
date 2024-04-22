@@ -20,7 +20,7 @@ const LoginForm = ({ onLogin }) => {
       });
   
       if (response.data.detail === 'Inicio de sesión exitoso como administrador') {
-        localStorage.setItem('token', response.data.token); // Almacena el token en localStorage
+        localStorage.setItem('token', response.data.token); 
         console.log('Acceso permitido como administrador');
         navigate('/Admin/');
         onLogin()

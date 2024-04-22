@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalRequest);
         }
       } catch (error) {
-        // Handle refresh token failure
+        
       }
     }
     return Promise.reject(error);

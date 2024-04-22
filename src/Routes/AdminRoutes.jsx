@@ -1,4 +1,3 @@
-// AdminRoutes.js
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Navbar/Sidebar";
 import Home from "../Pages/Home";
@@ -22,7 +21,7 @@ const AdminRoutes = ({ isAuthenticated }) => {
     const navigate = useNavigate();
     if (!isAuthenticated) {
         navigate("/");
-        return null; // No renderizar las rutas
+        return null; 
     }
 
     return (
