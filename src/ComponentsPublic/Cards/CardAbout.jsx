@@ -3,7 +3,7 @@ import ImgAbout from '../../assets/Images/About/ImgAbout.jpg';
 
 const CardAbout = () => {
   return (
-  <div className="container mx-auto px-4 mt-8">
+  <div className="container mx-auto p-4">
     <h1 className="text-3xl font-bold text-blue-900 py-8">SOBRE NOSOTROS</h1> 
     <div className="bg-white overflow-hidden">
       <div className="flex flex-col lg:flex-row">

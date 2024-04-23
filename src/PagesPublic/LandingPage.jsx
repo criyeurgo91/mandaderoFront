@@ -11,7 +11,7 @@ import Footer from '../ComponentsPublic/Footer/Footer';
 const LandingPage = () => {
  
   return (
-    <div className='mt-10 space-y-14'>
+    <div className='mt-0 space-y-10'>
       <section id="home">
         <Home />
       </section>

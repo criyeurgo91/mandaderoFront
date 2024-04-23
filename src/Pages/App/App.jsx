@@ -1,6 +1,6 @@
-// App.js
+
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminRoutes from '../../Routes/AdminRoutes';
 import StateContext from '../../Context/StateContext';
 import PublicRoutes from '../../Routes/PublicRoutes';
@@ -21,11 +21,9 @@ function App() {
     <StateContext>
       <BrowserRouter>
         <Routes>
-
-          <Route path='/*' element={<PublicRoutes />} />
-          <Route path='/Admin/*' element={<AdminRoutes />} />
-
-          <Route path='/' element={<LoginForm onLogin={handleLogin} />} />
+          <Route path='*' element={<PublicRoutes />} />
+          
+          <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
           <Route path='/Admin/*' element={<AdminRoutes isAuthenticated={isAuthenticated} />} />
 
         </Routes>
@@ -35,3 +33,4 @@ function App() {
 }
 
 export default App;
+
