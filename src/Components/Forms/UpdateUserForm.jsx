@@ -9,7 +9,6 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState(''); 
   const [phone, setPhone] = useState('');
-  const [isMander, setIsMander] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -24,7 +23,6 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         setName(response.data.name_user);
         setLastname(response.data.lastname_user);
         setPhone(response.data.phone_user);
-        setIsMander(response.data.ismander_user);
         if (response.data.image_user) {
           setImage(response.data.image_user);
         }
@@ -37,7 +35,6 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
   const handleImageChange = (event) => {
   const newImageFile = event.target.files[0];
   setNewImage(newImageFile);
-  // Actualiza el estado de la imagen para mostrar una vista previa si lo deseas
   setImage(URL.createObjectURL(newImageFile));
 };
 
@@ -50,10 +47,9 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
         name_user: name,
         lastname_user: lastname,
         phone_user: phone,
-        ismander_user: isMander,
       };
 
-      // Si se seleccionó una nueva imagen, agregarla a los datos del usuario
+      
       if (newImage) {
         userData.image_user = newImage;
       }
@@ -142,17 +138,7 @@ function UpdateUserForm({ userId, onUpdate, onClose }) {
               required
             />
           </div>
-          <div className="mb-4 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={isMander}
-                onChange={(event) => setIsMander(event.target.checked)}
-              />
-              <span className="ml-2 text-white">Is Mander?</span>
-            </label>
-          </div>
+          
           <button
             type="submit"
             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"

@@ -1,12 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import {
   RiHome4Line,
-  RiTeamLine,
   RiUserSearchLine,
-  //RiSettings2Line,
   RiLogoutBoxRLine,
-  RiCarLine,
-  RiFileTextLine,
   RiSteering2Line,
   RiToolsLine,
   RiNotification2Line 
@@ -16,7 +12,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   
   const logout = () => {
-    sessionStorage.removeItem("userName");
+    localStorage.removeItem('isAuthenticated');
     navigate("/");
   };
 
@@ -29,13 +25,6 @@ const Sidebar = () => {
         >
           <RiHome4Line />
         </Link>
-
-        {/*<Link
-          to="account"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
-        >
-          <RiTeamLine />
-        </Link>*/}
 
         <Link
           to="users"
@@ -51,12 +40,7 @@ const Sidebar = () => {
           <RiSteering2Line />
         </Link>
 
-        <Link
-          to="request"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500"
-        >
-          <RiFileTextLine />
-        </Link>
+        
 
         <Link
           to="services"
@@ -65,19 +49,12 @@ const Sidebar = () => {
           <RiToolsLine />
         </Link>
 
-        {/*<Link
+        <Link
           to="request"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-stone-500"
         >
-          <RiNotification2Line />
-      </Link>*/}
-
-        {/*<Link
-          to="vehicles"
-          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-teal-300"
-        >
-          <RiCarLine />
-    </Link>*/}
+          <RiNotification2Line/>
+        </Link>
     
       </nav>
 

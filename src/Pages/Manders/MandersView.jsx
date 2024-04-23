@@ -1,10 +1,10 @@
 
 import MandersList from "../../Components/Manders/MandersList";
 
-const ViewManders = () => {
+const MandersView = () => {
     return (
         <MandersList />
     );
 }
 
-export default ViewManders;
+export default MandersView;
