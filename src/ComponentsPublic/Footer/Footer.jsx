@@ -6,7 +6,7 @@ const Footer = () => {
  const navigate = useNavigate();
 
  const handleClick = () => {
-    navigate('/Admin/');
+    navigate('/*');
   };
   return (
     <footer className="bg-blue-800 text-white">
