@@ -1,69 +1,109 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import apiUrl from '../../config/apiConfig';
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import apiUrl from "../../config/apiConfig";
 
-function RequestList() {
-  const [request, setRequest] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+const RequestList = () => {
+  const [requests, setRequests] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [activeManders, setActiveManders] = useState([]);
+  const [selectedMander, setSelectedMander] = useState(null);
 
   useEffect(() => {
-    fetchRequest();
+    fetchData();
   }, []);
 
-  const fetchRequest = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/request/`);
-      setRequest(response.data);
+      const [requestsResponse, mandersResponse] = await Promise.all([
+        axios.get(`${apiUrl}/api/request_list/`),
+        axios.get(`${apiUrl}/api/getlistmanders/`),
+      ]);
+      setRequests(requestsResponse.data);
+      setActiveManders(
+        mandersResponse.data.filter((mander) => mander.isactive_mander)
+      );
     } catch (error) {
-      console.error('Error fetching request:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = useCallback((event) => {
     setSearchTerm(event.target.value);
-  };
+  }, []);
 
-  const handleStatusFilter = (event) => {
+  const handleStatusFilter = useCallback((event) => {
     setStatusFilter(event.target.value);
+  }, []);
+
+  const handleManderSelect = (mander) => {
+    console.log(mander);
+    setSelectedMander(mander);
   };
 
-  const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case 'proceso':
-        return 'text-blue-500';
-      case 'pendiente':
-        return 'text-yellow-500';
-      case 'finalizado':
-        return 'text-green-500';
-      default:
-        return 'text-white'; 
+  const handleAssignMander = async (requestId, mander_id_mander,detail_request) => {
+    console.log("Mander ID:", mander_id_mander, requestId ,);
+    if (!mander_id_mander) {
+      alert("Please select a mander first.");
+      console.log("Mander ID:", mander_id_mander, requestId);
+      return;
+    }
+
+    try {
+      const requestData = {
+        request_id_request: requestId,
+        mander_id_mander: mander_id_mander,
+        status_requestmanager: "espera",
+        detail_requestmanager: detail_request,
+      };
+
+      await axios.post(`${apiUrl}/api/request_manager/`, requestData);
+      
+      fetchData();
+    } catch (error) {
+      console.error(`Error assigning mander to request ${requestId}:`, error);
+      console.log("Error response:", error.response);
     }
   };
 
-  const getStatusName = (status) => {
+  const getStatusColor = useCallback((status) => {
     switch (status.toLowerCase()) {
-      case 'proceso':
-        return 'Process';
-      case 'pendiente':
-        return 'Pending';
-      case 'finalizado':
-        return 'Finish';
+      case "proceso":
+        return "text-blue-500";
+      case "pendiente":
+        return "text-yellow-500";
+      case "finalizado":
+        return "text-green-500";
       default:
-        return ''; 
+        return "text-white";
     }
-  };
+  }, []);
 
-  const filteredRequest = request.filter((request) =>
-    request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (statusFilter === '' || request.status_request.toLowerCase() === statusFilter.toLowerCase())
+  const getStatusName = useCallback((status) => {
+    switch (status.toLowerCase()) {
+      case "proceso":
+        return "Process";
+      case "pendiente":
+        return "Pending";
+      case "finalizado":
+        return "Finish";
+      default:
+        return "";
+    }
+  }, []);
+
+  const filteredRequests = requests.filter(
+    (request) =>
+      request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (statusFilter === "" ||
+        request.status_request.toLowerCase() === statusFilter.toLowerCase())
   );
 
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">Request List</h1>
-        <div className='flex justify-start'>
+        <div className="flex justify-start mb-4">
           <input
             type="text"
             placeholder="Search..."
@@ -84,16 +124,60 @@ function RequestList() {
       <table className="w-full max-w-6xl mx-auto border-collapse border border-black custom-table">
         <thead className="bg-stone-600">
           <tr>
-            <th className="border px-4 py-2">Detail</th>
-            <th className="border px-4 py-2">Status</th>
+            <th className="border border-gray-300 px-4 py-2">User Name</th>
+            <th className="border border-gray-300 px-4 py-2">Detail Request</th>
+            <th className="border border-gray-300 px-4 py-2">Status Request</th>
+            <th className="border border-gray-300 px-4 py-2">Mander Name</th>
+            <th className="border border-gray-300 px-4 py-2">Assign Mander</th>
           </tr>
         </thead>
         <tbody>
-          {filteredRequest.map((request) => (
-            <tr key={request.id_request} className="border border-black">
-              <td className="border px-4 py-2">{request.detail_request}</td>
-              <td className={`border px-4 py-2 ${getStatusColor(request.status_request)}`}>
+          {filteredRequests.map((request) => (
+            <tr key={request.id_request} className="border border-gray-800">
+              <td className="border border-gray-800 px-4 py-2">
+                {request.name_user}
+              </td>
+              <td className="border border-gray-800 px-4 py-2">
+                {request.detail_request}
+              </td>
+              <td
+                className={`border border-gray-800 px-4 py-2 ${getStatusColor(
+                  request.status_request
+                )}`}
+              >
                 {getStatusName(request.status_request)}
+              </td>
+              <td className="border border-gray-800 px-4 py-2">
+                {request.name_mander || (
+                  <select
+                    onChange={(e) => handleManderSelect(e.target.value)}
+                    className="border border-gray-300 bg-black text-white h-8 px-2 rounded-md"
+                  >
+                    <option value="">Select Mander</option>
+                    {activeManders.map((mander) => (
+                      <option key={mander.id_mander} value={mander.id_mander}>
+                        {mander.name_user} {mander.lastname_user}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </td>
+              <td className="border border-gray-800 px-4 py-2">
+                {request.name_mander ? (
+                  request.name_mander
+                ) : (
+                  
+                  <button
+                  onClick={() =>
+                    handleAssignMander(request.id_request, selectedMander, request.detail_request)
+                  }
+                  
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Assign
+                  </button>
+                  
+                )}
               </td>
             </tr>
           ))}
@@ -101,6 +185,6 @@ function RequestList() {
       </table>
     </div>
   );
-}
+};
 
 export default RequestList;
