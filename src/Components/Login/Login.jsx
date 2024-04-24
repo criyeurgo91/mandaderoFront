@@ -37,7 +37,7 @@ const LoginForm = ({ onLogin }) => {
   return (
     <div className="flex justify-center items-center h-screen bg-slate-900">
       <div className="bg-white rounded-lg p-8 shadow-md w-80">
-        <h2 className="text-2xl font-bold mb-6 text-center">Inicio de Sesión</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Admin</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-semibold mb-2">Email:</label>
