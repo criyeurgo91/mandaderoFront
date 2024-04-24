@@ -1,6 +1,6 @@
 import VehicleList from "../../Components/Vehicle/VehicleList"
 
-const ViewVehicle = () => {
+const VehivleView = () => {
   return (
     <div>
       <VehicleList/>
@@ -8,4 +8,4 @@ const ViewVehicle = () => {
   )
 }
 
-export default ViewVehicle
+export default VehivleView

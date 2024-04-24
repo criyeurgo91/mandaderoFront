@@ -26,10 +26,14 @@ function UserList() {
       const usersWithAccountInfo = await Promise.all(
         response.data.map(async (user) => {
           const accountResponse = await axios.get(`${apiUrl}/api/account/${user.account_id_account}/`);
-          return {
-            ...user,
-            email: accountResponse.data.email_account,
-          };
+          // Verifica si el usuario es mander
+          if (!user.ismander_user) {
+            return {
+              ...user,
+              email: accountResponse.data.email_account,
+            };
+          }
+          return null; // no renderiza manders
         })
       );
       setUsers(usersWithAccountInfo);
@@ -38,13 +42,18 @@ function UserList() {
 
       const response = await axios.get(`${apiUrl}/api/getlistuser/`);
       const data = response.data;
-      console.log(data);
-      setUsers(data);
-      setFilteredUsers(data);
+      
+      // Filtra los usuarios que no son mander
+      const filteredUsers = data.filter(user => !user.ismander_user);
+    
+      console.log(filteredUsers);
+      setUsers(filteredUsers);
+      setFilteredUsers(filteredUsers);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
   };
+  
 
   const handleEdit = (user) => {
     setSelectedUser(user);
