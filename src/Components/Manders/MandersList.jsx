@@ -25,7 +25,7 @@ function MandersList() {
   }, []);
 
   const fetchManders = async () => {
-    await fetch(`${apiUrl}/api/getlistmanders/`)
+    await fetch(`${apiUrl}/api/mander/`)
       .then((response) => response.json())
       .then((data) => {
         setFilteredManders(data);
