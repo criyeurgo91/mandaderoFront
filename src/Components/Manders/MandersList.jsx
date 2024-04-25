@@ -28,6 +28,7 @@ function MandersList() {
     await fetch(`${apiUrl}/api/getlistmanders/`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setFilteredManders(data);
       });
 
