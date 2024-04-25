@@ -1,0 +1,41 @@
+<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 32 32" 
+    width="32" 
+    height="32">
+        <!-- Contorno del favor -->
+        <path 
+            fill="#FFD700" 
+            d="M16,3C9.925,3,5,7.925,5,14h22C27,7.925,22.075,3,16,3z">
+            <!-- Animación de giro -->
+            <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                from="0 16 16"
+                to="360 16 16"
+                dur="3s"
+                repeatCount="indefinite"
+            />
+        </path>
+            <!-- Asa del favor -->
+        <path 
+            fill="#E6B700" 
+            d="M26,15c0,3.86-3.14,7-7,7s-7-3.14-7-7s3.14-7,7-7S26,11.14,26,15z"/>
+        <!-- Nudo del asa -->
+        <path 
+            fill="#FF7F00" 
+            d="M16,8c-3.86,0-7,3.14-7,7c0,1.53,0.49,2.93,1.31,4.08L16,27.62l5.69-7.54C22.51,17.93,23,16.53,23,15 C23,11.14,19.86,8,16,8z">
+            <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="translate"
+                values="0,0; 0,-5; 0,0"
+                keyTimes="0; 0.5; 1"
+                dur="1s"
+                begin="2s"
+                repeatCount="indefinite"
+            />
+        </path>
+</svg>
+
