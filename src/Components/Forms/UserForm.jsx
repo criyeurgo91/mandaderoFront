@@ -1,242 +1,183 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { axiosPost } from '../../Logic/Apihelpers';
+import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
+const UserForm = () => {
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
-function UserForm({ onCreate, onClose }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [image, setImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [name, setName] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [phone, setPhone] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [message, setMessage] = useState('');
-  const [errorEmail, setErrorEmail] = useState('')
-  const [errorPassword, setErrorPassword] = useState('')
-  const [errorPhone, setErrorPhone] = useState('')
+  const handleRegister = async (formData) => {
+    const dataAccountUser = {
+      email_account: formData.emailUser,
+      password_account: formData.passwordUser,
+      isadmin_account: formData.isadminUser || false,
+    };
 
-  useEffect(() => {
-    
-  }, []);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const accountResponse = await axios.post(`${apiUrl}/api/account/`, {
-        email_account: email,
-        password_account: password,
-        isadmin_account: isAdmin,
+    // Crear la cuenta de usuario
+    axiosPost(`${apiUrl}/api/account/`, dataAccountUser)
+      .then((response) => {
+        if (response) {
+          alert('Account Registered');
+          const accountId = response.id_account;
+          // Crear el usuario
+          handleUserRegister(formData, accountId);
+        } else {
+          alert('Failed to save Account');
+        }
+      })
+      .catch((error) => {
+        console.error('Error creating account:', error);
+        alert('Failed to create account');
       });
+  }
 
-      const accountId = accountResponse.data.id_account;
+  const handleUserRegister = async (formData, accountId) => {
+    const dataUser = {
+      name_user: formData.nameUser,
+      lastname_user: formData.lastnameUser,
+      phone_user: formData.phoneUser,
+      account_id_account: accountId,
+    };
 
-      const formData = new FormData();
-      formData.append('account_id_account', accountId);
-      formData.append('image_user', image);
-      formData.append('name_user', name);
-      formData.append('lastname_user', lastname);
-      formData.append('phone_user', phone);
-
-       const userResponse = await axios.post(`${apiUrl}/api/user/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    // Crear el usuario
+    axiosPost(`${apiUrl}/api/user/`, dataUser)
+      .then((response) => {
+        if (response) {
+          setShowModal(true);
+          navigate(window.history.back());
+        } else {
+          alert('Failed to save User');
+        }
+      })
+      .catch((error) => {
+        console.error('Error creating user:', error);
+        alert('Failed to create user');
       });
+  }
 
-      const userId = userResponse.data.id_user
+  const handleCancel = () => {
+    window.history.back();
+  }
 
-      setMessage('User created successfully.');
-
-      setEmail('');
-      setPassword('');
-      setImage(null);
-      setPreviewImage(null);
-      setName('');
-      setLastname('');
-      setPhone('');
-      setIsAdmin(false);
-
-      onCreate();
-      onClose();
-      
-    } catch (error) {
-      setMessage('Error creating user. Please try again.');
-      console.error('Error creating user:', error);
-    }
-  };
-
-  const handleChangePassword = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-
-    if (newPassword.length < 8) {
-      setErrorPassword('The password must be between 8 and 20 characters');
-    }else{
-      setErrorPassword('')
-    } 
-    
-  };
-
-  const handleChangeEmail = (event) => {
-    const newEmail = event.target.value;
-    setEmail(newEmail);
-
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(newEmail)) {
-      setErrorEmail("please enter a valid email");
-    }else{
-      setErrorEmail('')
-    }
-  };
-
-  const handleImageChange = (event) => {
-    const selectedImage = event.target.files[0];
-    setImage(selectedImage);
-    setPreviewImage(URL.createObjectURL(selectedImage)); 
-  };
-
-  const handleChangePhone = (event) => {
-    const newphone = event.target.value;
-    setPhone(newphone);
-
-    const phonePattern = /^\d{10}$/;
-
-    if (!phonePattern.test(newphone)) {
-      setErrorPhone("please enter a valid number phone");
-    }else{
-      setErrorPhone('')
-    }
-  };
-
+  const isadminUser = watch("isadminUser");
+  const ismanderUser = watch("ismanderUser");
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Create User</h2>
-      {message && (
-        <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
-          {message}
+    <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
+      <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+        <h2 className="text-lg font-semibold mb-4 text-white">User Form</h2>
+        <form onSubmit={handleSubmit(handleRegister)}>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
+              Email:
+            </label>
+            <input
+              {...register('emailUser', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Invalid email address'
+                }
+              })}
+              type="email"
+              placeholder="example@example.com"
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.emailUser ? 'border-red-500' : ''}`}
+            />
+            {errors.emailUser && <span className="text-red-500">{errors.emailUser.message}</span>}
+          </div>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="passwordUser">
+              Password:
+            </label>
+            <input
+              {...register('passwordUser', {
+                required: 'Password is required',
+                minLength: { value: 8, message: 'Password must have at least 8 characters' },
+                maxLength: { value: 20, message: 'Password cannot exceed 20 characters' }
+              })}
+              type="password"
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
+            />
+            {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
+          </div>
+          <div className="mb-4">
+            <label className="flex items-center">
+              <input
+                {...register('isadminUser')}
+                type="checkbox"
+                className="form-checkbox"
+                checked={isadminUser}
+              />
+              <span className="ml-2 text-white">Is Admin?</span>
+            </label>
+          </div>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
+              Name:
+            </label>
+            <input
+              {...register('nameUser', { required: true })}
+              type="text"
+              placeholder="name"
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.nameUser ? 'border-red-500' : ''}`}
+            />
+            {errors.nameUser && <span className="text-red-500">Name Required</span>}
+          </div>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
+              Lastname:
+            </label>
+            <input
+              {...register('lastnameUser', { required: true })}
+              type="text"
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.lastnameUser ? 'border-red-500' : ''}`}
+            />
+            {errors.lastnameUser && <span className="text-red-500">Lastname Required</span>}
+          </div>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="phoneUser">
+              Phone:
+            </label>
+            <input
+              {...register('phoneUser', {
+                required: 'Phone number is required',
+                pattern: {
+                  value: /^\d{10}$/, // valida que el telefono tenga 10 digitos
+                  message: 'Invalid phone number. Must contain exactly 10 digits'
+                }
+              })}
+              type="text"
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.phoneUser ? 'border-red-500' : ''}`}
+            />
+            {errors.phoneUser && <span className="text-red-500"> Phone Required</span>}
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+            onClick={handleCancel}
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p className="text-lg font-semibold mb-4">User Registered Successfully!</p>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
+          </div>
         </div>
       )}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
-            Email:
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder='example@example.'
-            className="w-full px-3 py-2 border rounded-md"
-            value={email}
-            onChange={handleChangeEmail}
-            required
-            
-          />
-          {errorEmail && <p className="text-red-500">{errorEmail}</p>}
-        </div>
-        <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
-            Password:
-          </label>
-          <input
-            id="password"
-            type="password"
-            minLength={8}
-            maxLength={20}
-            className="w-full px-3 py-2 border rounded-md"
-            value={password}
-            onChange={handleChangePassword}
-            required
-          />
-          {errorPassword && <p className="text-red-500">{errorPassword}</p>}
-        </div>
-        <div className="mb-4 ">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="image">
-            Image:
-          </label>
-          <input
-            id="image"
-            type="file"
-            className="w-full px-3 py-2 border rounded-md"
-            onChange={handleImageChange}
-            accept="image/*"
-          />
-          {previewImage && (
-            <img src={previewImage} alt="Preview" className="w-24 h-24 mb-4 mt-4 object-cover rounded-full" />
-          )}
-        </div>
-        <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
-            Name:
-          </label>
-          <input
-            id="name"
-            type="text"
-            placeholder='Enter your name'
-            className="w-full px-3 py-2 border rounded-md"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="lastname">
-            Lastname:
-          </label>
-          <input
-            id="lastname"
-            type="text"
-            placeholder='Enter your Lastname'
-            className="w-full px-3 py-2 border rounded-md"
-            value={lastname}
-            onChange={(event) => setLastname(event.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="phone">
-            Phone:
-          </label>
-          <input
-            id="phone"
-            type="text"
-            placeholder='Phone Number'
-            className="w-full px-3 py-2 border rounded-md"
-            value={phone}
-            onChange={handleChangePhone}
-            required
-          />
-          {errorPhone && <p className="text-red-500">{errorPhone}</p>}
-        </div>
-        <div className="mb-4">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={isAdmin}
-              onChange={(event) => setIsAdmin(event.target.checked)}
-            />
-            <span className="ml-2 text-white">Is Admin?</span>
-          </label>
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
-        >
-          Submit
-        </button>
-        <button
-          type="reset"
-          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-          onClick={onClose}
-        >
-          Cancel
-        </button>
-      </form>
     </div>
   );
 }

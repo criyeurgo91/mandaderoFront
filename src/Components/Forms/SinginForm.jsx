@@ -1,121 +1,116 @@
-import { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { axiosPost } from '../../Logic/Apihelpers';
+import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
+import UserForm from './UserForm';
 
-function SinginForm({onCreate,onclose}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [message, setMessage] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
+const SinginForm = () => {
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // Configuración del formulario utilizando react-hook-form
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  // Navegación entre páginas
+  const navigate = useNavigate();
 
-    if (!isValidEmail) {
-      setMessage('Please enter a valid email address.');
-      return;
-    }
+  // Función para manejar el registro de la cuenta
+  const handleBtnRegister = async (formData) => {
+    // Estructura de los datos de la cuenta
+    const dataAccountUser = {
+      email_account: formData.emailUser,
+      password_account: formData.passwordUser,
+      isadmin_account: formData.isadminUser || false, 
+    };
 
-    try {
-      const response = await axios.post(`${apiUrl}/api/account/`, {
-        email_account: email,
-        password_account: password,
-        isadmin_account: formData.isadmin_account ? formData.isadmin_account : false,
-      });
-
-      if (response.status === 201) {
-        setMessage('Account created successfully.');
-      } else {
-        setMessage('Error creating account. Please try again.');
+    // Realiza una solicitud POST para registrar la cuenta
+    axiosPost(`${apiUrl}/api/account/`, dataAccountUser).then(
+      (response) => {
+        if (response) {
+          alert('Account Registered');
+          setAccountId(response.id_account)
+          // Redirecciona a la página profile
+          navigate('users');
+        } else {
+          alert('Failed to save Account');
+        }
       }
+    );
+  }
 
-      console.log('Account created:', response.data);
+  const handleCancel = () => {
+    window.history.back(); 
+  }
 
-      // Limpiar los campos después de enviar el formulario
-      setEmail('');
-      setPassword('');
-      setIsAdmin(false);
-
-      onCreate()
-      onclose()
-
-    } catch (error) {
-      console.error('Error creating account:', error);
-    }
-  };
-
-  const handleEmailChange = (event) => {
-    const emailValue = event.target.value;
-    setEmail(emailValue);
-    setIsValidEmail(/^\S+@\S+\.\S+$/.test(emailValue));
-  };
+  // Obtiene el valor del campo "isadminUser"
+  const isadminUser = watch("isadminUser");
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Create Account</h2>
-      {message && (
-        <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
-          {message}
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+
+    <div className="flex justify-center items-center h-screen">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
+      <h2 className="text-lg font-semibold mb-4 text-white">Account</h2>
+      <form onSubmit={handleSubmit(handleBtnRegister)}>
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
             Email:
           </label>
           <input
-            id="email"
+            {...register('emailUser', { 
+              required: 'Email is required', 
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Invalid email address'
+              }
+            })}
             type="email"
-            className="w-full px-3 py-2 border rounded-md"
-            value={email}
-            onChange={handleEmailChange}
-            required
+            placeholder="example@example.com"
+            className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.emailUser ? 'border-red-500' : ''}`}
           />
+          {errors.emailUser && <span className="text-red-500">{errors.emailUser.message}</span>}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="passwordUser">
             Password:
           </label>
           <input
-            id="password"
+            {...register('passwordUser', { 
+              required: 'Password is required',
+              minLength: { value: 8, message: 'Password must have at least 8 characters' },
+              maxLength: { value: 20, message: 'Password cannot exceed 20 characters' }
+            })}
             type="password"
-            className="w-full px-3 py-2 border rounded-md"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
+            className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
           />
-          {!isValidEmail && <p className="text-red-500 text-sm mt-1">Please enter a valid email address.</p>}
+          {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="isAdmin">
+          <label className="flex items-center">
             <input
-              id="isAdmin"
-              name='isAdmin'
+              {...register('isadminUser')}
               type="checkbox"
-              className="mr-2"
-              checked={isAdmin}
-              onChange={(event) => setIsAdmin(event.target.checked)}
+              className="form-checkbox"
+              checked={isadminUser}
             />
-            Admin
+            <span className="ml-2 text-white">Is Admin?</span>
           </label>
         </div>
+        
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Submit
         </button>
         <button
           type="reset"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
-        onClick={onclose}
+          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          onClick={handleCancel}
         >
           Cancel
         </button>
       </form>
     </div>
+    </div>
   );
 }
 
-export default SinginForm
+export default SinginForm;
