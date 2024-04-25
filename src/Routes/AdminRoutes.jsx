@@ -6,10 +6,12 @@ import MandersView from "../Pages/Manders/MandersView";
 import ServiceView from "../Pages/Services/ServiceView";
 import RequestView from "../Pages/Request/RequestView";
 import HeaderComponent from "../Components/Headers/HeaderComponent";
-import RequestList from "../Components/Request/RequestList";
 import UserForm from "../Components/Forms/UserForm";
-import SinginForm from "../Components/Forms/SinginForm";
 import UpdateUserForm from "../Components/Forms/UpdateUserForm";
+import ManderForm from "../Components/Forms/ManderForm";
+import UpdateManderForm from "../Components/Forms/UpdateManderForm";
+import VehicleForm from "../Components/Forms/VehicleForm";
+import UpdateAccountForm from "../Components/Forms/UpdateAccount";
 
 const AdminRoutes = ({ isAuthenticated }) => {
     const navigate = useNavigate()
@@ -32,10 +34,15 @@ const AdminRoutes = ({ isAuthenticated }) => {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='users' element={<UserView/>} />
-                        <Route path='users/account' element={<SinginForm/>} />
                         <Route path='users/profile' element={<UserForm/>} />
-                        <Route path='users/update/:id' element={<UpdateUserForm/>} />
+                        <Route path='users/updateaccount/:id' element={<UpdateAccountForm/>} />
+                        <Route path='users/updateprofile/:id' element={<UpdateUserForm/>} />
                         <Route path='manders' element={<MandersView/>} />
+                        <Route path='manders/profilemander' element={<ManderForm/>} />
+                        <Route path='manders/updateaccountmander/:id' element={<UpdateAccountForm/>} />
+                        <Route path='manders/updateuser/:id' element={<UpdateUserForm/>} />
+                        <Route path='manders/updatemander/:id' element={<UpdateManderForm/>} />
+                        <Route path='manders/vehicle/:id' element={<VehicleForm/>} />
                         <Route path='services' element={<ServiceView/>} />
                         <Route path='request' element={<RequestView/>} />
                        

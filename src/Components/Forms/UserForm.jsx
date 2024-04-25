@@ -20,7 +20,7 @@ const UserForm = () => {
     axiosPost(`${apiUrl}/api/account/`, dataAccountUser)
       .then((response) => {
         if (response) {
-          alert('Account Registered');
+          setShowModal(true);
           const accountId = response.id_account;
           // Crear el usuario
           handleUserRegister(formData, accountId);
@@ -46,7 +46,7 @@ const UserForm = () => {
     axiosPost(`${apiUrl}/api/user/`, dataUser)
       .then((response) => {
         if (response) {
-          setShowModal(true);
+          
           navigate(window.history.back());
         } else {
           alert('Failed to save User');
@@ -68,7 +68,7 @@ const UserForm = () => {
   return (
     <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-semibold mb-4 text-white">User Form</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">User Form</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
@@ -99,6 +99,7 @@ const UserForm = () => {
                 maxLength: { value: 20, message: 'Password cannot exceed 20 characters' }
               })}
               type="password"
+              placeholder='password'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
@@ -133,6 +134,7 @@ const UserForm = () => {
             <input
               {...register('lastnameUser', { required: true })}
               type="text"
+              placeholder='lastname'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.lastnameUser ? 'border-red-500' : ''}`}
             />
             {errors.lastnameUser && <span className="text-red-500">Lastname Required</span>}
@@ -150,6 +152,7 @@ const UserForm = () => {
                 }
               })}
               type="text"
+              placeholder='phone number'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.phoneUser ? 'border-red-500' : ''}`}
             />
             {errors.phoneUser && <span className="text-red-500"> Phone Required</span>}
@@ -173,7 +176,7 @@ const UserForm = () => {
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4">User Registered Successfully!</p>
+            <p className="text-lg font-semibold mb-4 text-green-900">User Registered Successfully!</p>
             <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
           </div>
         </div>

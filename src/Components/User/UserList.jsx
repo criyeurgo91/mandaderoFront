@@ -91,7 +91,7 @@ function UserList() {
                         <td className="border px-4 py-2">{user.phone_user}</td>
                         <td className="border px-4 py-2">
                           <div className='flex justify-center'>
-                          <Link to={`update/${user.id_user}`} className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+                          <Link to={`updateprofile/${user.id_user}`} className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
                       Edit
                     </Link>
                           </div>
