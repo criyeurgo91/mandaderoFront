@@ -15,7 +15,7 @@ const UpdateAccountForm = () => {
   // Función para obtener los datos de la cuenta
   const fetchAccountData = async () => {
     try {
-      const response = await axiosGet(`${apiUrl}/api/account/${id}`);
+      const response = await axiosGet(`${apiUrl}/api/account/${id}/`);
       setAccountData(response);
     } catch (error) {
       console.error('Error fetching account data:', error);
@@ -36,9 +36,9 @@ const UpdateAccountForm = () => {
       };
 
       
-      await axiosPut(`${apiUrl}/api/account/${id}`, updatedAccountData);
+      await axiosPut(`${apiUrl}/api/account/${id}/`, updatedAccountData);
       alert('Account Updated');
-      navigate('/users');
+      navigate(window.history.back());
     } catch (error) {
       console.error('Error updating account:', error);
       alert('Failed to update Account');
@@ -49,7 +49,12 @@ const UpdateAccountForm = () => {
     return <div>Loading...</div>; 
   }
 
+  const handleCancel = () => {
+    window.history.back(); 
+  }
+
   return (
+    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
     <div className="flex justify-center items-center h-screen">
       <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
         <h2 className="text-lg font-semibold mb-4 text-white">Update Account</h2>
@@ -71,7 +76,10 @@ const UpdateAccountForm = () => {
               Password:
             </label>
             <input
-              {...register('passwordUser', { required: 'Password is required' })}
+              {...register('passwordUser', { required: 'Password is required',
+              minLength: { value: 8, message: 'Password must have at least 8 characters' },
+              maxLength: { value: 20, message: 'Password cannot exceed 20 characters' },
+             })}
               type="password"
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
@@ -97,12 +105,13 @@ const UpdateAccountForm = () => {
           <button
             type="button"
             className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-            onClick={() => navigate('/users')}
+            onClick={ handleCancel}
           >
             Cancel
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };
