@@ -1,44 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
-const DetailMander = ({ manderId, onClose }) => {
+const DetailMander = () => {
+  const { id } = useParams();
   const [manderData, setManderData] = useState(null);
-  const [userData, setUserData] = useState(null);
-  const [documentData, setDocumentData] = useState([]);
-  const [vehicleData, setVehicleData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-  
   const fetchData = async () => {
     try {
-      const manderResponse = await fetch(`${apiUrl}/api/mander/${manderId}/`);
-      const manderData = await manderResponse.json();
-      setManderData(manderData);
-  
-      const userResponse = await fetch(`${apiUrl}/api/user/${manderData.user_id_user}/`);
-      const userData = await userResponse.json();
-      setUserData(userData);
-  
-      // Obtener vehículos del mandadero
-      const vehicleResponse = await fetch(`${apiUrl}/api/vehicle/`);
-      const allVehicleData = await vehicleResponse.json();
-      const filteredVehicleData = allVehicleData.filter(vehicle => vehicle.user_id_user === manderData.user_id_user);
-  
-      // Obtener documentos del mandadero
-      const documentResponse = await fetch(`${apiUrl}/api/document/`);
-      const allDocumentData = await documentResponse.json();
-      const filteredDocumentData = allDocumentData.filter(document => document.user_id_user === manderData.user_id_user);
-  
-      setVehicleData(filteredVehicleData);
-      setDocumentData(filteredDocumentData);
-  
+      const manderResponse = await fetch(`${apiUrl}/api/getlistmanders/`);
+      const allManders = await manderResponse.json();
+      const mander = allManders.find(mander => mander.id_mander === parseInt(id));
+      if (mander) {
+        setManderData(mander);
+      } else {
+        throw new Error(`Mander with ID ${id} not found.`);
+      }
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -46,80 +29,60 @@ const DetailMander = ({ manderId, onClose }) => {
     }
   };
 
+  const handleClose = () => {
+    navigate(-1); // Navigates back one step in history
+  };
+
+  if (loading) {
+    return <div className="bg-stone-900 text-white p-4 py-20">Loading...</div>;
+  }
+
+  if (!manderData) {
+    return <div className="bg-stone-900 text-white p-4 py-20">No mander found with ID {id}.</div>;
+  }
+
   return (
-    <div className="bg-stone-900 text-white p-4 flex flex-wrap justify-between">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        manderData && userData && (
-          <>
-            <div className="w-full md:w-1/2 lg:w-1/4 mb-4">
-              <img src={manderData.image_mander} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
-              <div className="text-center">
-                <p className="text-lg font-bold">{userData.name_user} {userData.lastname_user}</p>
-                <p>CC: {manderData.cc_mander}</p>
-                <span className='font-bold'>
-                  Phone:
-                </span>
-                <p>{userData.phone_user}</p>
-                <span className='font-bold'>
-                  Address:
-                </span>
-                <p>{manderData.address_mander}</p>
-                <span className='font-bold'>
-                  Vehicle Registered:
-                </span>
-                <p>Car: {manderData.ishavecar_mander ? 'Yes' : 'No'}</p>
-                <p>Bike: {manderData.ishavemoto_mander ? 'Yes' : 'No'}</p>
-                <span className='font-bold'>
-                  Status:
-                </span>
-                <p>Active: {manderData.isactive_mander ? 'Yes' : 'No'}</p>
-                <p>Validated: {manderData.isvalidate_mander ? 'Yes' : 'No'}</p>
-                
-              </div>
+    <div className="bg-stone-900 text-white p-4 py-20">
+      <div className="flex justify-between mb-4">
+        <div className="w-full md:w-1/3">
+          <img src={manderData.image_mander} alt={`Image of ${manderData.name_user} ${manderData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
+          <div className="text-center">
+            <p className="text-lg font-bold">{manderData.name_user} {manderData.lastname_user}</p>
+            <p>CC: {manderData.cc_mander}</p>
+            <span className='font-bold'>Phone:</span>
+            <p>{manderData.phone_user}</p>
+            <span className='font-bold'>Address:</span>
+            <p>{manderData.address_mander}</p>
+          </div>
+        </div>
+        <div className="w-full md:w-1/3">
+          <h2 className="text-lg font-bold mb-2">Documents</h2>
+          {manderData.documents.map((document, index) => (
+            <div key={index}>
+              <p>Document Type: {document.type_document}</p>
+              <p>Image: <img src={document.image_document} alt={`Document ${index}`} /></p>
             </div>
-            <div className="w-full md:w-1/2 lg:w-1/4 mb-4">
-              <h3 className="text-lg font-bold">Vehicles:</h3>
-              {vehicleData.length > 0 ? (
-                <div className="space-y-4">
-                  {vehicleData.map(vehicle => (
-                    <div key={vehicle.id_vehicle} className="p-4 border border-gray-200 rounded-lg">
-                      <img src={vehicle.image_vehicle} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
-                      <p><span className="font-bold">Brand:</span> {vehicle.brand_vehicle}</p>
-                      <p><span className="font-bold">Plate:</span> {vehicle.plate_vehicle}</p>
-                      <p><span className="font-bold">Model:</span> {vehicle.model_vehicle}</p>
-                      <p><span className="font-bold">Color:</span> {vehicle.color_vehicle}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>No vehicles found.</p>
-              )}
+          ))}
+        </div>
+        <div className="w-full md:w-1/3">
+          <h2 className="text-lg font-bold mb-2">Vehicles</h2>
+          {manderData.vehicles.map((vehicle, index) => (
+            <div key={index}>
+              <p>Vehicle Brand: {vehicle.brand_vehicle}</p>
+              <p>Model: {vehicle.model_vehicle}</p>
+              <p>Plate: {vehicle.plate_vehicle}</p>
+              <p>Image: <img src={vehicle.image_vehicle} alt={`Vehicle ${index}`} /></p>
             </div>
-            <div className="w-full md:w-1/2 lg:w-1/4 mb-4">
-              <h3 className="text-lg font-bold">Documents:</h3>
-              {documentData.length > 0 ? (
-                <div className="space-y-4">
-                  {documentData.map(document => (
-                    <div key={document.id_document} className="p-4 border border-gray-200 rounded-lg">
-                      <img src={document.image_document} alt={`Image of ${userData.name_user} ${userData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
-                      <p><span className="font-bold">Type:</span> {document.type_document || 'Not available'}</p>
-                      <p><span className="font-bold">Verified:</span> {document.isverified_document ? 'Yes' : 'No'}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>No documents found.</p>
-              )}
-            </div>
-          </>
-        )
-      )}
-      <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 self-start" onClick={onClose}>Close</button>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={handleClose}>
+          Close
+        </button>
+      </div>
     </div>
   );
-}
-
+};
 
 export default DetailMander;

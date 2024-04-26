@@ -33,6 +33,7 @@ const UpdateAccountForm = () => {
         email_account: formData.emailUser,
         password_account: formData.passwordUser,
         isadmin_account: formData.isadminUser || false,
+        isactive_account: formData.isactiveUser || false,
       };
 
       
@@ -93,7 +94,18 @@ const UpdateAccountForm = () => {
                 defaultChecked={accountData.isadmin_account}
                 className="form-checkbox"
               />
-              <span className="ml-2 text-white">Is Admin?</span>
+              <span className="ml-2 text-white">Admin</span>
+            </label>
+          </div>
+          <div className="mb-4">
+            <label className="flex items-center">
+              <input
+                {...register('isactiveUser')}
+                type="checkbox"
+                defaultChecked={accountData.isactive_account}
+                className="form-checkbox"
+              />
+              <span className="ml-2 text-white">Active Account</span>
             </label>
           </div>
           <button

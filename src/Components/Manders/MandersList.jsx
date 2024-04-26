@@ -92,6 +92,12 @@ function MandersList() {
     } 
   };
 
+  const handleDetail = (manderId) => {
+    navigate(`detail/${manderId}`);
+  };
+
+  
+
 
   return (
     <div className="bg-stone-900 text-white min-h-screen">
@@ -116,7 +122,11 @@ function MandersList() {
             
           {filteredManders.map((mander, index) => (
           <div key={index} className="bg-stone-700 rounded-lg shadow-md p-2 border border-black ">
+          <div className='flex justify-center py-2'>
+            <img src={mander['image_mander']} alt="Mander" className="w-auto h-40 rounded-md" />
+          </div>
           <p className="text-sm mb-1"><span className="font-bold">Mander:</span> {mander['name_user']} {mander['lastname_user']}</p>
+          <p className="text-sm mb-1"><span className="font-bold">Email:</span> {mander['email_account']}</p>
           <p className="text-sm mb-1"><span className="font-bold">CC:</span> {mander['cc_mander']}</p>
           <p className="text-sm mb-1"><span className="font-bold">Address:</span> {mander['address_mander']}</p>
           <p className="text-sm mb-1"><span className="font-bold">Phone:</span> {mander['phone_user']}</p>
@@ -170,6 +180,10 @@ function MandersList() {
                           </select>
                         </div>
                       )}
+                      <button className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+                      onClick={() => handleDetail(mander.id_mander)}>
+                        Detail
+                      </button>
         </div>
       </div>
     ))}

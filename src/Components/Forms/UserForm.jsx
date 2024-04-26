@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 const UserForm = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    defaultValues:{
+      isadmin_account: false
+    }
+  });
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 

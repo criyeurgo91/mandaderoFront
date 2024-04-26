@@ -4,14 +4,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 const VehicleForm = () => {
+
   const { id } = useParams();
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     image_vehicle: null,
     brand_vehicle: "",
     plate_vehicle: "",
-    model_vehicle: null,
+    model_vehicle: '',
     color_vehicle: "",
-    type_vehicle: null,
+    type_vehicle: '',
     isverified_vehicle: false,
     user_id_user: id // Asignando el ID del mander al formulario
   });
@@ -70,14 +73,15 @@ const VehicleForm = () => {
         image_vehicle: null,
         brand_vehicle: "",
         plate_vehicle: "",
-        model_vehicle: null,
+        model_vehicle: '',
         color_vehicle: "",
-        type_vehicle: null,
+        type_vehicle: '',
         isverified_vehicle: false,
-        user_id_user: id // Restaurando el ID del mander al formulario después del envío
+        user_id_user: id 
       });
       setLoading(false);
       alert('Formulario enviado exitosamente');
+      navigate (-1)
 
 
     } catch (error) {

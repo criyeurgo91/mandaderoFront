@@ -16,6 +16,7 @@ function UpdateManderForm() {
   const [userId, setUserId] = useState('');
   const [existingImage, setExistingImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [image, setImage] = useState(null)
 
   useEffect(() => {
     axiosGet(`${apiUrl}/api/mander/${id}`).then(response => {

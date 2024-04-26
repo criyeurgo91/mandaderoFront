@@ -5,7 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 const ManderForm = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    defaultValues: {
+      isMander: false, 
+      activeMander: false, 
+      validateMander: false, 
+      carMander: false,
+      bikeMander: false,
+    }
+  });
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [imageFile, setImageFile] = useState(null);
