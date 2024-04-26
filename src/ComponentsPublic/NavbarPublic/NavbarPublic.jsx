@@ -35,12 +35,12 @@ const NavbarPublic = () => {
         <div className="text-white text-lg font-bold">Mandaderos</div>
         <div className="flex space-x-4">
           <Link to="/" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('home') }>Home</Link>
-          <Link to="/about" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('about')}>Nosotros</Link>
-          <Link to="/service" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('service')}>Servicios</Link>
-          <Link to="/function" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('function')}>Como funciona</Link>
-          <Link to="/gallery" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('gallery')}>Galería</Link>
-          <Link to="/team" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('team')}>Equipo</Link>
-          <Link to="/contact" className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('contact')}>Contacto</Link>
+          <Link  className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('about')}>Nosotros</Link>
+          <Link  className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('service')}>Servicios</Link>
+          <Link  className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('function')}>Como funciona</Link>
+          <Link  className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('gallery')}>Galería</Link>
+          <Link  className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('team')}>Equipo</Link>
+          <Link  className="text-white hover:text-green-500 font-bold" onClick={() => scrollToSection('contact')}>Contacto</Link>
         </div>
       </div>
     </nav>
