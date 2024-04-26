@@ -16,7 +16,7 @@ const RequestList = () => {
   const fetchData = async () => {
     try {
       const [requestsResponse, mandersResponse] = await Promise.all([
-        axios.get(`${apiUrl}/api/request_list/`),
+        axios.get(`${apiUrl}/api/getlistrequest/`),
         axios.get(`${apiUrl}/api/getlistmanders/`),
       ]);
       setRequests(requestsResponse.data);
