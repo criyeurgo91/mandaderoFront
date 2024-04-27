@@ -27,39 +27,6 @@ function MandersList() {
     })
   }, []);
 
-<<<<<<< HEAD
-  const fetchManders = async () => {
-    await fetch(`${apiUrl}/api/getlistmanders/`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setFilteredManders(data);
-      });
-
-   
-  };
-
-  const handleEditMander = (user) => {
-    // Recibe el objeto de mandadero completo
-    setSelectedMander(user); // Establece el mandadero seleccionado
-    setShowUpdateForm(true);
-  };
-
-  const handleUpdate = () => {
-    fetchManders();
-    setShowUpdateForm(false);
-  };
-
-  /*const handleDeleteMander = async (manderId) => {
-    try {
-      await axios.delete(`${apiUrl}/api/mander/${manderId}/`);
-      fetchManders();
-    } catch (error) {
-      console.error('Error deleting mander:', error);
-    }
-  };*/
-=======
->>>>>>> origin/private
 
   const handleSearchMander = (event) => {
     const searchTerm = event.target.value.toLowerCase();
