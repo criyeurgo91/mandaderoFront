@@ -86,12 +86,23 @@ const RequestList = () => {
     }
   }, []);
 
-  const filteredRequests = requests.filter(
-    (request) =>
-      request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (statusFilter === "" ||
-        request.status_request.toLowerCase() === statusFilter.toLowerCase())
-  );
+  const filteredRequests = [
+    ...requests.filter(
+      (request) =>
+        !request.name_mander &&
+        request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (statusFilter === "" ||
+          request.status_request.toLowerCase() === statusFilter.toLowerCase())
+    ),
+    ...requests.filter(
+      (request) =>
+        request.name_mander &&
+        request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (statusFilter === "" ||
+          request.status_request.toLowerCase() === statusFilter.toLowerCase())
+    )
+  ];
+  
 
   return (
     <div className="bg-stone-900 text-white min-h-screen">
