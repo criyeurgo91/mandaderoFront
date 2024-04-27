@@ -16,13 +16,11 @@ const RequestList = () => {
   const fetchData = async () => {
     try {
       const [requestsResponse, mandersResponse] = await Promise.all([
-        axios.get(`${apiUrl}/api/request_list/`),
-        axios.get(`${apiUrl}/api/getlistmanders/`),
+        axios.get(`${apiUrl}/api/getlistrequest/`),
+        axios.get(`${apiUrl}/api/getlistactivemanders/`)
       ]);
       setRequests(requestsResponse.data);
-      setActiveManders(
-        mandersResponse.data.filter((mander) => mander.isactive_mander)
-      );
+      setActiveManders(mandersResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -37,15 +35,12 @@ const RequestList = () => {
   }, []);
 
   const handleManderSelect = (mander) => {
-    console.log(mander);
     setSelectedMander(mander);
   };
 
-  const handleAssignMander = async (requestId, mander_id_mander,detail_request) => {
-    console.log("Mander ID:", mander_id_mander, requestId ,);
+  const handleAssignMander = async (requestId, mander_id_mander, detail_request) => {
     if (!mander_id_mander) {
       alert("Please select a mander first.");
-      console.log("Mander ID:", mander_id_mander, requestId);
       return;
     }
 
@@ -62,7 +57,6 @@ const RequestList = () => {
       fetchData();
     } catch (error) {
       console.error(`Error assigning mander to request ${requestId}:`, error);
-      console.log("Error response:", error.response);
     }
   };
 
@@ -128,7 +122,6 @@ const RequestList = () => {
             <th className="border border-gray-300 px-4 py-2">Detail Request</th>
             <th className="border border-gray-300 px-4 py-2">Status Request</th>
             <th className="border border-gray-300 px-4 py-2">Mander Name</th>
-            <th className="border border-gray-300 px-4 py-2">Assign Mander</th>
           </tr>
         </thead>
         <tbody>
@@ -148,35 +141,35 @@ const RequestList = () => {
                 {getStatusName(request.status_request)}
               </td>
               <td className="border border-gray-800 px-4 py-2">
-                {request.name_mander || (
-                  <select
-                    onChange={(e) => handleManderSelect(e.target.value)}
-                    className="border border-gray-300 bg-black text-white h-8 px-2 rounded-md"
-                  >
-                    <option value="">Select Mander</option>
-                    {activeManders.map((mander) => (
-                      <option key={mander.id_mander} value={mander.id_mander}>
-                        {mander.name_user} {mander.lastname_user}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </td>
-              <td className="border border-gray-800 px-4 py-2">
+                {/* Mostramos el nombre del "mandero" si está asignado */}
                 {request.name_mander ? (
                   request.name_mander
                 ) : (
-                  
-                  <button
-                  onClick={() =>
-                    handleAssignMander(request.id_request, selectedMander, request.detail_request)
-                  }
-                  
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Assign
-                  </button>
-                  
+                  <>
+                    <select
+                      onChange={(e) => handleManderSelect(e.target.value)}
+                      className="border border-gray-300 bg-black text-white h-8 px-2 rounded-md"
+                    >
+                      <option value="">Select Mander</option>
+                      {activeManders.map((mander) => (
+                        <option key={mander.id_mander} value={mander.id_mander}>
+                          {mander.name_user} {mander.lastname_user}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={() =>
+                        handleAssignMander(
+                          request.id_request,
+                          selectedMander,
+                          request.detail_request
+                        )
+                      }
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                    >
+                      Assign
+                    </button>
+                  </>
                 )}
               </td>
             </tr>
