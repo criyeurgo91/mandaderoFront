@@ -202,6 +202,18 @@ const VehicleForm = () => {
               </select>
             </div>
             <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">
+                <input
+                  type="checkbox"
+                  name="isverified_vehicle"
+                  checked={formData.isverified_vehicle}
+                  onChange={(e) => setFormData({ ...formData, isverified_vehicle: e.target.checked })}
+                  className="ml-2"
+                />
+                <span className="ml-2 text-white">Verify</span>
+              </label>
+            </div>
+            <div className="mb-4">
               <label className="block text-white text-sm font-bold mb-2">Image:</label>
               <input
                 type="file"

@@ -19,6 +19,8 @@ const DetailMander = () => {
       const mander = allManders.find(mander => mander.id_mander === parseInt(id));
       if (mander) {
         setManderData(mander);
+
+        console.log(mander);
       } else {
         throw new Error(`Mander with ID ${id} not found.`);
       }
@@ -29,9 +31,20 @@ const DetailMander = () => {
     }
   };
 
+
   const handleClose = () => {
-    navigate(-1); // Navigates back one step in history
+    navigate(-1); 
   };
+
+
+  const handleEditVehicle=(vehicleId)=>{
+    navigate(`updatevehicle/${vehicleId}`)
+  }
+
+  const handleEditDocument=(documentId)=>{
+    navigate(`updatedocument/${documentId}`)
+  }
+
 
   if (loading) {
     return <div className="bg-stone-900 text-white p-4 py-20">Loading...</div>;
@@ -61,6 +74,11 @@ const DetailMander = () => {
             <div key={index}>
               <p>Document Type: {document.type_document}</p>
               <p>Image: <img src={document.image_document} alt={`Document ${index}`} /></p>
+              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2"
+            onClick={()=>handleEditDocument(document.id_document)}
+            >
+              edit
+            </button>
             </div>
           ))}
         </div>
@@ -72,8 +90,16 @@ const DetailMander = () => {
               <p>Model: {vehicle.model_vehicle}</p>
               <p>Plate: {vehicle.plate_vehicle}</p>
               <p>Image: <img src={vehicle.image_vehicle} alt={`Vehicle ${index}`} /></p>
+              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2"
+            onClick={()=>handleEditVehicle(vehicle.id_vehicle)}
+            >
+              edit
+            </button>
             </div>
           ))}
+          
+            
+          
         </div>
       </div>
       <div className="flex justify-center">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { axiosPut, axiosGet } from '../../Logic/Apihelpers';
+import { axiosPatch, axiosGet } from '../../Logic/Apihelpers';
 import { useNavigate, useParams } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
@@ -31,13 +31,12 @@ const UpdateAccountForm = () => {
     try {
       const updatedAccountData = {
         email_account: formData.emailUser,
-        password_account: formData.passwordUser,
         isadmin_account: formData.isadminUser || false,
         isactive_account: formData.isactiveUser || false,
       };
 
       
-      await axiosPut(`${apiUrl}/api/account/${id}/`, updatedAccountData);
+      await axiosPatch(`${apiUrl}/api/account/${id}/`, updatedAccountData);
       alert('Account Updated');
       navigate(window.history.back());
     } catch (error) {
@@ -71,20 +70,6 @@ const UpdateAccountForm = () => {
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.emailUser ? 'border-red-500' : ''}`}
             />
             {errors.emailUser && <span className="text-red-500">{errors.emailUser.message}</span>}
-          </div>
-          <div className="mb-4 text-black">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="passwordUser">
-              Password:
-            </label>
-            <input
-              {...register('passwordUser', { required: 'Password is required',
-              minLength: { value: 8, message: 'Password must have at least 8 characters' },
-              maxLength: { value: 20, message: 'Password cannot exceed 20 characters' },
-             })}
-              type="password"
-              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
-            />
-            {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
           </div>
           <div className="mb-4">
             <label className="flex items-center">

@@ -50,7 +50,6 @@ function UpdateUserForm() {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    // Mostrar la imagen seleccionada por el usuario
     setExistingImage(URL.createObjectURL(e.target.files[0]));
   };
 
@@ -107,7 +106,7 @@ function UpdateUserForm() {
           <label className="block text-white text-sm font-bold mb-2" htmlFor="image">
             Image:
           </label>
-          <input
+          <input          
             type="file"
             id="image"
             onChange={handleImageChange}

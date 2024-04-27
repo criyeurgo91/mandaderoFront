@@ -40,6 +40,16 @@ export async function axiosPut(endpoint, data) {
     }
 }
 
+export async function axiosPatch(endpoint, data) {
+    try {
+        const response = await axios.patch(endpoint, data);
+        return response.data;
+    } catch (error) {
+        console.error('ERROR AXIOS PATCH', error.message);
+        throw error;
+    }
+}
+
 export async function axiosDelete(endpoint, id) {
     try {
         const response = await axios.delete(endpoint + id);
