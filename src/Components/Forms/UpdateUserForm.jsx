@@ -1,158 +1,136 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { axiosGet, axiosPut } from '../../Logic/Apihelpers';
 import apiUrl from '../../config/apiConfig';
 
-function UpdateUserForm({ userId, onUpdate, onClose }) {
-  const [user, setUser] = useState(null);
-  const [image, setImage] = useState(null);
-  const [newImage, setNewImage] = useState(null)
+function UpdateUserForm() {
+  const { id } = useParams();
+  const navigate = useNavigate()
+  const [user, setUser] = useState({});
   const [name, setName] = useState('');
-  const [lastname, setLastname] = useState(''); 
+  const [lastname, setLastname] = useState('');
   const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
+  const [image, setImage] = useState(null);
+  const [accountId, setAccountId] = useState('')
+  const [existingImage, setExistingImage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetchUserData();
-  }, [userId]);
+    axiosGet(`${apiUrl}/api/user/${id}`).then(response => {
+      setUser(response);
+      setName(response.name_user);
+      setLastname(response.lastname_user);
+      setPhone(response.phone_user);
+      setAccountId(response.account_id_account);
+      setExistingImage(response.image_user);
+    });
+  }, [id]);
 
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/api/user/${userId}`);
-      setUser(response.data);
-      if (response.data) {
-        setName(response.data.name_user);
-        setLastname(response.data.lastname_user);
-        setPhone(response.data.phone_user);
-        if (response.data.image_user) {
-          setImage(response.data.image_user);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
+  const handleUpdate = () => {
+    const formData = new FormData();
+    formData.append('name_user', name);
+    formData.append('lastname_user', lastname);
+    formData.append('phone_user', phone);
+    formData.append('account_id_account', accountId)
+    if (image) {
+      formData.append('image_user', image);
     }
+    
+    axiosPut(`${apiUrl}/api/user/${id}/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(response => {
+      console.log(response);
+      setShowModal(true); // Mensaje modal
+    }).catch(error => {
+      console.error(error);
+    });
   };
 
-  const handleImageChange = (event) => {
-  const newImageFile = event.target.files[0];
-  setNewImage(newImageFile);
-  setImage(URL.createObjectURL(newImageFile));
-};
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const userData = {
-        account_id_account: user.account_id_account,
-        name_user: name,
-        lastname_user: lastname,
-        phone_user: phone,
-      };
-
-      
-      if (newImage) {
-        userData.image_user = newImage;
-      }
-
-      const formData = new FormData();
-      for (const key in userData) {
-        formData.append(key, userData[key]);
-      }
-
-      await axios.put(`${apiUrl}/api/user/${userId}/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setMessage('User updated successfully.');
-      onUpdate();
-      onClose();
-    } catch (error) {
-      setMessage('Failed to update user. Please try again.');
-      console.error('Error updating user:', error);
-    }
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+    setExistingImage(URL.createObjectURL(e.target.files[0]));
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(window.history.back()); 
+  };
+
+  const handleCancel = () => {
+    window.history.back(); 
+  }
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Update User</h2>
-      {message && (
-        <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
-          {message}
+    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
+      <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+        <h2 className="text-lg font-semibold mb-4 text-white">Edit User</h2>
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
+            Name:
+          </label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
+          />
         </div>
-      )}
-      {user && (
-        <form onSubmit={handleSubmit}>
-         {image && (
-            <img src={image} alt="User Avatar" className="w-24 h-24 mb-2 object-cover rounded-full" />
-          )}
-          <div className="mb-4">
-            <label htmlFor="image" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Edit Image
-            </label>
-            <input
-              id="image"
-              type="file"
-              className="hidden"
-              onChange={handleImageChange}
-              accept="image/*"
-            />
-          </div>
-          <div className="mb-4 text-black">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
-              Name:
-            </label>
-            <input
-              id="name"
-              type="text"
-              className="w-full px-3 py-2 border rounded-md"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4 text-black">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="lastname">
-              Lastname:
-            </label>
-            <input
-              id="lastname"
-              type="text"
-              className="w-full px-3 py-2 border rounded-md"
-              value={lastname}
-              onChange={(event) => setLastname(event.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4 text-black">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="phone">
-              Phone:
-            </label>
-            <input
-              id="phone"
-              type="text"
-              className="w-full px-3 py-2 border rounded-md"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              required
-            />
-          </div>
-          
-          <button
-            type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
-          >
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="lastname">
+            Lastname:
+          </label>
+          <input
+            type="text"
+            id="lastname"
+            value={lastname}
+            onChange={e => setLastname(e.target.value)}
+            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
+          />
+        </div>
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="phone">
+            Phone:
+          </label>
+          <input
+            type="text"
+            id="phone"
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
+            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
+          />
+        </div>
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="image">
+            Image:
+          </label>
+          <input          
+            type="file"
+            id="image"
+            onChange={handleImageChange}
+            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
+          />
+        </div>
+        {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full"/>}
+        <div className="flex justify-between">
+          <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleUpdate}>
             Update
           </button>
-          <button
-            type="reset"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-            onClick={onClose}
-          >
+          <button className="bg-red-950 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
             Cancel
           </button>
-        </form>
+        </div>
+      </div>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p className="text-lg font-semibold mb-4">Update Successful!</p>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Close</button>
+          </div>
+        </div>
       )}
     </div>
   );

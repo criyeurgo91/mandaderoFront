@@ -7,6 +7,7 @@ function ServicesForm({ onCreate, onClose }) {
   const [detail, setDetail] = useState('');
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState('');
+  const [ visible, setVisible] = useState(true)
   const [previewImage, setPreviewImage] = useState(null)
 
   const handleImageChange = (event) => {
@@ -23,6 +24,7 @@ function ServicesForm({ onCreate, onClose }) {
       formData.append('name_service', name);
       formData.append('detail_service', detail);
       formData.append('image_service', image);
+      formData.append('isvisible_service', visible)
 
       await axios.post(`${apiUrl}/api/service/`, formData);
 
@@ -30,6 +32,7 @@ function ServicesForm({ onCreate, onClose }) {
       setName('');
       setDetail('');
       setImage(null);
+      setVisible(true)
 
       onCreate();
       onClose();
@@ -86,6 +89,19 @@ function ServicesForm({ onCreate, onClose }) {
             accept="image/*"
           />
           {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
+        </div>
+        <div className="mb-4 text-black">
+          <label className="block text-white text-sm font-bold mb-2" htmlFor="detail">
+          
+          <input
+            id="visible"
+            type="checkbox"
+            className="form-checkbox"
+            value={visible}
+            onChange={(event) => setVisible(event.target.value)}
+          />
+          <span className="ml-2 text-white">Visible</span>
+          </label>
         </div>
         <div className='flex items-center justify-between'>
         <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold  rounded px-2 py-2">

@@ -8,7 +8,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/estadisticas/`);
+        const response = await fetch(`${apiUrl}/api/contadores/`);
         const data = await response.json();
         setEstadisticas(data);
       } catch (error) {

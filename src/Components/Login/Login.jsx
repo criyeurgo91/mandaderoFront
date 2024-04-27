@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import axiosInstance from '../../Logic/AxiosInstance';
 import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
@@ -21,6 +20,8 @@ const LoginForm = ({ onLogin }) => {
   
       if (response.data.detail === 'Inicio de sesión exitoso como administrador') {
         localStorage.setItem('token', response.data.token); 
+        localStorage.setItem('accountId', response.data.id_account); 
+        console.log('ID de la cuenta:', response.data.id_account); 
         console.log('Acceso permitido como administrador');
         navigate('/Admin/');
         onLogin()
@@ -37,7 +38,7 @@ const LoginForm = ({ onLogin }) => {
   return (
     <div className="flex justify-center items-center h-screen bg-slate-900">
       <div className="bg-white rounded-lg p-8 shadow-md w-80">
-        <h2 className="text-2xl font-bold mb-6 text-center">Inicio de Sesión</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Admin</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-semibold mb-2">Email:</label>
