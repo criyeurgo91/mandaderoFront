@@ -92,8 +92,8 @@ const VehicleForm = () => {
   };
 
   const vehicleBrandsCar = [
-    'Chevrolet', 'Hyundai', 'Kia', 'Volkswagen', 'Ford', 'Nissan', 'Chery', 'Honda', 'Toyota',
-    'Mitsubishi', 'Mazda','Fiat','Peugeot','Renauolt'
+    'Chevrolet', 'Hyundai', 'Kia', 'Volkswagen', 'Ford', 'Nissan', 'Chery', 'Audi', 'Toyota',
+    'Mitsubishi', 'Mazda','Fiat','Peugeot','Renault'
   ];
 
   const vehicleBrandsBike = [
