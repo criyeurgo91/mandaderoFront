@@ -72,18 +72,18 @@ const UserForm = () => {
   return (
     <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">User Form</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Usuario</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
-              Email:
+              Correo:
             </label>
             <input
               {...register('emailUser', {
-                required: 'Email is required',
+                required: 'Este campo es obligatorio',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
+                  message: 'correo invalido'
                 }
               })}
               type="email"
@@ -94,16 +94,16 @@ const UserForm = () => {
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="passwordUser">
-              Password:
+              Contraseña:
             </label>
             <input
               {...register('passwordUser', {
-                required: 'Password is required',
-                minLength: { value: 8, message: 'Password must have at least 8 characters' },
-                maxLength: { value: 20, message: 'Password cannot exceed 20 characters' }
+                required: 'Este campo es obligatorio',
+                minLength: { value: 8, message: 'la contraseña debe tener minimo 8 caracteres' },
+                maxLength: { value: 20, message: 'la contraseña no debe exceder los 20 caracteres' }
               })}
               type="password"
-              placeholder='password'
+              placeholder='contraseña'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
@@ -116,63 +116,63 @@ const UserForm = () => {
                 className="form-checkbox"
                 checked={isadminUser}
               />
-              <span className="ml-2 text-white">Is Admin?</span>
+              <span className="ml-2 text-white">Administrador</span>
             </label>
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
-              Name:
+              Nombre:
             </label>
             <input
               {...register('nameUser', { required: true })}
               type="text"
-              placeholder="name"
+              placeholder="nombre"
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.nameUser ? 'border-red-500' : ''}`}
             />
-            {errors.nameUser && <span className="text-red-500">Name Required</span>}
+            {errors.nameUser && <span className="text-red-500">Este campo es requerido</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
-              Lastname:
+              Apellido:
             </label>
             <input
               {...register('lastnameUser', { required: true })}
               type="text"
-              placeholder='lastname'
+              placeholder='apellido'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.lastnameUser ? 'border-red-500' : ''}`}
             />
-            {errors.lastnameUser && <span className="text-red-500">Lastname Required</span>}
+            {errors.lastnameUser && <span className="text-red-500">Este campo es requerido</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="phoneUser">
-              Phone:
+              Celular:
             </label>
             <input
               {...register('phoneUser', {
-                required: 'Phone number is required',
+                required: 'Este campo es requerido',
                 pattern: {
                   value: /^\d{10}$/, // valida que el telefono tenga 10 digitos
-                  message: 'Invalid phone number. Must contain exactly 10 digits'
+                  message: 'Numero de celular invalido'
                 }
               })}
               type="text"
-              placeholder='phone number'
+              placeholder='celular'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.phoneUser ? 'border-red-500' : ''}`}
             />
-            {errors.phoneUser && <span className="text-red-500"> Phone Required</span>}
+            {errors.phoneUser && <span className="text-red-500">Este campo es requerido</span>}
           </div>
           <button
             type="submit"
             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
-            Submit
+            Guardar
           </button>
           <button
             type="button"
             className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={handleCancel}
           >
-            Cancel
+            Cancelar
           </button>
         </form>
       </div>

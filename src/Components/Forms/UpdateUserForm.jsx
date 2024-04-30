@@ -65,10 +65,10 @@ function UpdateUserForm() {
   return (
     <div className="bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-semibold mb-4 text-white">Edit User</h2>
+        <h2 className="text-lg font-semibold mb-4 text-white">Usuario</h2>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
-            Name:
+            Nombre:
           </label>
           <input
             type="text"
@@ -80,7 +80,7 @@ function UpdateUserForm() {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="lastname">
-            Lastname:
+            Apellido:
           </label>
           <input
             type="text"
@@ -92,7 +92,7 @@ function UpdateUserForm() {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="phone">
-            Phone:
+            Celular:
           </label>
           <input
             type="text"
@@ -104,7 +104,7 @@ function UpdateUserForm() {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="image">
-            Image:
+            Imagen:
           </label>
           <input          
             type="file"
@@ -116,10 +116,10 @@ function UpdateUserForm() {
         {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full"/>}
         <div className="flex justify-between">
           <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleUpdate}>
-            Update
+            Actualizar
           </button>
           <button className="bg-red-950 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
-            Cancel
+            Cancelar
           </button>
         </div>
       </div>
@@ -127,7 +127,7 @@ function UpdateUserForm() {
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4">Update Successful!</p>
+            <p className="text-lg font-semibold mb-4">Actualizacion Exitosa!</p>
             <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Close</button>
           </div>
         </div>
