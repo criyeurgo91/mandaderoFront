@@ -1,36 +1,29 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
-const VehicleForm = ({ manderId, onCreate, onClose }) => {
+const VehicleForm = () => {
+
+  const { id } = useParams();
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     image_vehicle: null,
     brand_vehicle: "",
     plate_vehicle: "",
-    model_vehicle: null,
+    model_vehicle: '',
     color_vehicle: "",
-    type_vehicle: null,
+    type_vehicle: '',
     isverified_vehicle: false,
-    user_id_user: manderId // Asignando el ID del mander al formulario
+    user_id_user: id // Asignando el ID del mander al formulario
   });
 
+  
   const [loading, setLoading] = useState(false);
   const [plateError, setPlateError] = useState('');
   const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
   const [previewImage, setPreviewImage] = useState(null)
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/api/user/${manderId}`);
-        setUser(response.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [manderId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -80,17 +73,16 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
         image_vehicle: null,
         brand_vehicle: "",
         plate_vehicle: "",
-        model_vehicle: null,
+        model_vehicle: '',
         color_vehicle: "",
-        type_vehicle: null,
+        type_vehicle: '',
         isverified_vehicle: false,
-        user_id_user: manderId // Restaurando el ID del mander al formulario después del envío
+        user_id_user: id 
       });
       setLoading(false);
       alert('Formulario enviado exitosamente');
+      navigate (-1)
 
-      onCreate();
-      onClose();
 
     } catch (error) {
       console.error('Error:', error);
@@ -100,8 +92,8 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
   };
 
   const vehicleBrandsCar = [
-    'Chevrolet', 'Hyundai', 'Kia', 'Volkswagen', 'Ford', 'Nissan', 'Chery', 'Honda', 'Toyota',
-    'Mitsubishi', 'Mazda','Fiat','Peugeot','Renauolt'
+    'Chevrolet', 'Hyundai', 'Kia', 'Volkswagen', 'Ford', 'Nissan', 'Chery', 'Audi', 'Toyota',
+    'Mitsubishi', 'Mazda','Fiat','Peugeot','Renault'
   ];
 
   const vehicleBrandsBike = [
@@ -125,11 +117,16 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
     "Dark Gray", "Navy Blue", "Crimson Red", "Bright Yellow", "Multicolor",
   ];
 
+  const handleCancel = () => {
+    window.history.back(); 
+  }
+
   return (
-    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
+    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
+    <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
       <div>
         <div>
-          <h1 className="text-2xl text-center font-bold mb-4">Form Vehicles</h1>
+          <h1 className="text-2xl text-center font-bold mb-4 text-white">Vehicle Form</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text_black">
               <label className="block text-white text-sm font-bold mb-2">Type:</label>
@@ -140,9 +137,8 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
                 <option value="">Select Type</option>
-                <option value="car" className="hover:bg-gray-100 cursor-pointer">Carro</option>
-                <option value="bike" className="hover:bg-gray-100 cursor-pointer">Moto</option>
-                <option value="bicycle" className="hover:bg-gray-100 cursor-pointer">Bicicleta</option>
+                <option value="car" className="hover:bg-gray-100 cursor-pointer">Car</option>
+                <option value="bike" className="hover:bg-gray-100 cursor-pointer">Bike</option>
               </select>
             </div>
             <div className="mb-4">
@@ -206,6 +202,18 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               </select>
             </div>
             <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">
+                <input
+                  type="checkbox"
+                  name="isverified_vehicle"
+                  checked={formData.isverified_vehicle}
+                  onChange={(e) => setFormData({ ...formData, isverified_vehicle: e.target.checked })}
+                  className="ml-2"
+                />
+                <span className="ml-2 text-white">Verify</span>
+              </label>
+            </div>
+            <div className="mb-4">
               <label className="block text-white text-sm font-bold mb-2">Image:</label>
               <input
                 type="file"
@@ -226,7 +234,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
               <button
           type="reset"
           className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-          onClick={onClose}
+          onClick={handleCancel}
         >
           Cancel
         </button>
@@ -234,6 +242,7 @@ const VehicleForm = ({ manderId, onCreate, onClose }) => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

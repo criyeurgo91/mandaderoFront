@@ -8,6 +8,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
   const [image, setImage] = useState(null);
   const [currentImage, setCurrentImage] = useState(null);
   const [message, setMessage] = useState('');
+  const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     fetchServiceData();
@@ -19,6 +20,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
       setName(response.data.name_service);
       setDetail(response.data.detail_service);
       setCurrentImage(response.data.image_service);
+      setVisible(response.data.isvisible_service);
     } catch (error) {
       console.error('Error fetching service data:', error);
     }
@@ -31,6 +33,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
       const formData = new FormData();
       formData.append('name_service', name);
       formData.append('detail_service', detail);
+      formData.append('isvisible_service', visible)
       
       if (image) {
         formData.append('image_service', image);
@@ -119,6 +122,17 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
           accept="image/*"
         />
       </div>
+      <div className="mb-4">
+          <label className="block text-white text-sm font-bold mb-2">
+          
+          <input
+            type="checkbox"
+            checked={visible}
+            onChange={(event) => setVisible(event.target.checked)}
+          />
+          <span className="ml-2 text-white">Visible</span>
+          </label>
+        </div>
         <button
           type="submit"
           className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
