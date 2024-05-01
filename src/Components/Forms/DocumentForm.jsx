@@ -1,30 +1,23 @@
 import  { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
-function DocumentForm({ onCreate, onClose }) {
+function DocumentForm() {
+  const { id } = useParams()
   const [imageDocument, setImageDocument] = useState(null);
   const [previewImage, setPreviewImage] = useState(null)
   const [isDocumentVehicle, setIsDocumentVehicle] = useState(false);
   const [isVerifiedDocument, setIsVerifiedDocument] = useState(false);
-  const [typeDocument, setTypeDocument] = useState(null);
-  const [dateVerifiedDocument, setDateVerifiedDocument] = useState(null);
+  const [typeDocument, setTypeDocument] = useState(false);
+  const [dateVerifiedDocument, setDateVerifiedDocument] = useState('');
   const [userIdUser, setUserIdUser] = useState('');
   const [message, setMessage] = useState('');
   const [users, setUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false)
+  const navigate = useNavigate()
+  
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/api/user/`);
-      setUsers(response.data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
 
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
@@ -42,7 +35,7 @@ function DocumentForm({ onCreate, onClose }) {
       formData.append('isverified_document', isVerifiedDocument);
       formData.append('type_document', typeDocument);
       formData.append('dateverified_document', dateVerifiedDocument);
-      formData.append('user_id_user', userIdUser);
+      formData.append('user_id_user', id);
 
       await axios.post(`${apiUrl}/api/document/`, formData, {
         headers: {
@@ -51,6 +44,7 @@ function DocumentForm({ onCreate, onClose }) {
       });
 
       setMessage('Document added successfully.');
+      setShowModal(true);
 
      
       setImageDocument(null);
@@ -61,21 +55,25 @@ function DocumentForm({ onCreate, onClose }) {
       setDateVerifiedDocument('');
       setUserIdUser('');
 
-      // Llamar a la función onCreate para actualizar la lista de usuarios
-      onCreate();
-
-      // Llamar a la función onClose para cerrar el formulario después de una creación exitosa
-      onClose();
-
     } catch (error) {
       setMessage('Error adding document. Please try again.');
       console.error('Error adding document:', error);
     }
   };
 
+  const handleCancel = () => {
+    window.history.back(); 
+  }
+
+  const closeModalAndNavigate = () => {
+    setShowModal(false);
+    navigate(window.history.back());
+  };
+
   return (
-    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Add Document</h2>
+    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
+    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+      <h2 className="text-lg font-semibold mb-4 text-white">Documento</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
           {message}
@@ -84,7 +82,7 @@ function DocumentForm({ onCreate, onClose }) {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="image_document">
-            Document Image:
+            Imagen:
           </label>
           <input
             id="image_document"
@@ -97,7 +95,7 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">
-            Document Vehicle
+            Documento del Vehiculo
           </label>
           <input
             type="checkbox"
@@ -108,7 +106,7 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">
-            Verified Document
+            Documento Verificado
           </label>
           <input
             type="checkbox"
@@ -119,7 +117,7 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="type_document">
-            Document Type:
+            Tipo de Documento:
           </label>
           <select
             id="type_document"
@@ -128,7 +126,7 @@ function DocumentForm({ onCreate, onClose }) {
             onChange={(event) => setTypeDocument(event.target.value)}
             required
           >
-            <option value="">Select Document Type</option>
+            <option value="">Seleccione tipo de documento</option>
             <option value="CC">Cedula de Ciudadania</option>
             <option value="SOAT">SOAT</option>
             <option value="LICENCIA">Licencia</option>
@@ -139,7 +137,7 @@ function DocumentForm({ onCreate, onClose }) {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="dateverified_document">
-            Date Verified Document:
+            Fecha de verificacion:
           </label>
           <input
             id="dateverified_document"
@@ -149,39 +147,31 @@ function DocumentForm({ onCreate, onClose }) {
             onChange={(event) => setDateVerifiedDocument(event.target.value)}
           />
         </div>
-        <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="user">
-            User:
-          </label>
-          <select
-            id="user"
-            className="w-full px-3 py-2 border rounded-md"
-            value={userIdUser}
-            onChange={(event) => setUserIdUser(event.target.value)}
-            required
-          >
-            <option value="">Select User</option>
-            {users.map((user) => (
-              <option key={user.id_user} value={user.id_user}>
-                {user.name_user} {user.lastname_user}
-              </option>
-            ))}
-          </select>
-        </div>
         <button
           type="submit"
           className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
-          Add Document
+          Agregar
         </button>
         <button
           type="reset"
           className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
-          onClick={onClose}
+          onClick={handleCancel}
         >
-          Cancel
+          Cancelar
         </button>
       </form>
+      {/* Modal */}
+      {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
+            <div className="relative bg-white p-8 rounded-lg shadow-lg">
+              <p className="text-lg text-center font-semibold">Document registered successfully</p>
+              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={closeModalAndNavigate}>Close</button>
+            </div>
+          </div>
+        )}
+    </div>
     </div>
   );
 }
