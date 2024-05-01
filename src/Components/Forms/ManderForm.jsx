@@ -126,12 +126,12 @@ const ManderForm = () => {
   return (
     <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">Mander Form</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Mander</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="imageMander">
-              Image:
+              Imagen:
             </label>
             <input
               type="file"
@@ -142,14 +142,14 @@ const ManderForm = () => {
             />
           </div>
             <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
-              Email:
+              Correo:
             </label>
             <input
               {...register('emailUser', {
-                required: 'Email is required',
+                required: 'este campo es obligatorio',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
+                  message: 'correo invalido'
                 }
               })}
               type="email"
@@ -160,16 +160,16 @@ const ManderForm = () => {
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="passwordUser">
-              Password:
+              Contraseña:
             </label>
             <input
               {...register('passwordUser', {
-                required: 'Password is required',
-                minLength: { value: 8, message: 'Password must have at least 8 characters' },
-                maxLength: { value: 20, message: 'Password cannot exceed 20 characters' }
+                required: 'este campo es obligatorio',
+                minLength: { value: 8, message: 'la contraseña debe tener minimo 8 caracteres' },
+                maxLength: { value: 20, message: 'la contraseña debe tener maximo 20 caracteres' }
               })}
               type="password"
-              placeholder='password'
+              placeholder='contraseña'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
@@ -187,71 +187,71 @@ const ManderForm = () => {
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
-              Name:
+              Nombre:
             </label>
             <input
               {...register('nameUser', { required: true })}
               type="text"
-              placeholder="name"
+              placeholder="nombre"
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.nameUser ? 'border-red-500' : ''}`}
             />
-            {errors.nameUser && <span className="text-red-500">Name Required</span>}
+            {errors.nameUser && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
-              Lastname:
+              Apellido:
             </label>
             <input
               {...register('lastnameUser', { required: true })}
               type="text"
-              placeholder='lastname'
+              placeholder='apellido'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.lastnameUser ? 'border-red-500' : ''}`}
             />
-            {errors.lastnameUser && <span className="text-red-500">Lastname Required</span>}
+            {errors.lastnameUser && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="phoneUser">
-              Phone:
+              Celular:
             </label>
             <input
               {...register('phoneUser', {
-                required: 'Phone number is required',
+                required: 'este campo es obligatorio',
                 pattern: {
                   value: /^\d{10}$/, // valida que el telefono tenga 10 digitos
-                  message: 'Invalid phone number. Must contain exactly 10 digits'
+                  message: 'numero de celular invalido'
                 }
               })}
               type="text"
-              placeholder='phone number'
+              placeholder='numero de celular'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.phoneUser ? 'border-red-500' : ''}`}
             />
-            {errors.phoneUser && <span className="text-red-500"> Phone Required</span>}
+            {errors.phoneUser && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
-              Document:
+              Documento:
             </label>
             <input
               {...register('ccMander', { required: true })}
               type="text"
-              placeholder='document number'
+              placeholder='numero de documento'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.ccMander ? 'border-red-500' : ''}`}
             />
-            {errors.ccMander && <span className="text-red-500">Document Required</span>}
+            {errors.ccMander && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
-              Address:
+              Direccion:
             </label>
             <input
               {...register('addressMander', { required: true })}
               type="text"
-              placeholder='addreess'
+              placeholder='direccion'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.addressMander ? 'border-red-500' : ''}`}
             />
-            {errors.addressMander && <span className="text-red-500">Address Required</span>}
+            {errors.addressMander && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
-          <div className=' text-lg font-bold'>Status:
+          <div className=' text-lg font-bold text-white'>Estado:
           <div className="mb-4">
             <label className="flex items-center">
               <input
@@ -260,7 +260,7 @@ const ManderForm = () => {
                 className="form-checkbox"
                 checked={activeMander}
               />
-              <span className=" text-sm ml-2 text-white">Active</span>
+              <span className=" text-sm ml-2 text-white">Activo</span>
             </label>
           </div>
           <div className="mb-4">
@@ -271,11 +271,11 @@ const ManderForm = () => {
                 className="form-checkbox"
                 checked={validateMander}
               />
-              <span className=" text-sm ml-2 text-white">Validate</span>
+              <span className=" text-sm ml-2 text-white">Validar</span>
             </label>
           </div>
           </div>
-          <div className='text-base font-bold text-white'>Vehicle Type:
+          <div className='text-base font-bold text-white'>Tipo de Vehiculo:
           <div className="mb-4">
             <label className="flex items-center">
               <input
@@ -284,7 +284,7 @@ const ManderForm = () => {
                 className="form-checkbox"
                 checked={carMander}
               />
-              <span className=" text-sm ml-2 text-white">Car</span>
+              <span className=" text-sm ml-2 text-white">Carro</span>
             </label>
           </div>
           <div className="mb-4">
@@ -295,7 +295,7 @@ const ManderForm = () => {
                 className="form-checkbox"
                 checked={bikeMander}
               />
-              <span className=" text-sm ml-2 text-white">Bike</span>
+              <span className=" text-sm ml-2 text-white">Moto</span>
             </label>
           </div>
           </div>
@@ -303,14 +303,14 @@ const ManderForm = () => {
             type="submit"
             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
-            Submit
+            Registrar
           </button>
           <button
             type="button"
             className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={handleCancel}
           >
-            Cancel
+            Cancelar
           </button>
         </form>
       </div>

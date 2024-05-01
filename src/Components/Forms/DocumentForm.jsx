@@ -73,7 +73,7 @@ function DocumentForm() {
   return (
     <div className="bg-stone-900 min-h-screen flex justify-center items-center">
     <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-      <h2 className="text-lg font-semibold mb-4">Add Document</h2>
+      <h2 className="text-lg font-semibold mb-4 text-white">Documento</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
           {message}
@@ -82,7 +82,7 @@ function DocumentForm() {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="image_document">
-            Document Image:
+            Imagen:
           </label>
           <input
             id="image_document"
@@ -95,7 +95,7 @@ function DocumentForm() {
         </div>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">
-            Document Vehicle
+            Documento del Vehiculo
           </label>
           <input
             type="checkbox"
@@ -106,7 +106,7 @@ function DocumentForm() {
         </div>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">
-            Verified Document
+            Documento Verificado
           </label>
           <input
             type="checkbox"
@@ -117,7 +117,7 @@ function DocumentForm() {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="type_document">
-            Document Type:
+            Tipo de Documento:
           </label>
           <select
             id="type_document"
@@ -126,7 +126,7 @@ function DocumentForm() {
             onChange={(event) => setTypeDocument(event.target.value)}
             required
           >
-            <option value="">Select Document Type</option>
+            <option value="">Seleccione tipo de documento</option>
             <option value="CC">Cedula de Ciudadania</option>
             <option value="SOAT">SOAT</option>
             <option value="LICENCIA">Licencia</option>
@@ -137,7 +137,7 @@ function DocumentForm() {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="dateverified_document">
-            Date Verified Document:
+            Fecha de verificacion:
           </label>
           <input
             id="dateverified_document"
@@ -151,14 +151,14 @@ function DocumentForm() {
           type="submit"
           className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
-          Add Document
+          Agregar
         </button>
         <button
           type="reset"
           className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={handleCancel}
         >
-          Cancel
+          Cancelar
         </button>
       </form>
       {/* Modal */}

@@ -60,7 +60,7 @@ const HeaderComponent = () => {
         <div>
           <h1>
             <NavLink to="" className="text-xl font-bold">
-              Dashboard
+              Panel de Administracion
             </NavLink>
           </h1>
           <div className="text-sm mt-2">
@@ -70,7 +70,7 @@ const HeaderComponent = () => {
 
         <div className="flex items-center space-x-4">
           {user && (
-            <div className="font-bold">Welcome Sr.
+            <div className="font-bold">Bien Venido Sr.
             <span className="flex items-center font-semibold">
               {user.name_user} {user.lastname_user}
             </span>

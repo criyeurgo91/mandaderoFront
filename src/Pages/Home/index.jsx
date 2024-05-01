@@ -23,17 +23,17 @@ function Home() {
   return (
     <div className="bg-stone-900 text-white flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Home</h2>
+        <h2 className="text-2xl font-bold">Inicio</h2>
       </div>
 
       {estadisticas && (
         <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg">
-          {renderStatCard("Registered Users", estadisticas.total_users, <FaUser />)}
-          {renderStatCard("Registered Manders", estadisticas.total_manders, <FaUserSecret />)}
-          {renderStatCard("Requests Made", estadisticas.total_requests, <FaTasks />)}
-          {renderStatCard("Pending Requests", estadisticas.pending_requests, <FaHourglassHalf />)}
-          {renderStatCard("Requests in Progress", estadisticas.processing_requests, <FaUserPlus />)}
-          {renderStatCard("Completed Requests", estadisticas.finished_requests, <FaCheckCircle />)}
+          {renderStatCard("Usuarios Registrados :", estadisticas.total_users, <FaUser />)}
+          {renderStatCard("Mandaderos :", estadisticas.total_manders, <FaUserSecret />)}
+          {renderStatCard("Solicitudes Realizadas : ", estadisticas.total_requests, <FaTasks />)}
+          {renderStatCard("Solicitudes pendientes : ", estadisticas.pending_requests, <FaHourglassHalf />)}
+          {renderStatCard("Solicitudes en Progreso :", estadisticas.processing_requests, <FaUserPlus />)}
+          {renderStatCard("Solicitudes Finalizadas :", estadisticas.finished_requests, <FaCheckCircle />)}
         </div>
       )}
     </div>

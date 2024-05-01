@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { axiosGet } from '../../Logic/Apihelpers';
+import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
 import '../../Components/User/Index.css';
 import apiUrl from '../../config/apiConfig';
 
@@ -12,17 +12,37 @@ function UserList() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedAccountId, setSelectedAccountId] = useState(null)
   const [selectedOption, setSelectedOption] = useState('');
+  const [userIsActive, setUserIsActive] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosGet(`${apiUrl}/api/getlistuser/`).then((response) => {
-      const filteredUsers = response.filter((user) => !user.ismander_user);
-      setUsers(filteredUsers);
-      setFilteredUsers(filteredUsers);
-    });
+    axiosGet(`${apiUrl}/api/getlistuser/`)
+      .then(async (response) => {
+        console.log(response);
+        const usersWithIsActive = await Promise.all(response.map(async (user) => {
+          try {
+            const accountResponse = await axiosGet(`${apiUrl}/api/account/${user.id_account}/`);
+            return { ...user, isactive_account: accountResponse.isactive_account };
+          } catch (error) {
+            console.error(`Error fetching account state for user ${user.id_user}:`, error);
+            return user;
+          }
+        }));
+        
+        setUsers(usersWithIsActive);
+        setFilteredUsers(usersWithIsActive);
+        
+        // Aquí puedes establecer el estado de activación del primer usuario seleccionado
+        if (usersWithIsActive.length > 0) {
+          setUserIsActive(usersWithIsActive[0].isactive_account || false);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching user list:', error);
+      });
   }, []);
   
-
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
     setSearchTerm(searchTerm);
@@ -36,35 +56,51 @@ function UserList() {
     setAlertMessage(filtered.length === 0 ? "User doesn't exist" : '');
   };
 
-  const handleEdit = (userId, accountId) => {
-    if (selectedUserId === userId) {
-        setSelectedUserId(null);
-        setSelectedAccountId(null);
-        setSelectedOption('');
-    } else {
+  const handleEdit = (userId) => {
         setSelectedUserId(userId);
-        setSelectedAccountId(accountId);
-        setSelectedOption('');
-    }
-};
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    if (option === 'updateAccount') {
-      navigate(`updateaccount/${selectedAccountId}`);
-    } else if (option === 'updateProfile') {
-      navigate(`updateprofile/${selectedUserId}`);
-    }
+        navigate(`updateprofile/${userId}`)
   };
 
   const handleNewUser = () => {
     navigate('profile');
   };
 
+  const handleToggleActive = async (userId, isActive) => {
+    try {
+      // Buscar el usuario en la lista por su ID de usuario
+      const userToUpdate = users.find(user => user.id_user === userId);
+      if (!userToUpdate) {
+        console.error(`User with ID ${userId} not found.`);
+        return;
+      }
+      
+      const accountId = userToUpdate.id_account; // Obtener el ID de la cuenta asociada al usuario
+  
+      const updatedUser = {
+        isactive_account: !isActive,
+      };
+  
+      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedUser);
+  
+      // Actualizar el estado local después de que se haya confirmado la actualización en el servidor
+      const updatedUsers = users.map(user =>
+        user.id_user === userId ? { ...user, isactive_account: !isActive } : user
+      );
+      setUsers(updatedUsers);
+      setFilteredUsers(updatedUsers);
+    } catch (error) {
+      console.error('Error toggling user active state:', error);
+      alert('Failed to toggle user active state');
+    }
+  };
+  
+  
+  
+
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5">User List</h2>
+        <h2 className="text-2xl font-bold mb-5">Usuarios</h2>
         <div className="container mx-auto px-4 py-8">
           <div className="flex mb-4">
             <input
@@ -77,24 +113,45 @@ function UserList() {
               className="bg-green-950 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
               onClick={handleNewUser}
             >
-              New User
+              Registrar
             </button>
           </div>
           {alertMessage && <div className="text-red-950">{alertMessage}</div>}
+          <div className='table-container'>
           <table className="w-full border-collapse border border-black custom-table">
             <thead className="bg-stone-600">
               <tr>
-                <th className="px-4 py-2 border">Email</th>
-                <th className="px-4 py-2 border">Name</th>
-                <th className="px-4 py-2 border">Lastname</th>
-                <th className="px-4 py-2 border">Phone</th>
-                <th className="px-4 py-2 border">Actions</th>
+                <th className="px-4 py-2 border">Correo</th>
+                <th className="px-4 py-2 border">Nombre</th>
+                <th className="px-4 py-2 border">Apellido</th>
+                <th className="px-4 py-2 border">Celular</th>
+                <th className="px-4 py-2 border">Accion</th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.map((user) => (
                 <tr key={user.id_user} className="border border-black">
-                  <td className="border px-4 py-2">{user.email_account}</td>
+                  <td className="border px-4 py-2">
+                    {user.email_account}
+                    <div className="ml-2 py-2 relative">
+                      <input
+                        type="checkbox"
+                        checked={user.isactive_account}
+                        onChange={() => handleToggleActive(user.id_user, user.isactive_account)}
+                        id={`toggle-${user.id_user}`}
+                        className="sr-only"
+                      />
+                      <label
+                        htmlFor={`toggle-${user.id_user}`}
+                        className={`block cursor-pointer w-14 h-7 rounded-full ${user.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
+                      >
+                        <span
+                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${user.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
+                        ></span>
+                      </label>
+                      <span className='ml-2'>{user.isactive_account ? "Activo" : "Bloqueado"}</span>
+                    </div>
+                  </td>
                   <td className="border px-4 py-2">{user.name_user}</td>
                   <td className="border px-4 py-2">{user.lastname_user}</td>
                   <td className="border px-4 py-2">{user.phone_user}</td>
@@ -102,29 +159,17 @@ function UserList() {
                     <div className="flex justify-center">
                       <button
                         className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-                        onClick={() => handleEdit(user.id_user, user.id_account)}
+                        onClick={() => handleEdit(user.id_user)}
                       >
-                        Edit
+                        Editar
                       </button>
-                      {selectedUserId === user.id_user && (
-                        <div className="ml-2">
-                          <select
-                            className="bg-gray-700 text-white px-2 py-1 rounded"
-                            value={selectedOption}
-                            onChange={(e) => handleOptionSelect(e.target.value)}
-                          >
-                            <option value="">Select...</option>
-                            <option value="updateAccount">Update Account</option>
-                            <option value="updateProfile">Update Profile</option>
-                          </select>
-                        </div>
-                      )}
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
