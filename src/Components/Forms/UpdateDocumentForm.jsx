@@ -76,7 +76,7 @@ function UpdateDocumentForm() {
   return (
     <div className="bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-semibold mb-4">Update Document</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Actualizar Documento</h2>
         {message && (
           <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
             {message}
@@ -85,7 +85,7 @@ function UpdateDocumentForm() {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="image_document">
-              Document Image:
+              Imagen:
             </label>
             <input
               id="image_document"
@@ -97,7 +97,7 @@ function UpdateDocumentForm() {
           </div>
           <div className="mb-4">
             <label className="block text-white text-sm font-bold mb-2">
-              Document Vehicle
+              Documento del Vehiculo
             </label>
             <input
               type="checkbox"
@@ -108,7 +108,7 @@ function UpdateDocumentForm() {
           </div>
           <div className="mb-4">
             <label className="block text-white text-sm font-bold mb-2">
-              Verified Document
+              Verificar Documento
             </label>
             <input
               type="checkbox"
@@ -117,19 +117,21 @@ function UpdateDocumentForm() {
               onChange={(event) => setIsVerifiedDocument(event.target.checked)}
             />
           </div>
+          <div className='flex justify-between'>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
           >
-            Update Document
+            Actualizar
           </button>
           <button
             type="button"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-2 rounded"
             onClick={handleCancel}
           >
-            Cancel
+            Cancelar
           </button>
+          </div>
         </form>
         {/* Modal */}
         {showModal && (

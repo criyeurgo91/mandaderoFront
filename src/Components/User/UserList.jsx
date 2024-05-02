@@ -13,7 +13,6 @@ function UserList() {
   const [selectedAccountId, setSelectedAccountId] = useState(null)
   const [selectedOption, setSelectedOption] = useState('');
   const [userIsActive, setUserIsActive] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {

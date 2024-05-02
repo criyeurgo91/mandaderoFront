@@ -79,16 +79,14 @@ const UpdateVehicleForm = () => {
   };
 
   const colors = [
-    "White", "Black", "Gray", "Silver", "Red", "Blue", "Yellow",
-    "Green", "Orange", "Brown", "Beige", "Pearl White", "Matte Black",
-    "Dark Gray", "Navy Blue", "Crimson Red", "Bright Yellow", "Multicolor",
+    "Blanco", "Negro", "Gris", "Plata", "Rojo", "Azul", "Amarillo", "Verde", "Naranja", "Marrón", "Beige", "Blanco Perla", "Negro Mate", "Gris Oscuro", "Azul Marino", "Rojo Carmesí", "Amarillo Brillante", "Multicolor", "Morado", "Rosa", "Turquesa", "Oro Rosa", "Cobre", "Violeta",
   ];
 
   return (
     <div className="bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
         <div>
-          <h1 className="text-2xl text-center font-bold mb-4 text-white">Update Vehicle</h1>
+          <h1 className="text-2xl text-center font-bold mb-4 text-white">Actualizar Vehiculo</h1>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="mb-4">
               <label className="block text-white text-sm font-bold mb-2">Color:</label>
@@ -98,7 +96,7 @@ const UpdateVehicleForm = () => {
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
-                <option value="">Select Color</option>
+                <option value="">Selecciona el  Color</option>
                 {colors.map((color, index) => (
                   <option key={index} value={color}>
                     {color}
@@ -115,11 +113,11 @@ const UpdateVehicleForm = () => {
                   onChange={(e) => setFormData({ ...formData, isverified_vehicle: e.target.checked })}
                   className="ml-2"
                 />
-                <span className="ml-2 text-white">Verified</span>
+                <span className="ml-2 text-white">Verificado</span>
               </label>
             </div>
             <div className="mb-4">
-              <label className="block text-white text-sm font-bold mb-2">Image:</label>
+              <label className="block text-white text-sm font-bold mb-2">Imagen:</label>
               <input
                 type="file"
                 name="image_vehicle"
@@ -134,14 +132,14 @@ const UpdateVehicleForm = () => {
                 disabled={loading}
                 className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
-                {loading ? 'Loading...' : 'Submit'}
+                {loading ? 'Loading...' : 'Actualizar'}
               </button>
               <button
                 type="button"
                 className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
                 onClick={handleCancel}
               >
-                Cancel
+                Cancelar
               </button>
             </div>
           </form>
