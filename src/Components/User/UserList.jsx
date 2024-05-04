@@ -105,7 +105,7 @@ function UserList() {
             <input
               type="text"
               className="w-1/2 border-2 border-gray-700 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
-              placeholder="Search..."
+              placeholder="Buscar..."
               onChange={handleSearch}
             />
             <button
@@ -142,7 +142,7 @@ function UserList() {
                       />
                       <label
                         htmlFor={`toggle-${user.id_user}`}
-                        className={`block cursor-pointer w-14 h-7 rounded-full ${user.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
+                        className={`block cursor-pointer w-12 h-5 rounded-full ${user.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
                       >
                         <span
                           className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${user.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}

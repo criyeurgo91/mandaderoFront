@@ -55,7 +55,7 @@ const HeaderComponent = () => {
   });
 
   return (
-    <header className="bg-black text-white p-4">
+    <header className="bg-indigo-900 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <h1>
@@ -70,7 +70,7 @@ const HeaderComponent = () => {
 
         <div className="flex items-center space-x-4">
           {user && (
-            <div className="font-bold">Bien Venido Sr.
+            <div className="font-bold">Bienvenido Sr.
             <span className="flex items-center font-semibold">
               {user.name_user} {user.lastname_user}
             </span>
