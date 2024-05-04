@@ -76,11 +76,11 @@ const RequestList = () => {
   const getStatusName = useCallback((status) => {
     switch (status.toLowerCase()) {
       case "proceso":
-        return "Process";
+        return "Proceso";
       case "pendiente":
-        return "Pending";
+        return "Pendiente";
       case "finalizado":
-        return "Finish";
+        return "Finalizado";
       default:
         return "";
     }
@@ -107,11 +107,11 @@ const RequestList = () => {
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Request List</h1>
+        <h1 className="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
         <div className="flex justify-start mb-4">
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Buscar..."
             className="w-1/4 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none mr-4"
             onChange={handleSearch}
           />
@@ -119,20 +119,20 @@ const RequestList = () => {
             className="w-1/6 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
             onChange={handleStatusFilter}
           >
-            <option value="">All</option>
-            <option value="proceso">Process</option>
-            <option value="pendiente">Pending</option>
-            <option value="finalizado">Finish</option>
+            <option value="">Mostrar todo</option>
+            <option value="proceso">Proceso</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="finalizado">Finalizado</option>
           </select>
         </div>
       </div>
       <table className="w-full max-w-6xl mx-auto border-collapse border border-black custom-table">
         <thead className="bg-stone-600">
           <tr>
-            <th className="border border-gray-300 px-4 py-2">User Name</th>
-            <th className="border border-gray-300 px-4 py-2">Detail Request</th>
-            <th className="border border-gray-300 px-4 py-2">Status Request</th>
-            <th className="border border-gray-300 px-4 py-2">Mander Name</th>
+            <th className="border border-gray-300 px-4 py-2">Usuario</th>
+            <th className="border border-gray-300 px-4 py-2">Detalle</th>
+            <th className="border border-gray-300 px-4 py-2">Estado</th>
+            <th className="border border-gray-300 px-4 py-2">Mandadero</th>
           </tr>
         </thead>
         <tbody>
@@ -161,7 +161,7 @@ const RequestList = () => {
                       onChange={(e) => handleManderSelect(e.target.value)}
                       className="border border-gray-300 bg-black text-white h-8 px-2 rounded-md"
                     >
-                      <option value="">Select Mander</option>
+                      <option value="">Seleccionar Mandadero</option>
                       {activeManders.map((mander) => (
                         <option key={mander.id_mander} value={mander.id_mander}>
                           {mander.name_user} {mander.lastname_user}
@@ -178,7 +178,7 @@ const RequestList = () => {
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
                     >
-                      Assign
+                      Asignar
                     </button>
                   </>
                 )}
