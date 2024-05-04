@@ -61,39 +61,41 @@ const DetailMander = () => {
           <img src={manderData.image_mander} alt={`Image of ${manderData.name_user} ${manderData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
           <div className="text-center">
             <p className="text-lg font-bold">{manderData.name_user} {manderData.lastname_user}</p>
-            <p>CC: {manderData.cc_mander}</p>
-            <span className='font-bold'>Phone:</span>
+            <p>Documento: {manderData.cc_mander}</p>
+            <span className='font-bold'>Correo:</span>
+            <p>{manderData.email_account}</p>
+            <span className='font-bold'>Celular:</span>
             <p>{manderData.phone_user}</p>
-            <span className='font-bold'>Address:</span>
+            <span className='font-bold'>Direccion:</span>
             <p>{manderData.address_mander}</p>
           </div>
         </div>
         <div className="w-full md:w-1/3">
-          <h2 className="text-lg font-bold mb-2">Documents</h2>
+          <h2 className="text-lg font-bold mb-2">Documentos</h2>
           {manderData.documents.map((document, index) => (
             <div key={index}>
-              <p>Document Type: {document.type_document}</p>
-              <p>Image: <img src={document.image_document} alt={`Document ${index}`} /></p>
-              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2"
+               <p><img src={document.image_document} alt={`Document ${index}`} className='w-auto h-44'/></p>
+              <p>Tipo de Documento: {document.type_document}</p>
+              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
             onClick={()=>handleEditDocument(document.id_document)}
             >
-              edit
+              Editar
             </button>
             </div>
           ))}
         </div>
         <div className="w-full md:w-1/3">
-          <h2 className="text-lg font-bold mb-2">Vehicles</h2>
+          <h2 className="text-lg font-bold mb-2">Vehiculos</h2>
           {manderData.vehicles.map((vehicle, index) => (
             <div key={index}>
-              <p>Vehicle Brand: {vehicle.brand_vehicle}</p>
-              <p>Model: {vehicle.model_vehicle}</p>
-              <p>Plate: {vehicle.plate_vehicle}</p>
-              <p>Image: <img src={vehicle.image_vehicle} alt={`Vehicle ${index}`} /></p>
-              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2"
+              <p><img src={vehicle.image_vehicle} alt={`Vehicle ${index}`} className='w-auto h-44'/></p>
+              <p>Marca: {vehicle.brand_vehicle}</p>
+              <p>Modelo: {vehicle.model_vehicle}</p>
+              <p>Placa: {vehicle.plate_vehicle}</p>
+              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
             onClick={()=>handleEditVehicle(vehicle.id_vehicle)}
             >
-              edit
+              Editar
             </button>
             </div>
           ))}
@@ -104,7 +106,7 @@ const DetailMander = () => {
       </div>
       <div className="flex justify-center">
         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={handleClose}>
-          Close
+          Vover
         </button>
       </div>
     </div>

@@ -16,6 +16,7 @@ import DocumentForm from "../Components/Forms/DocumentForm"
 import DetailMander from "../Components/Manders/DetailMander"
 import UpdateVehicleForm from "../Components/Forms/UpdateVehicleForm";
 import UpdateDocumentForm from "../Components/Forms/UpdateDocumentForm";
+import UpdateManderProfileForm from "../Components/Forms/UpdateManderProfileForm";
 
 const AdminRoutes = ({ isAuthenticated }) => {
     const navigate = useNavigate()
@@ -45,7 +46,7 @@ const AdminRoutes = ({ isAuthenticated }) => {
                         <Route path='manders/profilemander' element={<ManderForm/>} />
                         <Route path='manders/updateaccountmander/:id' element={<UpdateAccountForm/>} />
                         <Route path='manders/updateuser/:id' element={<UpdateUserForm/>} />
-                        <Route path='manders/updatemander/:id' element={<UpdateManderForm/>} />
+                        <Route path='manders/updatemander/:id' element={<UpdateManderProfileForm/>} />
                         <Route path='manders/vehicle/:id' element={<VehicleForm/>} />
                         <Route path='manders/detail/:id/updatevehicle/:id' element={<UpdateVehicleForm/>} />
                         <Route path='manders/document/:id' element={<DocumentForm/>} />

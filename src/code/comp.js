@@ -19,59 +19,12 @@ function MandersList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosGet(`${apiUrl}/api/getlistmanders/`)
-      .then(async (response) => {
-        console.log(response);
-        const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
-          try {
-            const accountResponse = await axiosGet(`${apiUrl}/api/account/${mander.id_account}/`);
-            return { ...mander, isactive_account: accountResponse.isactive_account };
-          } catch (error) {
-            console.error(`Error fetching account state for user ${user.id_user}:`, error);
-            return mander;
-          }
-        }));
-        setManders(mandersWithIsActive);
-        setFilteredManders(mandersWithIsActive);
-  
-        if (mandersWithIsActive.length > 0) {
-          setManderIsActive(mandersWithIsActive[0].isactive_account || false);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching mander list:', error);
-      });
+    axiosGet(`${apiUrl}/api/getlistmanders/`).then((response) => {
+      console.log(response);
+      setManders(response);
+      setFilteredManders(response);
+    });
   }, []);
-  
-
-  const handleToggleActive = async (manderId, isActive) => {
-    try {
-      // Buscar el mandadero en la lista por su ID
-      const manderToUpdate = manders.find(mander => mander.id_mander === manderId);
-      if (!manderToUpdate) {
-        console.error(`Mander with ID ${manderId} not found.`);
-        return;
-      }
-      
-      const accountId = manderToUpdate.id_account; // Obtener el ID de la cuenta asociada al mandadero
-  
-      const updatedMander = {
-        isactive_account: !isActive,
-      };
-  
-      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedMander);
-  
-      // Actualizar el estado local después de que se haya confirmado la actualización en el servidor
-      const updatedManders = manders.map(mander =>
-        mander.id_mander === manderId ? { ...mander, isactive_account: !isActive } : mander
-      );
-      setManders(updatedManders);
-      setFilteredManders(updatedManders);
-    } catch (error) {
-      console.error('Error toggling mander active state:', error);
-      alert('Failed to toggle mander active state');
-    }
-  };
 
 
   const handleSearchMander = (event) => {
@@ -160,24 +113,6 @@ function MandersList() {
               <p className="text-sm mb-1">
                 <span className="font-bold">Correo:</span> {mander['email_account']}
               </p>
-              <div className="ml-2 py-2 relative">
-                      <input
-                        type="checkbox"
-                        checked={mander.isactive_account}
-                        onChange={() => handleToggleActive(mander.id_mander, mander.isactive_account)}
-                        id={`toggle-${mander.id_mander}`}
-                        className="sr-only"
-                      />
-                      <label
-                        htmlFor={`toggle-${mander.id_mander}`}
-                        className={`block cursor-pointer w-14 h-7 rounded-full ${mander.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
-                      >
-                        <span
-                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
-                        ></span>
-                      </label>
-                      <span className='ml-2'>{mander.isactive_account ? "Activo" : "Bloqueado"}</span>
-                    </div>
               <p className="text-sm mb-1">
                 <span className="font-bold">Documento:</span> {mander['cc_mander']}
               </p>

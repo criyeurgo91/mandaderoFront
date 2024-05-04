@@ -57,11 +57,11 @@ const UpdateAccountForm = () => {
     <div className="bg-stone-900 min-h-screen flex justify-center items-center">
     <div className="flex justify-center items-center h-screen">
       <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold mb-4 text-white">Update Account</h2>
+        <h2 className="text-lg font-semibold mb-4 text-white">Actualizar Cuenta</h2>
         <form onSubmit={handleSubmit(handleUpdateAccount)}>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
-              Email:
+              Correo:
             </label>
             <input
               {...register('emailUser', { required: 'Email is required' })}
@@ -79,7 +79,7 @@ const UpdateAccountForm = () => {
                 defaultChecked={accountData.isadmin_account}
                 className="form-checkbox"
               />
-              <span className="ml-2 text-white">Admin</span>
+              <span className="ml-2 text-white">Administrador</span>
             </label>
           </div>
           <div className="mb-4">
@@ -90,21 +90,21 @@ const UpdateAccountForm = () => {
                 defaultChecked={accountData.isactive_account}
                 className="form-checkbox"
               />
-              <span className="ml-2 text-white">Active Account</span>
+              <span className="ml-2 text-white">Cuenta activa</span>
             </label>
           </div>
           <button
             type="submit"
             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
-            Update
+            Actualizar
           </button>
           <button
             type="button"
             className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={ handleCancel}
           >
-            Cancel
+            Cancelar
           </button>
         </form>
       </div>

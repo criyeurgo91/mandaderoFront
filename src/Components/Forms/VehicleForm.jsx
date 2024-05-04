@@ -32,12 +32,12 @@ const VehicleForm = () => {
       [name]: value
     });
 
-    if (name === 'plate_vehicle') {
-      const plateRegex = formData.type_vehicle === 'car' ? /^[A-Z]{3}\d{3}$/ : /^[A-Z]{3}\d{2}[A-Z]$/;
+    if (name === 'placa_vehiculo') {
+      const plateRegex = formData.type_vehicle === 'carro' ? /^[A-Z]{3}\d{3}$/ : /^[A-Z]{3}\d{2}[A-Z]$/;
       if (plateRegex.test(value)) {
         setPlateError('');
       } else {
-        setPlateError(formData.type_vehicle === 'car' ? 'Formato de placa correcto para Carro es Ejemplo: ABC123 MAYUSCULAS' : 'Formato de placa correcto para Moto es. Ejemplo: ABC12A MAYUSCULAS');
+        setPlateError(formData.type_vehicle === 'carro' ? 'Formato de placa correcto para Carro es Ejemplo: ABC123 MAYUSCULAS' : 'Formato de placa correcto para Moto es. Ejemplo: ABC12A MAYUSCULAS');
       }
     }
   };
@@ -112,9 +112,7 @@ const VehicleForm = () => {
 
   const colors = [
     
-    "White", "Black", "Gray", "Silver", "Red", "Blue", "Yellow",
-    "Green", "Orange", "Brown", "Beige", "Pearl White", "Matte Black",
-    "Dark Gray", "Navy Blue", "Crimson Red", "Bright Yellow", "Multicolor",
+    "Blanco", "Negro", "Gris", "Plata", "Rojo", "Azul", "Amarillo", "Verde", "Naranja", "Marrón", "Beige", "Blanco Perla", "Negro Mate", "Gris Oscuro", "Azul Marino", "Rojo Carmesí", "Amarillo Brillante", "Multicolor", "Morado", "Rosa", "Turquesa", "Oro Rosa", "Cobre", "Violeta",
   ];
 
   const handleCancel = () => {
@@ -126,30 +124,30 @@ const VehicleForm = () => {
     <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
       <div>
         <div>
-          <h1 className="text-2xl text-center font-bold mb-4 text-white">Vehicle Form</h1>
+          <h1 className="text-2xl text-center font-bold mb-4 text-white">Vehiculo</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text_black">
-              <label className="block text-white text-sm font-bold mb-2">Type:</label>
+              <label className="block text-white text-sm font-bold mb-2">Tipo:</label>
               <select
                 name="type_vehicle"
                 value={formData.type_vehicle}
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
-                <option value="">Select Type</option>
-                <option value="car" className="hover:bg-gray-100 cursor-pointer">Car</option>
-                <option value="bike" className="hover:bg-gray-100 cursor-pointer">Bike</option>
+                <option value="">Seleccione el tipo</option>
+                <option value="car" className="hover:bg-gray-100 cursor-pointer">Carro</option>
+                <option value="bike" className="hover:bg-gray-100 cursor-pointer">Moto</option>
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-white text-sm font-bold mb-2">Brand:</label>
+              <label className="block text-white text-sm font-bold mb-2">Marca:</label>
               <select
                 name="brand_vehicle"
                 value={formData.brand_vehicle || ""}
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
-                <option value="">Select Brand</option>
+                <option value="">Selecciona la marca</option>
                 {vehicleBrandsToShow.map((brand, index) => (
                   <option key={index} value={brand}>
                     {brand}
@@ -158,10 +156,10 @@ const VehicleForm = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-white text-sm font-bold mb-2">Plate:</label>
+              <label className="block text-white text-sm font-bold mb-2">Placa:</label>
               <input
                 type="text"
-                placeholder='enter plate'
+                placeholder='ingresa placa del vehiculo'
                 name="plate_vehicle"
                 value={formData.plate_vehicle || ""}
                 onChange={handleInputChange}
@@ -170,14 +168,14 @@ const VehicleForm = () => {
               {plateError && <p className="text-red-500 text-xs italic">{plateError}</p>}
             </div>
             <div className="mb-4">
-              <label className="block text-white text-sm font-bold mb-2">Model:</label>
+              <label className="block text-white text-sm font-bold mb-2">Modelo:</label>
               <select
                 name="model_vehicle"
                 value={formData.model_vehicle || ""}
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
-                <option value="">Select Model</option>
+                <option value="">Selecciona el modelo</option>
                 {years.map((year) => (
                   <option key={year} value={year}>
                     {year}
@@ -193,7 +191,7 @@ const VehicleForm = () => {
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               >
-                <option value="">Select Color</option>
+                <option value="">Selecciona el Color</option>
                 {colors.map((color, index) => (
                   <option key={index} value={color}>
                     {color}
@@ -210,11 +208,11 @@ const VehicleForm = () => {
                   onChange={(e) => setFormData({ ...formData, isverified_vehicle: e.target.checked })}
                   className="ml-2"
                 />
-                <span className="ml-2 text-white">Verify</span>
+                <span className="ml-2 text-white">Verificar</span>
               </label>
             </div>
             <div className="mb-4">
-              <label className="block text-white text-sm font-bold mb-2">Image:</label>
+              <label className="block text-white text-sm font-bold mb-2">Imagen:</label>
               <input
                 type="file"
                 name="image_vehicle"
@@ -223,20 +221,20 @@ const VehicleForm = () => {
               />
               {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex  justify-between">
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                {loading ? 'Loading...' : 'Submit'}
+                className="bg-blue-900 hover:bg-blue-700 text-white font-bold rounded focus:outline-none focus:shadow-outline px-2 py-2"
+              > 
+                {loading ? 'Loading...' : 'Registrar'}
               </button>
               <button
           type="reset"
-          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-2 rounded "
           onClick={handleCancel}
         >
-          Cancel
+          Cancelar
         </button>
             </div>
           </form>

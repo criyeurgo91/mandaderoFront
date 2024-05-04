@@ -299,6 +299,7 @@ const ManderForm = () => {
             </label>
           </div>
           </div>
+          <div className='flex justify-center py-2'>
           <button
             type="submit"
             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
@@ -312,14 +313,15 @@ const ManderForm = () => {
           >
             Cancelar
           </button>
+          </div>
         </form>
       </div>
       {/* Modal */}
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">Mander Registered Successfully!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
+            <p className="text-lg font-semibold mb-4 text-green-900">Registro Exitoso!</p>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>cerrar</button>
           </div>
         </div>
       )}

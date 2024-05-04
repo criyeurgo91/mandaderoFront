@@ -166,8 +166,8 @@ function DocumentForm() {
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
             <div className="relative bg-white p-8 rounded-lg shadow-lg">
-              <p className="text-lg text-center font-semibold">Document registered successfully</p>
-              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={closeModalAndNavigate}>Close</button>
+              <p className="text-lg text-center font-semibold">Registro exitoso!</p>
+              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={closeModalAndNavigate}>Cerrar</button>
             </div>
           </div>
         )}
