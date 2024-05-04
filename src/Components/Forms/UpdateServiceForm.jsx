@@ -60,7 +60,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
 
   return (
     <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Update Service</h2>
+      <h2 className="text-lg font-semibold mb-4">Actualizar servicio</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
           {message}
@@ -69,7 +69,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
       <form onSubmit={handleSubmit}>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
-            Name:
+            Nombre:
           </label>
           <input
             id="name"
@@ -82,7 +82,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
         </div>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="detail">
-            Detail:
+            Detalle:
           </label>
           <input
             id="detail"
@@ -108,7 +108,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
           </div>
         )}
         <label htmlFor="image" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Edit
+          Editar
         </label>
         <input
           id="image"
@@ -137,14 +137,14 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
           type="submit"
           className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
-          Update
+          Actualizar
         </button>
         <button
           type="reset"
           className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={onClose}
         >
-          Cancel
+          Cancelar
         </button>
       </form>
     </div>
