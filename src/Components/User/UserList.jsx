@@ -19,6 +19,7 @@ function UserList() {
     axiosGet(`${apiUrl}/api/getlistuser/`)
       .then(async (response) => {
         console.log(response);
+        //Se debe optimizar este codigo, getlistuser devuelve isactive_account
         const usersWithIsActive = await Promise.all(response.map(async (user) => {
           try {
             const accountResponse = await axiosGet(`${apiUrl}/api/account/${user.id_account}/`);

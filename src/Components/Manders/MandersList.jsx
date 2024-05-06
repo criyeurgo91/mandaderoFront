@@ -22,6 +22,7 @@ function MandersList() {
     axiosGet(`${apiUrl}/api/getlistmanders/`)
       .then(async (response) => {
         console.log(response);
+        //Se debe optimizar este codigo, getlistmanders devuelve isactive_account
         const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
           try {
             const accountResponse = await axiosGet(`${apiUrl}/api/account/${mander.id_account}/`);
@@ -37,6 +38,7 @@ function MandersList() {
         if (mandersWithIsActive.length > 0) {
           setManderIsActive(mandersWithIsActive[0].isactive_account || false);
         }
+        //Hasta aqui
       })
       .catch(error => {
         console.error('Error fetching mander list:', error);
@@ -234,7 +236,7 @@ function MandersList() {
                 )}
                 <button
                   className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-2 rounded"
-                  onClick={() => handleDetail(mander.id_mander)}
+                  onClick={() => handleDetail(mander.id_user)}
                 >
                   Detalle
                 </button>

@@ -14,16 +14,16 @@ const DetailMander = () => {
 
   const fetchData = async () => {
     try {
-      const manderResponse = await fetch(`${apiUrl}/api/getlistmanders/`);
+      const manderResponse = await fetch(`${apiUrl}/api/getlistmanders/${id}/`);
       const allManders = await manderResponse.json();
-      const mander = allManders.find(mander => mander.id_mander === parseInt(id));
-      if (mander) {
-        setManderData(mander);
 
-        console.log(mander);
+      if (allManders) {
+        setManderData(allManders);
+        console.log(allManders);
       } else {
         throw new Error(`Mander with ID ${id} not found.`);
       }
+      //const mander = allManders.find(mander => mander.id_mander === parseInt(id));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -33,15 +33,15 @@ const DetailMander = () => {
 
 
   const handleClose = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
 
-  const handleEditVehicle=(vehicleId)=>{
+  const handleEditVehicle = (vehicleId) => {
     navigate(`updatevehicle/${vehicleId}`)
   }
 
-  const handleEditDocument=(documentId)=>{
+  const handleEditDocument = (documentId) => {
     navigate(`updatedocument/${documentId}`)
   }
 
@@ -74,13 +74,13 @@ const DetailMander = () => {
           <h2 className="text-lg font-bold mb-2">Documentos</h2>
           {manderData.documents.map((document, index) => (
             <div key={index}>
-               <p><img src={document.image_document} alt={`Document ${index}`} className='w-auto h-44'/></p>
+              <p><img src={document.image_document} alt={`Document ${index}`} className='w-auto h-44' /></p>
               <p>Tipo de Documento: {document.type_document}</p>
               <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
-            onClick={()=>handleEditDocument(document.id_document)}
-            >
-              Editar
-            </button>
+                onClick={() => handleEditDocument(document.id_document)}
+              >
+                Editar
+              </button>
             </div>
           ))}
         </div>
@@ -88,20 +88,20 @@ const DetailMander = () => {
           <h2 className="text-lg font-bold mb-2">Vehiculos</h2>
           {manderData.vehicles.map((vehicle, index) => (
             <div key={index}>
-              <p><img src={vehicle.image_vehicle} alt={`Vehicle ${index}`} className='w-auto h-44'/></p>
+              <p><img src={vehicle.image_vehicle} alt={`Vehicle ${index}`} className='w-auto h-44' /></p>
               <p>Marca: {vehicle.brand_vehicle}</p>
               <p>Modelo: {vehicle.model_vehicle}</p>
               <p>Placa: {vehicle.plate_vehicle}</p>
               <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
-            onClick={()=>handleEditVehicle(vehicle.id_vehicle)}
-            >
-              Editar
-            </button>
+                onClick={() => handleEditVehicle(vehicle.id_vehicle)}
+              >
+                Editar
+              </button>
             </div>
           ))}
-          
-            
-          
+
+
+
         </div>
       </div>
       <div className="flex justify-center">

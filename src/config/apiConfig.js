@@ -4,7 +4,7 @@ var host = window.location.host;
 // var apiUrl = protocol + '//' + host + ':8000';
 //// const apiUrl = 'http://localhost:8000';
 //Para uso con backend desplegado en Azure
-const apiUrl = 'https://manders.azurewebsites.net';
+const apiUrl = 'https://mandaderos.azurewebsites.net';
 //para uso local
 //const apiUrl = 'http://127.0.0.1:8000'
 
