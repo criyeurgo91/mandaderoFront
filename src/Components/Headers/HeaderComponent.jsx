@@ -25,7 +25,7 @@ const HeaderComponent = () => {
   const fetchUserDetails = async (accountId) => {
     try {
       const response = await axios.get(
-        `${apiUrl}/api/user?account_id_account=${accountId}`
+        `${apiUrl}/api/user?idaccount=${accountId}`
       );
 
       if (response.status !== 200) {
@@ -34,7 +34,7 @@ const HeaderComponent = () => {
       }
 
       const userData = response.data;
-      const userForCurrentAccount = userData.find(user => user.account_id_account === parseInt(accountId));
+      const userForCurrentAccount = userData[0];
       
       if (userForCurrentAccount) {
         setUser(userForCurrentAccount);
@@ -55,7 +55,7 @@ const HeaderComponent = () => {
   });
 
   return (
-    <header className="bg-black text-white p-4">
+    <header className="bg-indigo-900 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <h1>

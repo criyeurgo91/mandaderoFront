@@ -22,6 +22,7 @@ function MandersList() {
     axiosGet(`${apiUrl}/api/getlistmanders/`)
       .then(async (response) => {
         console.log(response);
+        //Se debe optimizar este codigo, getlistmanders devuelve isactive_account
         const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
           try {
             const accountResponse = await axiosGet(`${apiUrl}/api/account/${mander.id_account}/`);
@@ -37,6 +38,7 @@ function MandersList() {
         if (mandersWithIsActive.length > 0) {
           setManderIsActive(mandersWithIsActive[0].isactive_account || false);
         }
+        //Hasta aqui
       })
       .catch(error => {
         console.error('Error fetching mander list:', error);
@@ -137,7 +139,7 @@ function MandersList() {
           <input
             type="text"
             className="w-1/2 border-2 border-gray-500 bg-black h-10 px-6 rounded-lg text-sm focus:outline-none"
-            placeholder="Search..."
+            placeholder="Buscar..."
             onChange={handleSearchMander}
           />
           <button
@@ -170,7 +172,7 @@ function MandersList() {
                       />
                       <label
                         htmlFor={`toggle-${mander.id_mander}`}
-                        className={`block cursor-pointer w-14 h-7 rounded-full ${mander.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
+                        className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
                       >
                         <span
                           className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
@@ -234,7 +236,7 @@ function MandersList() {
                 )}
                 <button
                   className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-2 rounded"
-                  onClick={() => handleDetail(mander.id_mander)}
+                  onClick={() => handleDetail(mander.id_user)}
                 >
                   Detalle
                 </button>
