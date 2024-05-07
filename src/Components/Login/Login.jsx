@@ -38,10 +38,10 @@ const LoginForm = ({ onLogin }) => {
   return (
     <div className="flex justify-center items-center h-screen bg-slate-900">
       <div className="bg-white rounded-lg p-8 shadow-md w-80">
-        <h2 className="text-2xl font-bold mb-6 text-center">Admin</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Administrador</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-semibold mb-2">Email:</label>
+            <label htmlFor="email" className="block text-sm font-semibold mb-2">Correo:</label>
             <input
               type="email"
               id="email"
@@ -52,7 +52,7 @@ const LoginForm = ({ onLogin }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-semibold mb-2">Password:</label>
+            <label htmlFor="password" className="block text-sm font-semibold mb-2">Contraseña:</label>
             <input
               type="password"
               id="password"
@@ -62,7 +62,7 @@ const LoginForm = ({ onLogin }) => {
               required
             />
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white rounded-md py-2">submit</button>
+          <button type="submit" className="w-full bg-blue-500 text-white rounded-md py-2">Ingresar</button>
         </form>
         {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
       </div>

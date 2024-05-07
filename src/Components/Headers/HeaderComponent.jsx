@@ -70,7 +70,7 @@ const HeaderComponent = () => {
 
         <div className="flex items-center space-x-4">
           {user && (
-            <div className="font-bold">Bien Venido Sr.
+            <div className="font-bold">Bienvenido Sr.
             <span className="flex items-center font-semibold">
               {user.name_user} {user.lastname_user}
             </span>

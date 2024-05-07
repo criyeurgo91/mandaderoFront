@@ -61,7 +61,8 @@ const DetailMander = () => {
           <img src={manderData.image_mander} alt={`Image of ${manderData.name_user} ${manderData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
           <div className="text-center">
             <p className="text-lg font-bold">{manderData.name_user} {manderData.lastname_user}</p>
-            <p>Documento: {manderData.cc_mander}</p>
+            <span className='font-bold'>Documento:</span>
+            <p>{manderData.cc_mander}</p>
             <span className='font-bold'>Correo:</span>
             <p>{manderData.email_account}</p>
             <span className='font-bold'>Celular:</span>
