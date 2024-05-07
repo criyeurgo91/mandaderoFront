@@ -59,7 +59,7 @@ function ServiceList() {
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Service List</h1>
+        <h1 className="text-2xl font-bold mb-4">Lista de Servicios</h1>
         {showUpdateForm && (
           <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
         )}
@@ -73,7 +73,7 @@ function ServiceList() {
                 <div className="flex mb-4">
                   <input
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Buscar..."
                     className="w-1/2 border-2 border-gray-500 bg-black text-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                     onChange={handleSearch}
                   />
@@ -81,17 +81,17 @@ function ServiceList() {
                     className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2 flex items-center"
                     onClick={handleCreateService}
                   >
-                    <FiPlus className="mr-2" /> New Service
+                    <FiPlus className="mr-2" /> Nuevo servicio
                   </button>
                 </div>
                 <table className="w-full bg-stone-900 shadow-md rounded my-6">
                   <thead className='bg-stone-600'>
                     <tr>
                     
-                      <th className="border px-4 py-2">Name</th>
-                      <th className="border px-4 py-2">Detail</th>
-                      <th className="border px-4 py-2">Image</th>
-                      <th className="border px-4 py-2">Actions</th>
+                      <th className="border px-4 py-2">Nombre</th>
+                      <th className="border px-4 py-2">Detalle</th>
+                      <th className="border px-4 py-2">Imagen</th>
+                      <th className="border px-4 py-2">Actualizar</th>
                       
                     </tr>
                   </thead>
@@ -110,7 +110,7 @@ function ServiceList() {
                             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-4"
                             onClick={() => handleEditService(service.id_service)}
                           >
-                            Edit
+                            Editar
                           </button>
                           
                         </td>
