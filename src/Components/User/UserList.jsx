@@ -22,9 +22,7 @@ function UserList() {
         
         const usersWithIsActive = await Promise.all(response.map(async (user) => {
           try {
-            // Corregir la asignación de accountResponse
             const accountResponse = user.isactive_account;
-            // Retornar el usuario modificado
             return { ...user, isactive_account: accountResponse };
           } catch (error) {
             console.error(`Error fetching account state for user ${user.id_user}:`, error);
@@ -32,11 +30,9 @@ function UserList() {
           }
         }));
         
-        // Mover la actualización de estado después de Promise.all
         setUsers(usersWithIsActive);
         setFilteredUsers(usersWithIsActive);
         
-        // Mover la verificación dentro de la función then
         if (usersWithIsActive.length > 0) {
           setUserIsActive(usersWithIsActive[0].isactive_account || false);
         }
