@@ -107,7 +107,7 @@ const RequestList = () => {
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
+        <h1 className="text-2xl font-bold mb-4 py-10">Lista de Solicitudes</h1>
         <div className="flex justify-start mb-4">
           <input
             type="text"

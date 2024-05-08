@@ -134,7 +134,7 @@ function MandersList() {
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5">Mandaderos</h2>
+        <h2 className="text-2xl font-bold mb-5 py-10">Mandaderos</h2>
         {alertMessage && <div className="text-red-500">{alertMessage}</div>}
         <div className="flex mb-4">
           <input
