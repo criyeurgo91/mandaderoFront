@@ -22,7 +22,7 @@ function MandersList() {
     axiosGet(`${apiUrl}/api/getlistmanders/`)
       .then(async (response) => {
         console.log(response);
-        //Se debe optimizar este codigo, getlistmanders devuelve isactive_account
+        
         const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
           try {
             const accountResponse = await axiosGet(`${apiUrl}/api/account/${mander.id_account}/`);
