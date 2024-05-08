@@ -16,6 +16,7 @@ const VehicleForm = () => {
     color_vehicle: "",
     type_vehicle: '',
     isverified_vehicle: false,
+    isactive_vehicle: false,
     user_id_user: id // Asignando el ID del mander al formulario
   });
 
@@ -77,6 +78,7 @@ const VehicleForm = () => {
         color_vehicle: "",
         type_vehicle: '',
         isverified_vehicle: false,
+        isactive_vehicle: false,
         user_id_user: id 
       });
       setLoading(false);
@@ -209,6 +211,18 @@ const VehicleForm = () => {
                   className="ml-2"
                 />
                 <span className="ml-2 text-white">Verificar</span>
+              </label>
+            </div>
+            <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">
+                <input
+                  type="checkbox"
+                  name="isactive_vehicle"
+                  checked={formData.isactive_vehicle}
+                  onChange={(e) => setFormData({ ...formData, isactive_vehicle: e.target.checked })}
+                  className="ml-2"
+                />
+                <span className="ml-2 text-white">Activo</span>
               </label>
             </div>
             <div className="mb-4">
