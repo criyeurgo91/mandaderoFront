@@ -26,20 +26,20 @@ function MandersList() {
         
         const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
           try {
-            const accountResponse = await axiosGet(`${apiUrl}/api/account/${mander.id_account}/`);
-            return { ...mander, isactive_account: accountResponse.isactive_account };
+            const accountResponse = mander.isactive_account;
+            return { ...mander, isactive_account: accountResponse };
           } catch (error) {
-            console.error(`Error fetching account state for user ${user.id_user}:`, error);
+            console.error(`Error fetching account state for mander ${mander.id_mander}:`, error);
             return mander;
           }
         }));
+
         setManders(mandersWithIsActive);
         setFilteredManders(mandersWithIsActive);
   
         if (mandersWithIsActive.length > 0) {
           setManderIsActive(mandersWithIsActive[0].isactive_account || false);
         }
-        //Hasta aqui
       })
       .catch(error => {
         console.error('Error fetching mander list:', error);
