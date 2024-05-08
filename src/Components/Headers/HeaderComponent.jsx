@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -70,10 +71,17 @@ const HeaderComponent = () => {
 
         <div className="flex items-center space-x-4">
           {user && (
-            <div className="font-bold">Bienvenido Sr.
-            <span className="flex items-center font-semibold">
-              {user.name_user} {user.lastname_user}
-            </span>
+            <div className="font-bold flex items-center">Bienvenido Sr.
+              <span className="font-semibold ml-1">
+                {user.name_user} {user.lastname_user}
+              </span>
+              {user.image_user && (
+                <img
+                  src={user.image_user}
+                  alt="user"
+                  className="w-8 h-8 rounded-full ml-2"
+                />
+              )}
             </div>
           )}
         </div>
@@ -84,3 +92,6 @@ const HeaderComponent = () => {
 };
 
 export default HeaderComponent;
+
+
+
