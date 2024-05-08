@@ -19,11 +19,11 @@ function UserList() {
     axiosGet(`${apiUrl}/api/getlistuser/`)
       .then(async (response) => {
         console.log(response);
-        //Se debe optimizar este codigo, getlistuser devuelve isactive_account
+        
         const usersWithIsActive = await Promise.all(response.map(async (user) => {
           try {
-            const accountResponse = await axiosGet(`${apiUrl}/api/account/${user.id_account}/`);
-            return { ...user, isactive_account: accountResponse.isactive_account };
+            const accountResponse = user.isactive_account;
+            return { ...user, isactive_account: accountResponse };
           } catch (error) {
             console.error(`Error fetching account state for user ${user.id_user}:`, error);
             return user;
@@ -33,7 +33,6 @@ function UserList() {
         setUsers(usersWithIsActive);
         setFilteredUsers(usersWithIsActive);
         
-        // Aquí puedes establecer el estado de activación del primer usuario seleccionado
         if (usersWithIsActive.length > 0) {
           setUserIsActive(usersWithIsActive[0].isactive_account || false);
         }
@@ -42,6 +41,7 @@ function UserList() {
         console.error('Error fetching user list:', error);
       });
   }, []);
+  
   
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();

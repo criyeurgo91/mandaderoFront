@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
 import apiUrl from '../../config/apiConfig';
+import { FaCar, FaMotorcycle, FaLightbulb } from 'react-icons/fa';
 import '../../Components/Manders/index.css'
 
 function MandersList() {
@@ -157,10 +158,7 @@ function MandersList() {
                 <img src={mander['image_mander']} alt="Mander" className="w-auto h-40 rounded-md" />
               </div>
               <p className="text-sm mb-1">
-                <span className="font-bold">Mandadero:</span> {mander['name_user']} {mander['lastname_user']}
-              </p>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Correo:</span> {mander['email_account']}
+                <span className="font-bold"></span> {mander['name_user']} {mander['lastname_user']}
               </p>
               <div className="ml-2 py-2 relative">
                       <input
@@ -181,31 +179,34 @@ function MandersList() {
                       <span className='ml-2'>{mander.isactive_account ? "Activo" : "Bloqueado"}</span>
                     </div>
               <p className="text-sm mb-1">
-                <span className="font-bold">Documento:</span> {mander['cc_mander']}
-              </p>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Direccion:</span> {mander['address_mander']}
-              </p>
-              <p className="text-sm mb-1">
                 <span className="font-bold">Celular:</span> {mander['phone_user']}
               </p>
               <div>
-                <span className="font-bold"> Vehiculo Activo:</span>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Carro:</span> {mander['ishavecar_mander'] ? 'Si' : 'No'}
-                </p>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Moto:</span> {mander['ishavemoto_mander'] ? 'Si' : 'No'}
-                </p>
+              {mander['vehicles']
+                .filter(vehicle => vehicle.isactive_vehicle)
+                .map((vehicle, index) => (
+                  <div key={index}>
+                    <span className="font-bold">Vehículo:</span>
+                    {vehicle.type_vehicle === 'car' ? (
+                      <span>
+                        <FaCar size={24} />
+                        <span> {vehicle.plate_vehicle}</span>
+                      </span>
+                    ) : (
+                      <span>
+                        <FaMotorcycle size={24} />
+                        <span> {vehicle.plate_vehicle}</span>
+                      </span>
+                    )}
+                  </div>
+                ))}
               </div>
               <div>
                 <span className="font-bold"> Estado:</span>
                 <p className="text-sm mb-1">
-                  <span className="font-bold">Activo:</span> {mander['isactive_mander'] ? 'Si' : 'No'}
+                <FaLightbulb size={24} className={mander.isactive_mander ? 'text-green-500' : 'text-red-500'} />
                 </p>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Validado:</span> {mander['isvalidate_mander'] ? 'Si' : 'No'}
-                </p>
+                
               </div>
               {/* Botones */}
               <div className="flex justify-between py-2">
