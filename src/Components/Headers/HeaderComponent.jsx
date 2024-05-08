@@ -79,7 +79,7 @@ const HeaderComponent = () => {
                 <img
                   src={user.image_user}
                   alt="user"
-                  className="w-8 h-8 rounded-full ml-2"
+                  className="w-20 h-auto rounded-full ml-2"
                 />
               )}
             </div>
