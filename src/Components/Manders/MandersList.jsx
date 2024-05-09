@@ -26,10 +26,10 @@ function MandersList() {
         
         const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
           try {
-            const accountResponse = mander.isactive_account;
-            return { ...mander, isactive_account: accountResponse };
+            const userResponse = mander.isactive_user;
+            return { ...mander, isactive_user: userResponse };
           } catch (error) {
-            console.error(`Error fetching account state for mander ${mander.id_mander}:`, error);
+            console.error(`Error fetching state for mander ${mander.id_mander}:`, error);
             return mander;
           }
         }));
@@ -38,7 +38,7 @@ function MandersList() {
         setFilteredManders(mandersWithIsActive);
   
         if (mandersWithIsActive.length > 0) {
-          setManderIsActive(mandersWithIsActive[0].isactive_account || false);
+          setManderIsActive(mandersWithIsActive[0].isactive_user || false);
         }
       })
       .catch(error => {
@@ -55,18 +55,16 @@ function MandersList() {
         console.error(`Mander with ID ${manderId} not found.`);
         return;
       }
-      
-      const accountId = manderToUpdate.id_account; // Obtener el ID de la cuenta asociada al mandadero
   
       const updatedMander = {
-        isactive_account: !isActive,
+        isactive_user: !isActive,
       };
   
-      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedMander);
+      await axiosPatch(`${apiUrl}/api/user/${userId}/`, updatedMander);
   
       // Actualizar el estado local después de que se haya confirmado la actualización en el servidor
       const updatedManders = manders.map(mander =>
-        mander.id_mander === manderId ? { ...mander, isactive_account: !isActive } : mander
+        mander.id_mander === manderId ? { ...mander, isactive_user: !isActive } : mander
       );
       setManders(updatedManders);
       setFilteredManders(updatedManders);
@@ -163,20 +161,20 @@ function MandersList() {
               <div className="ml-2 py-2 relative">
                       <input
                         type="checkbox"
-                        checked={mander.isactive_account}
-                        onChange={() => handleToggleActive(mander.id_mander, mander.isactive_account)}
+                        checked={mander.isactive_user}
+                        onChange={() => handleToggleActive(mander.id_mander, mander.isactive_user)}
                         id={`toggle-${mander.id_mander}`}
                         className="sr-only"
                       />
                       <label
                         htmlFor={`toggle-${mander.id_mander}`}
-                        className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
+                        className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_user ? 'bg-blue-500' : 'bg-gray-300'}`}
                       >
                         <span
-                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
+                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_user ? 'translate-x-7' : 'translate-x-0'} `}
                         ></span>
                       </label>
-                      <span className='ml-2'>{mander.isactive_account ? "Activo" : "Bloqueado"}</span>
+                      <span className='ml-2'>{mander.isactive_user ? "Activo" : "Bloqueado"}</span>
                     </div>
               <p className="text-sm mb-1">
                 <span className="font-bold">Celular:</span> {mander['phone_user']}

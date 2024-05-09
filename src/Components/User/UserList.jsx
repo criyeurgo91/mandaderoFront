@@ -22,10 +22,10 @@ function UserList() {
         
         const usersWithIsActive = await Promise.all(response.map(async (user) => {
           try {
-            const accountResponse = user.isactive_account;
-            return { ...user, isactive_account: accountResponse };
+            const userResponse = user.isactive_user;
+            return { ...user, isactive_user: userResponse };
           } catch (error) {
-            console.error(`Error fetching account state for user ${user.id_user}:`, error);
+            console.error(`Error fetching user state ${user.id_user}:`, error);
             return user;
           }
         }));
@@ -34,7 +34,7 @@ function UserList() {
         setFilteredUsers(usersWithIsActive);
         
         if (usersWithIsActive.length > 0) {
-          setUserIsActive(usersWithIsActive[0].isactive_account || false);
+          setUserIsActive(usersWithIsActive[0].isactive_user || false);
         }
       })
       .catch(error => {
@@ -73,18 +73,16 @@ function UserList() {
         console.error(`User with ID ${userId} not found.`);
         return;
       }
-      
-      const accountId = userToUpdate.id_account; // Obtener el ID de la cuenta asociada al usuario
   
       const updatedUser = {
-        isactive_account: !isActive,
+        isactive_user: !isActive,
       };
   
-      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedUser);
+      await axiosPatch(`${apiUrl}/api/user/${userId}/`, updatedUser);
   
       // Actualizar el estado local después de que se haya confirmado la actualización en el servidor
       const updatedUsers = users.map(user =>
-        user.id_user === userId ? { ...user, isactive_account: !isActive } : user
+        user.id_user === userId ? { ...user, isactive_user: !isActive } : user
       );
       setUsers(updatedUsers);
       setFilteredUsers(updatedUsers);
@@ -136,20 +134,20 @@ function UserList() {
                     <div className="ml-2 py-2 relative">
                       <input
                         type="checkbox"
-                        checked={user.isactive_account}
-                        onChange={() => handleToggleActive(user.id_user, user.isactive_account)}
+                        checked={user.isactive_user}
+                        onChange={() => handleToggleActive(user.id_user, user.isactive_user)}
                         id={`toggle-${user.id_user}`}
                         className="sr-only"
                       />
                       <label
                         htmlFor={`toggle-${user.id_user}`}
-                        className={`block cursor-pointer w-12 h-5 rounded-full ${user.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
+                        className={`block cursor-pointer w-12 h-5 rounded-full ${user.isactive_user ? 'bg-blue-500' : 'bg-gray-300'}`}
                       >
                         <span
-                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${user.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
+                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${user.isactive_user ? 'translate-x-7' : 'translate-x-0'} `}
                         ></span>
                       </label>
-                      <span className='ml-2'>{user.isactive_account ? "Activo" : "Bloqueado"}</span>
+                      <span className='ml-2'>{user.isactive_user ? "Activo" : "Bloqueado"}</span>
                     </div>
                   </td>
                   <td className="border px-4 py-2">{user.name_user}</td>
