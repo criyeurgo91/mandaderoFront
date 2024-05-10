@@ -45,7 +45,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
         formData.append('image_service', file);
       }
 
-      const response = await axios.put(`${apiUrl}/api/service/${serviceId}/`, formData);
+      const response = await axios.patch(`${apiUrl}/api/service/${serviceId}/`, formData);
 
       setMessage('Service updated successfully.');
       console.log('Service updated successfully.', response.data);
