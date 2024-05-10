@@ -10,6 +10,7 @@ const UpdateVehicleForm = () => {
   const [formData, setFormData] = useState({
     image_vehicle: "",
     color_vehicle: "",
+    isactive_vehicle: false,
     isverified_vehicle: false,
     user_id_user: id
   });
@@ -29,6 +30,7 @@ const UpdateVehicleForm = () => {
         image_vehicle: data.image_vehicle,
         color_vehicle: data.color_vehicle,
         isverified_vehicle: data.isverified_vehicle,
+        isactive_vehicle: data.isactive_vehicle,
         user_id_user: data.user_id_user,
       });
     } catch (error) {
@@ -114,6 +116,18 @@ const UpdateVehicleForm = () => {
                   className="ml-2"
                 />
                 <span className="ml-2 text-white">Verificado</span>
+              </label>
+            </div>
+            <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">
+                <input
+                  type="checkbox"
+                  name="isactive_vehicle"
+                  checked={formData.isactive_vehicle}
+                  onChange={(e) => setFormData({ ...formData, isactive_vehicle: e.target.checked })}
+                  className="ml-2"
+                />
+                <span className="ml-2 text-white">Activo</span>
               </label>
             </div>
             <div className="mb-4">

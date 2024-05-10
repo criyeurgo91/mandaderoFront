@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -67,16 +68,32 @@ const HeaderComponent = () => {
             <p>{formattedDateTime}</p>
           </div>
         </div>
-
+        
         <div className="flex items-center space-x-4">
-          {user && (
-            <div className="font-bold">Bienvenido Sr.
-            <span className="flex items-center font-semibold">
-              {user.name_user} {user.lastname_user}
-            </span>
+        {user && (
+          <div>
+            {user.image_user && (
+              <img
+                src={user.image_user}
+                alt="user"
+                className="w-16 h-auto rounded-full ml-2"
+              />
+            )}
+          </div>
+        )}
+        {user && (
+          <div className="font-bold">
+            <span>Bienvenido Sr.</span> 
+            <div className="flex items-center">
+              <span className="font-semibold ml-1">
+                {user.name_user} {user.lastname_user}
+              </span>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
+
+
       </div>
       <Outlet />
     </header>
@@ -84,3 +101,6 @@ const HeaderComponent = () => {
 };
 
 export default HeaderComponent;
+
+
+

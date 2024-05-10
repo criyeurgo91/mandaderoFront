@@ -23,7 +23,7 @@ function Home() {
   return (
     <div className="bg-stone-900 text-white flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Inicio</h2>
+        <h2 className="text-2xl font-bold py-10">Inicio</h2>
       </div>
 
       {estadisticas && (

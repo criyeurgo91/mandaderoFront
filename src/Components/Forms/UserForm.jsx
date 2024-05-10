@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosPost } from '../../Logic/Apihelpers';
@@ -7,11 +8,13 @@ import apiUrl from '../../config/apiConfig';
 const UserForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
     defaultValues:{
-      isadmin_account: false
+      isadminUser: false,
+      ismanderUser: false
     }
   });
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const handleRegister = async (formData) => {
     const dataAccountUser = {
@@ -39,18 +42,17 @@ const UserForm = () => {
   }
 
   const handleUserRegister = async (formData, accountId) => {
-    const dataUser = {
-      name_user: formData.nameUser,
-      lastname_user: formData.lastnameUser,
-      phone_user: formData.phoneUser,
-      account_id_account: accountId,
-    };
+    const dataUser = new FormData();
+    dataUser.append('name_user', formData.nameUser);
+    dataUser.append('lastname_user', formData.lastnameUser);
+    dataUser.append('phone_user', formData.phoneUser);
+    dataUser.append('account_id_account', accountId);
+    dataUser.append('image_user', imageFile);
 
     // Crear el usuario
     axiosPost(`${apiUrl}/api/user/`, dataUser)
       .then((response) => {
         if (response) {
-          
           navigate(window.history.back());
         } else {
           alert('Failed to save User');
@@ -60,6 +62,11 @@ const UserForm = () => {
         console.error('Error creating user:', error);
         alert('Failed to create user');
       });
+  }
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImageFile(file);
   }
 
   const handleCancel = () => {
@@ -114,7 +121,7 @@ const UserForm = () => {
                 {...register('isadminUser')}
                 type="checkbox"
                 className="form-checkbox"
-                checked={isadminUser}
+                defaultChecked={isadminUser}
               />
               <span className="ml-2 text-white">Administrador</span>
             </label>
@@ -161,6 +168,17 @@ const UserForm = () => {
             />
             {errors.phoneUser && <span className="text-red-500">Este campo es requerido</span>}
           </div>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="imageUser">
+              Imagen:
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className={`p-2 shadow-lg rounded-lg w-full mb-4`}
+            />
+          </div>
           <button
             type="submit"
             className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
@@ -190,3 +208,10 @@ const UserForm = () => {
 }
 
 export default UserForm;
+
+
+
+
+
+
+
