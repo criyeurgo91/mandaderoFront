@@ -30,17 +30,21 @@ function UserList() {
           }
         }));
         
-        setUsers(usersWithIsActive);
-        setFilteredUsers(usersWithIsActive);
+        // Solo listar usuarios que no sean mandaderos
+        const filteredUsers = usersWithIsActive.filter(user => !user.ismander_user);
+  
+        setUsers(filteredUsers);
+        setFilteredUsers(filteredUsers);
         
-        if (usersWithIsActive.length > 0) {
-          setUserIsActive(usersWithIsActive[0].isactive_user || false);
+        if (filteredUsers.length > 0) {
+          setUserIsActive(filteredUsers[0].isactive_user || false);
         }
       })
       .catch(error => {
         console.error('Error fetching user list:', error);
       });
   }, []);
+  
   
   
   const handleSearch = (event) => {

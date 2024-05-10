@@ -31,14 +31,13 @@ const UpdateAccountForm = () => {
     try {
       const updatedAccountData = {
         email_account: formData.emailUser,
-        isadmin_account: formData.isadminUser || false,
-        isactive_account: formData.isactiveUser || false,
+        password_account: formData.passwordUser,
       };
 
       
       await axiosPatch(`${apiUrl}/api/account/${id}/`, updatedAccountData);
-      alert('Account Updated');
-      navigate(window.history.back());
+      alert('Cuenta Actualizada');
+      navigate(-1);
     } catch (error) {
       console.error('Error updating account:', error);
       alert('Failed to update Account');
@@ -50,7 +49,7 @@ const UpdateAccountForm = () => {
   }
 
   const handleCancel = () => {
-    window.history.back(); 
+    navigate(-1); 
   }
 
   return (
@@ -71,27 +70,20 @@ const UpdateAccountForm = () => {
             />
             {errors.emailUser && <span className="text-red-500">{errors.emailUser.message}</span>}
           </div>
-          <div className="mb-4">
-            <label className="flex items-center">
-              <input
-                {...register('isadminUser')}
-                type="checkbox"
-                defaultChecked={accountData.isadmin_account}
-                className="form-checkbox"
-              />
-              <span className="ml-2 text-white">Administrador</span>
+          <div className="mb-4 text-black">
+            <label className="block text-white text-sm font-bold mb-2" htmlFor="passwordUser">
+              Contraseña:
             </label>
-          </div>
-          <div className="mb-4">
-            <label className="flex items-center">
-              <input
-                {...register('isactiveUser')}
-                type="checkbox"
-                defaultChecked={accountData.isactive_account}
-                className="form-checkbox"
-              />
-              <span className="ml-2 text-white">Cuenta activa</span>
-            </label>
+            <input
+              {...register('passwordUser', {
+                required: 'Password is required',
+                minLength: { value: 8, message: 'Password must be at least 8 characters' },
+                maxLength: { value: 20, message: 'Password must not exceed 20 characters' }
+              })}
+              type="password"
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
+            />
+            {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
           </div>
           <button
             type="submit"

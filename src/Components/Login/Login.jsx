@@ -13,15 +13,17 @@ const LoginForm = ({ onLogin }) => {
     e.preventDefault();
   
     try {
-      const response = await axiosInstance.post(`${apiUrl}/api2/admin/login/`, {
+      const response = await axiosInstance.post(`${apiUrl}/api2/login2/`, {
         email_account: email,
         password_account: password
       });
+      console.log(response);
   
       if (response.data.detail === 'Inicio de sesión exitoso como administrador') {
-        localStorage.setItem('token', response.data.token); 
-        localStorage.setItem('accountId', response.data.id_account); 
-        console.log('ID de la cuenta:', response.data.id_account); 
+        localStorage.setItem('token', response.data.jwt); 
+        localStorage.setItem('name', response.data.name_user);
+        localStorage.setItem('lastname', response.data.lastname_user); 
+        localStorage.setItem('image', response.data.image_user);
         console.log('Acceso permitido como administrador');
         navigate('/Admin/');
         onLogin()

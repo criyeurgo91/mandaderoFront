@@ -9,7 +9,6 @@ import HeaderComponent from "../Components/Headers/HeaderComponent";
 import UserForm from "../Components/Forms/UserForm";
 import UpdateUserForm from "../Components/Forms/UpdateUserForm";
 import ManderForm from "../Components/Forms/ManderForm";
-import UpdateManderForm from "../Components/Forms/UpdateManderForm";
 import VehicleForm from "../Components/Forms/VehicleForm";
 import UpdateAccountForm from "../Components/Forms/UpdateAccount";
 import DocumentForm from "../Components/Forms/DocumentForm"
@@ -44,7 +43,6 @@ const AdminRoutes = ({ isAuthenticated }) => {
                         <Route path='users/updateprofile/:id' element={<UpdateUserForm/>} />
                         <Route path='manders' element={<MandersView/>} />
                         <Route path='manders/profilemander' element={<ManderForm/>} />
-                        <Route path='manders/updateaccountmander/:id' element={<UpdateAccountForm/>} />
                         <Route path='manders/updateuser/:id' element={<UpdateUserForm/>} />
                         <Route path='manders/updatemander/:id' element={<UpdateManderProfileForm/>} />
                         <Route path='manders/vehicle/:id' element={<VehicleForm/>} />
@@ -52,6 +50,7 @@ const AdminRoutes = ({ isAuthenticated }) => {
                         <Route path='manders/document/:id' element={<DocumentForm/>} />
                         <Route path='manders/detail/:id/updatedocument/:id' element={<UpdateDocumentForm/>} />
                         <Route path='manders/detail/:id' element={<DetailMander/>} />
+                        <Route path='manders/detail/:id/updateaccountmander/:id' element={<UpdateAccountForm/>} />
                         <Route path='services' element={<ServiceView/>} />
                         <Route path='request' element={<RequestView/>} />
                        

@@ -47,7 +47,7 @@ function MandersList() {
   }, []);
   
 
-  const handleToggleActive = async (manderId, isActive) => {
+  const handleToggleActive = async (manderId, userId, isActive) => {
     try {
       // Buscar el mandadero en la lista por su ID
       const manderToUpdate = manders.find(mander => mander.id_mander === manderId);
@@ -162,7 +162,8 @@ function MandersList() {
                       <input
                         type="checkbox"
                         checked={mander.isactive_user}
-                        onChange={() => handleToggleActive(mander.id_mander, mander.isactive_user)}
+                        onChange={() => handleToggleActive(mander.id_mander, mander.id_user, mander.isactive_user)}
+
                         id={`toggle-${mander.id_mander}`}
                         className="sr-only"
                       />

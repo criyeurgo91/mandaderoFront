@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 const DetailMander = () => {
@@ -64,7 +64,11 @@ const DetailMander = () => {
             <span className='font-bold'>Documento:</span>
             <p>{manderData.cc_mander}</p>
             <span className='font-bold'>Correo:</span>
-            <p>{manderData.email_account}</p>
+            <p>
+              <Link to={`updateaccountmander/${manderData.id_account}`}>
+                {manderData.email_account}
+              </Link>
+            </p>
             <span className='font-bold'>Celular:</span>
             <p>{manderData.phone_user}</p>
             <span className='font-bold'>Direccion:</span>
