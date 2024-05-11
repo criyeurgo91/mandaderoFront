@@ -68,23 +68,32 @@ const HeaderComponent = () => {
             <p>{formattedDateTime}</p>
           </div>
         </div>
-
+        
         <div className="flex items-center space-x-4">
-          {user && (
-            <div className="font-bold flex items-center">Bienvenido Sr.
+        {user && (
+          <div>
+            {user.image_user && (
+              <img
+                src={user.image_user}
+                alt="user"
+                className="w-16 h-auto rounded-full ml-2"
+              />
+            )}
+          </div>
+        )}
+        {user && (
+          <div className="font-bold">
+            <span>Bienvenido Sr.</span> 
+            <div className="flex items-center">
               <span className="font-semibold ml-1">
                 {user.name_user} {user.lastname_user}
               </span>
-              {user.image_user && (
-                <img
-                  src={user.image_user}
-                  alt="user"
-                  className="w-20 h-auto rounded-full ml-2"
-                />
-              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
+
+
       </div>
       <Outlet />
     </header>

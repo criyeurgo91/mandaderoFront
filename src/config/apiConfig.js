@@ -6,9 +6,9 @@ var host = window.location.host;
 //Para uso con backend desplegado en Azure
 //const apiUrl = 'https://manders.azurewebsites.net';
 //Para uso con backend desplegado en Azure2
-//const apiUrl = 'https://mandaderos.azurewebsites.net';
+const apiUrl = 'https://mandaderos.azurewebsites.net';
 //Para uso con backend desplegado en Azure3
-const apiUrl = 'https://mandaderos3.azurewebsites.net';
+//const apiUrl = 'https://mandaderos3.azurewebsites.net';
 //para uso local
 //const apiUrl = 'http://127.0.0.1:8000'
 

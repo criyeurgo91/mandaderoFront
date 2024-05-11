@@ -1,30 +1,44 @@
-import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import apiUrl from "../../config/apiConfig";
+import { useState, useEffect, useCallback, useMemo } from 'react'; // Importar useState, useEffect, useCallback y useMemo
+import axios from 'axios';
+import RequestFilter from './RequestFilter';
+import RequestTable from './RequestTable';
+import apiUrl from '../../config/apiConfig';
 
 const RequestList = () => {
   const [requests, setRequests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [activeManders, setActiveManders] = useState([]);
-  const [selectedMander, setSelectedMander] = useState(null);
+  const [selectedMander, setSelectedMander] = useState({});
 
   useEffect(() => {
     fetchData();
+    const intervalId = setInterval(updateElapsedTime, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const fetchData = async () => {
     try {
-      const [requestsResponse, mandersResponse] = await Promise.all([
-        axios.get(`${apiUrl}/api/getlistrequest/`),
-        axios.get(`${apiUrl}/api/getlistactivemanders/`)
-      ]);
+      const requestsResponse = await axios.get(`${apiUrl}/api/getlistrequest/`);
       setRequests(requestsResponse.data);
-      setActiveManders(mandersResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
+  const updateElapsedTime = useCallback(() => {
+    setRequests((prevRequests) =>
+      prevRequests.map((request) => {
+        if (request.status_request !== "Finalizado") {
+          return {
+            ...request,
+            elapsedTime: calculateElapsedTime(request.dateregister_request)
+          };
+        } else {
+          return request;
+        }
+      })
+    );
+  }, []);
 
   const handleSearch = useCallback((event) => {
     setSearchTerm(event.target.value);
@@ -34,31 +48,39 @@ const RequestList = () => {
     setStatusFilter(event.target.value);
   }, []);
 
-  const handleManderSelect = (mander) => {
-    setSelectedMander(mander);
-  };
+  const handleManderSelect = useCallback((mander, requestId) => {
+    setSelectedMander({ manderId: mander, requestId: requestId });
+  }, []);
 
-  const handleAssignMander = async (requestId, mander_id_mander, detail_request) => {
-    if (!mander_id_mander) {
-      alert("Please select a mander first.");
+  const handleAssignMander = useCallback(async (requestId, detail_request) => {
+    if (!selectedMander.manderId) {
+      alert("Por favor, selecciona primero un mandadero.");
       return;
     }
 
     try {
       const requestData = {
         request_id_request: requestId,
-        mander_id_mander: mander_id_mander,
+        mander_id_mander: selectedMander.manderId,
         status_requestmanager: "espera",
         detail_requestmanager: detail_request,
       };
 
       await axios.post(`${apiUrl}/api/request_manager/`, requestData);
-      
-      fetchData();
+
+      setRequests(prevRequests =>
+        prevRequests.filter(
+          request =>
+            request.id_request !== requestId ||
+            request.status_request.toLowerCase() === "finalizado"
+        )
+      );
+
+      setSelectedMander({});
     } catch (error) {
-      console.error(`Error assigning mander to request ${requestId}:`, error);
+      console.error(`Error asignando mandadero a la solicitud ${requestId}:`, error);
     }
-  };
+  }, [selectedMander]);
 
   const getStatusColor = useCallback((status) => {
     switch (status.toLowerCase()) {
@@ -86,107 +108,77 @@ const RequestList = () => {
     }
   }, []);
 
-  const filteredRequests = [
-    ...requests.filter(
-      (request) =>
-        !request.name_mander &&
-        request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (statusFilter === "" ||
-          request.status_request.toLowerCase() === statusFilter.toLowerCase())
-    ),
-    ...requests.filter(
-      (request) =>
-        request.name_mander &&
-        request.detail_request.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (statusFilter === "" ||
-          request.status_request.toLowerCase() === statusFilter.toLowerCase())
-    )
-  ];
-  
+  const calculateElapsedTime = useCallback((startTimeString) => {
+    const startTime = new Date(startTimeString);
+    const currentTime = new Date();
+    const elapsedTime = Math.abs(currentTime - startTime);
+    const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+    const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }, []);
+
+  const handleOpenInMaps = useCallback((originLat, originLng, destinationLat, destinationLng) => {
+    const originCoords = `${originLat},${originLng}`;
+    const destinationCoords = `${destinationLat},${destinationLng}`;
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originCoords}&destination=${destinationCoords}`;
+    window.open(mapsUrl, "_blank");
+  }, []);
+
+  const filteredRequests = useMemo(() => {
+    let filtered = requests;
+
+    if (statusFilter === "finalizado") {
+      filtered = filtered.filter(
+        (request) => request.status_request.toLowerCase() === "finalizado"
+      );
+    } else {
+      filtered = filtered.filter(
+        (request) =>
+          request.status_request.toLowerCase() === "proceso" ||
+          request.status_request.toLowerCase() === "pendiente"
+      );
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (request) =>
+          request.name_user.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          request.lastname_user.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          request.phone_user.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          request.detail_request.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (statusFilter && statusFilter !== "finalizado") {
+      filtered = filtered.filter(
+        (request) => request.status_request.toLowerCase() === statusFilter.toLowerCase()
+      );
+    }
+
+    return filtered;
+  }, [requests, searchTerm, statusFilter]);
 
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
-        <div className="flex justify-start mb-4">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            className="w-1/4 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none mr-4"
-            onChange={handleSearch}
-          />
-          <select
-            className="w-1/6 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
-            onChange={handleStatusFilter}
-          >
-            <option value="">Mostrar todo</option>
-            <option value="proceso">Proceso</option>
-            <option value="pendiente">Pendiente</option>
-            <option value="finalizado">Finalizado</option>
-          </select>
-        </div>
+        <RequestFilter
+          handleSearch={handleSearch}
+          handleStatusFilter={handleStatusFilter}
+        />
       </div>
-      <table className="w-full max-w-6xl mx-auto border-collapse border border-black custom-table">
-        <thead className="bg-stone-600">
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">Usuario</th>
-            <th className="border border-gray-300 px-4 py-2">Detalle</th>
-            <th className="border border-gray-300 px-4 py-2">Estado</th>
-            <th className="border border-gray-300 px-4 py-2">Mandadero</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredRequests.map((request) => (
-            <tr key={request.id_request} className="border border-gray-800">
-              <td className="border border-gray-800 px-4 py-2">
-                {request.name_user}
-              </td>
-              <td className="border border-gray-800 px-4 py-2">
-                {request.detail_request}
-              </td>
-              <td
-                className={`border border-gray-800 px-4 py-2 ${getStatusColor(
-                  request.status_request
-                )}`}
-              >
-                {getStatusName(request.status_request)}
-              </td>
-              <td className="border border-gray-800 px-4 py-2">
-                {/* Mostramos el nombre del "mandero" si está asignado */}
-                {request.name_mander ? (
-                  request.name_mander
-                ) : (
-                  <>
-                    <select
-                      onChange={(e) => handleManderSelect(e.target.value)}
-                      className="border border-gray-300 bg-black text-white h-8 px-2 rounded-md"
-                    >
-                      <option value="">Seleccionar Mandadero</option>
-                      {activeManders.map((mander) => (
-                        <option key={mander.id_mander} value={mander.id_mander}>
-                          {mander.name_user} {mander.lastname_user}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      onClick={() =>
-                        handleAssignMander(
-                          request.id_request,
-                          selectedMander,
-                          request.detail_request
-                        )
-                      }
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-                    >
-                      Asignar
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="container mx-auto px-4">
+        <RequestTable
+          requests={filteredRequests}
+          handleOpenInMaps={handleOpenInMaps}
+          getStatusColor={getStatusColor}
+          getStatusName={getStatusName}
+          selectedMander={selectedMander}
+          handleAssignMander={handleAssignMander}
+          handleManderSelect={handleManderSelect}
+        />
+      </div>
     </div>
   );
 };
