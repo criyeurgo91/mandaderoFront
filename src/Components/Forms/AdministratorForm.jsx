@@ -1,15 +1,14 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosPost } from '../../Logic/Apihelpers';
 import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
-const UserForm = () => {
+const AdministratorForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
     defaultValues:{
-      isadminUser: false,
-      ismanderUser: false
+      isadminUser: true,
+      ismanderUser: true
     }
   });
   const navigate = useNavigate();
@@ -29,8 +28,8 @@ const UserForm = () => {
         if (response) {
           setShowModal(true);
           const accountId = response.id_account;
-          // Crear el usuario
-          handleUserRegister(formData, accountId);
+          // Crear el Administrador
+          handleAdminRegister(formData, accountId);
         } else {
           alert('Failed to save Account');
         }
@@ -41,26 +40,26 @@ const UserForm = () => {
       });
   }
 
-  const handleUserRegister = async (formData, accountId) => {
-    const dataUser = new FormData();
-    dataUser.append('name_user', formData.nameUser);
-    dataUser.append('lastname_user', formData.lastnameUser);
-    dataUser.append('phone_user', formData.phoneUser);
-    dataUser.append('account_id_account', accountId);
-    dataUser.append('image_user', imageFile);
+  const handleAdminRegister = async (formData, accountId) => {
+    const dataAdmin = new FormData();
+    dataAdmin.append('name_user', formData.nameAdmin);
+    dataAdmin.append('lastname_user', formData.lastnameAdmin);
+    dataAdmin.append('phone_user', formData.phoneAdmin);
+    dataAdmin.append('account_id_account', accountId);
+    dataAdmin.append('image_user', imageFile);
 
     // Crear el usuario
-    axiosPost(`${apiUrl}/api/user/`, dataUser)
+    axiosPost(`${apiUrl}/api/user/`, dataAdmin)
       .then((response) => {
         if (response) {
           navigate(window.history.back());
         } else {
-          alert('Failed to save User');
+          alert('Failed to save Admin');
         }
       })
       .catch((error) => {
-        console.error('Error creating user:', error);
-        alert('Failed to create user');
+        console.error('Error creating admin:', error);
+        alert('Failed to create admin');
       });
   }
 
@@ -79,7 +78,7 @@ const UserForm = () => {
   return (
     <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">Usuario</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Administrador</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
@@ -114,6 +113,17 @@ const UserForm = () => {
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
+          </div>
+          <div className="mb-4">
+            <label className="flex items-center">
+              <input
+                {...register('isadminUser')}
+                type="checkbox"
+                className="form-checkbox"
+                defaultChecked={isadminUser}
+              />
+              <span className="ml-2 text-white">Administrador</span>
+            </label>
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
@@ -196,11 +206,4 @@ const UserForm = () => {
   );
 }
 
-export default UserForm;
-
-
-
-
-
-
-
+export default AdministratorForm;
