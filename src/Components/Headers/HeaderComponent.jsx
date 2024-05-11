@@ -56,7 +56,7 @@ const HeaderComponent = () => {
   });
 
   return (
-    <header className="bg-indigo-900 text-white p-4">
+    <header className="bg-blue-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <h1>
