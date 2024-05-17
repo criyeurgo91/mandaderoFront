@@ -42,7 +42,7 @@ function UpdateUserForm() {
       }
     }).then(response => {
       console.log(response);
-      setShowModal(true); // Mensaje modal
+      setShowModal(true); 
     }).catch(error => {
       console.error(error);
     });
@@ -58,7 +58,7 @@ function UpdateUserForm() {
 
   const closeModal = () => {
     setShowModal(false);
-    navigate(window.history.back()); 
+    navigate(-1); 
   };
 
   const handleCancel = () => {
@@ -106,15 +106,14 @@ function UpdateUserForm() {
           />
         </div>
         <div className="mb-4 text-black">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="image">
-            Imagen:
-          </label>
-          <input          
-            type="file"
-            id="image"
-            onChange={handleImageChange}
-            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
-          />
+        <label className="block text-white text-sm font-bold mb-2">Imagen:</label>
+              <input
+                type="file"
+                name="image_vehicle"
+                onChange={handleImageChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+              {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
         </div>
         {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full" />}
 
@@ -132,7 +131,7 @@ function UpdateUserForm() {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
             <p className="text-lg font-semibold mb-4">Actualizacion Exitosa!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Close</button>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}
