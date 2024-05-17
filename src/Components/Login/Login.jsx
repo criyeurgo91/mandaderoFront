@@ -22,15 +22,19 @@ const LoginForm = ({ onLogin }) => {
         email_account: email,
         password_account: password
       });
-      console.log(response);
   
-      if (response.data.detail === 'Inicio de sesión exitoso como administrador') {
-        localStorage.setItem('token', response.data.jwt); 
+      if (response.data.detail === 'Inicio de sesión exitoso como administrador' ||
+          response.data.detail === 'Inicio de sesión exitoso como Superadministrador') {
+            
+        setLoading(true)
+        const userType = response.data.rol;
+        localStorage.setItem('userType', userType);
+        localStorage.setItem('token', response.data.jwt);
         localStorage.setItem('name', response.data.name_user);
-        localStorage.setItem('lastname', response.data.lastname_user); 
-        localStorage.setItem('image', response.data.image_user);
-        setLoading(true);
-        onLogin()
+        localStorage.setItem('lastname', response.data.lastname_user);
+        localStorage.setItem('image', response.data.image_user); 
+
+        onLogin(userType);
         setTimeout(() => {
           navigate('/Admin/');
         }, 2000);
