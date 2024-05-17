@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import axios from "axios";
-import apiUrl from "../../config/apiConfig";
 
 const HeaderComponent = () => {
   const { state } = useLocation();
@@ -34,7 +32,7 @@ const HeaderComponent = () => {
   });
 
   return (
-    <header className="bg-blue-800 text-white p-4">
+    <header className="bg-blue-800 text-white p-4 fixed top-0 left-0 right-0 z-10">
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <h1>
@@ -48,30 +46,28 @@ const HeaderComponent = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-        {user && (
-          <div>
-            {user.image_user && (
-              <img
-                src={user.image_user}
-                alt="user"
-                className="w-16 h-auto rounded-full ml-2"
-              />
-            )}
-          </div>
-        )}
-        {user && (
-          <div className="font-bold">
-            <span>Bienvenido Sr.</span> 
-            <div className="flex items-center">
-              <span className="font-semibold ml-1">
-                {user.name_user} {user.lastname_user}
-              </span>
+          {user && (
+            <div>
+              {user.image_user && (
+                <img
+                  src={user.image_user}
+                  alt="user"
+                  className="w-16 h-auto rounded-full ml-2"
+                />
+              )}
             </div>
-          </div>
-        )}
-      </div>
-
-
+          )}
+          {user && (
+            <div className="font-bold">
+              <span>Bienvenido Sr.</span> 
+              <div className="flex items-center">
+                <span className="font-semibold ml-1">
+                  {user.name_user} {user.lastname_user}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <Outlet />
     </header>
