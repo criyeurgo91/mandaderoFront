@@ -8,7 +8,7 @@ const AdministratorForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
     defaultValues:{
       isadminUser: true,
-      ismanderUser: true
+      ismanderUser: false
     }
   });
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ const AdministratorForm = () => {
         if (response) {
           setShowModal(true);
           const accountId = response.id_account;
-          // Crear el Administrador
-          handleAdminRegister(formData, accountId);
+          // Crear el usuario
+          handleUserRegister(formData, accountId);
         } else {
           alert('Failed to save Account');
         }
@@ -40,26 +40,28 @@ const AdministratorForm = () => {
       });
   }
 
-  const handleAdminRegister = async (formData, accountId) => {
-    const dataAdmin = new FormData();
-    dataAdmin.append('name_user', formData.nameAdmin);
-    dataAdmin.append('lastname_user', formData.lastnameAdmin);
-    dataAdmin.append('phone_user', formData.phoneAdmin);
-    dataAdmin.append('account_id_account', accountId);
-    dataAdmin.append('image_user', imageFile);
+  const handleUserRegister = async (formData, accountId) => {
+    const dataUser = new FormData();
+    dataUser.append('name_user', formData.nameUser);
+    dataUser.append('lastname_user', formData.lastnameUser);
+    dataUser.append('phone_user', formData.phoneUser);
+    dataUser.append('account_id_account', accountId);
+    dataUser.append('image_user', imageFile);
+    dataUser.append('isadmin_user', true);
+    dataUser.append('isactive_user', true);
 
     // Crear el usuario
-    axiosPost(`${apiUrl}/api/user/`, dataAdmin)
+    axiosPost(`${apiUrl}/api/user/`, dataUser)
       .then((response) => {
         if (response) {
           navigate(window.history.back());
         } else {
-          alert('Failed to save Admin');
+          alert('Failed to save User');
         }
       })
       .catch((error) => {
-        console.error('Error creating admin:', error);
-        alert('Failed to create admin');
+        console.error('Error creating user:', error);
+        alert('Failed to create user: ${error.message}');
       });
   }
 
@@ -113,17 +115,6 @@ const AdministratorForm = () => {
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
-          </div>
-          <div className="mb-4">
-            <label className="flex items-center">
-              <input
-                {...register('isadminUser')}
-                type="checkbox"
-                className="form-checkbox"
-                defaultChecked={isadminUser}
-              />
-              <span className="ml-2 text-white">Administrador</span>
-            </label>
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
@@ -197,7 +188,7 @@ const AdministratorForm = () => {
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">User Registered Successfully!</p>
+            <p className="text-lg font-semibold mb-4 text-green-900">Administrador registrado con exito!</p>
             <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
           </div>
         </div>

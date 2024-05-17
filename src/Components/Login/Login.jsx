@@ -18,20 +18,17 @@ const LoginForm = ({ onLogin }) => {
         password_account: password
       });
   
-      if (response.data.detail === 'Inicio de sesión exitoso como administrador') {
+      if (response.data.detail === 'Inicio de sesión exitoso como administrador' ||
+          response.data.detail === 'Inicio de sesión exitoso como Superadministrador') {
+        const userType = response.data.rol;
+        localStorage.setItem('userType', userType);
         localStorage.setItem('token', response.data.jwt);
-        localStorage.setItem('name', response.data.name);
-        localStorage.setItem('lastname', response.data.lastname);
-        localStorage.setItem('image', response.data.image); 
-        onLogin("admin"); // Establece el rol del usuario como "admin"
-        navigate('/Admin'); // Navega a la página de administrador
-      } else if (response.data.detail === 'Inicio de sesión exitoso como superadministrador') {
-        localStorage.setItem('token', response.data.jwt);
-        localStorage.setItem('name', response.data.name);
-        localStorage.setItem('lastname', response.data.lastname);
-        localStorage.setItem('image', response.data.image); 
-        onLogin("Superadmin"); // Establece el rol del usuario como "superadmin"
-        navigate('/superAdmin'); // Navega a la página de superadministrador
+        localStorage.setItem('name', response.data.name_user);
+        localStorage.setItem('lastname', response.data.lastname_user);
+        localStorage.setItem('image', response.data.image_user); 
+
+        navigate('/Admin/'); // Redirigir a la página de administrador
+        onLogin(userType);
       } else {
         setError(response.data.detail);
       }
@@ -80,6 +77,8 @@ const LoginForm = ({ onLogin }) => {
 export default LoginForm;
 
 
+
+
 {/*import React, { useState } from 'react';
 import axiosInstance from '../../Logic/AxiosInstance';
 import { useNavigate } from 'react-router-dom';
@@ -95,16 +94,16 @@ const LoginForm = ({ onLogin }) => {
     e.preventDefault();
   
     try {
-      const response = await axiosInstance.post(`${apiUrl}/api2/admin/login/`, {
+      const response = await axiosInstance.post(`${apiUrl}/api2/login2/`, {
         email_account: email,
         password_account: password
       });
   
       if (response.data.detail === 'Inicio de sesión exitoso como administrador') {
-        localStorage.setItem('token', response.data.token); 
-        localStorage.setItem('accountId', response.data.id_account); 
-        console.log('ID de la cuenta:', response.data.id_account); 
-        console.log('Acceso permitido como administrador');
+        localStorage.setItem('token', response.data.jwt);
+        localStorage.setItem('name', response.data.name);
+        localStorage.setItem('lastname', response.data.lastname);
+        localStorage.setItem('image', response.data.image); 
         navigate('/Admin/');
         onLogin()
       } else {

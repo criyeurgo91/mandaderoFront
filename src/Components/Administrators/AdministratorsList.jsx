@@ -38,7 +38,7 @@ function AdministratorsList() {
         }
       })
       .catch(error => {
-        console.error('Error fetching admin list:', error);
+        console.error('Error fetching user list:', error);
       });
   }, []);
   
@@ -53,7 +53,7 @@ function AdministratorsList() {
         user.phone_user.toLowerCase().includes(searchTerm)
     );
     setFilteredUsers(filtered);
-    setAlertMessage(filtered.length === 0 ? "Admin doesn't exist" : '');
+    setAlertMessage(filtered.length === 0 ? "User doesn't exist" : '');
   };
 
   const handleEdit = (userId) => {
@@ -61,7 +61,7 @@ function AdministratorsList() {
         navigate(`updateprofile/${userId}`)
   };
 
-  const handleNewAdmin = () => {
+  const handleNewUser = () => {
     navigate('profile');
   };
 
@@ -70,24 +70,24 @@ function AdministratorsList() {
       // Buscar el usuario en la lista por su ID de usuario
       const userToUpdate = users.find(user => user.id_user === userId);
       if (!userToUpdate) {
-        console.error(`Admin with ID ${userId} not found.`);
+        console.error(`User with ID ${userId} not found.`);
         return;
       }
       
       const accountId = userToUpdate.id_account; // Obtener el ID de la cuenta asociada al usuario
   
-      const updatedAdmin = {
+      const updatedUser = {
         isactive_account: !isActive,
       };
   
-      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedAdmin);
+      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedUser);
   
       // Actualizar el estado local después de que se haya confirmado la actualización en el servidor
-      const updatedAdmins = users.map(user =>
+      const updatedUsers = users.map(user =>
         user.id_user === userId ? { ...user, isactive_account: !isActive } : user
       );
-      setAdmins(updatedAdmins);
-      setFilteredAdmins(updatedAdmins);
+      setUsers(updatedUsers);
+      setFilteredUsers(updatedUsers);
     } catch (error) {
       console.error('Error toggling user active state:', error);
       alert('Failed to toggle user active state');
@@ -100,7 +100,7 @@ function AdministratorsList() {
   return (
     <div className="bg-stone-900 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5">Administradores</h2>
+        <h2 className="text-2xl font-bold mb-5 py-10">Administrador</h2>
         <div className="container mx-auto px-4 py-8">
           <div className="flex mb-4">
             <input
@@ -111,7 +111,7 @@ function AdministratorsList() {
             />
             <button
               className="bg-green-950 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
-              onClick={handleNewAdmin}
+              onClick={handleNewUser}
             >
               Registrar
             </button>

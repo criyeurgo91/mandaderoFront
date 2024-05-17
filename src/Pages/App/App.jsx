@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminRoutes from '../../Routes/AdminRoutes';
 import StateContext from '../../Context/StateContext';
 import LoginForm from '../../Components/Login/Login';
-import SuperAdminRoutes from '../../Routes/superAdminRoutes';
 
 function App() {
-  const [userRole, setUserRole] = useState(""); 
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('isAuthenticated') === 'true';
-  });
+  const [userType, setUserType] = useState(localStorage.getItem('userType'));
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
 
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
   }, [isAuthenticated]);
 
-  const handleLogin = (role) => { 
-    setUserRole(role); 
+  const handleLogin = (type) => {
+    setUserType(type);
     setIsAuthenticated(true);
-    
   };
 
   return (
@@ -26,16 +22,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/*' element={<LoginForm onLogin={handleLogin} />} />
+          <Route path='/Admin/*' element={<AdminRoutes isAuthenticated={isAuthenticated} userType={userType} />} />
 
-          {userRole === "admin" && (
-            <Route path='/Admin/*' element={<AdminRoutes isAuthenticated={isAuthenticated} isAdmin={true} />} />
-          )}
-          
-          {userRole === "superadmin" && (
-            <Route path='/Superadmin/*' element={<SuperAdminRoutes isAuthenticated={isAuthenticated} isSuperadmin={true} />} /> 
-
-          )}
-         
         </Routes>
       </BrowserRouter>
     </StateContext>

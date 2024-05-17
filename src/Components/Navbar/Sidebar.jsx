@@ -10,14 +10,17 @@ import {
   RiTeamLine
 } from "react-icons/ri";
 
-const Sidebar = ({ isAdmin, isSuperAdmin }) => { // Agrega isAdmin e isSuperAdmin como props
+const Sidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const logout = () => {
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userType');
     navigate("/login");
   };
+
+  const userType = localStorage.getItem('userType');
 
   return (
     <div 
@@ -34,15 +37,14 @@ const Sidebar = ({ isAdmin, isSuperAdmin }) => { // Agrega isAdmin e isSuperAdmi
           <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Inicio</span>
         </NavLink>
 
-        {/* Condición para renderizar el enlace solo si el usuario es superadministrador */}
-        {isSuperAdmin && (
-          <NavLink to="/Admin/administrators" // Solo se mostrará si el usuario es superadministrador
-            className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500"
-          >
-            <RiTeamLine style={{ width: "30px", height: "30px", color: "white" }} />
-            <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Administradores</span>
-          </NavLink>
-        )}
+        {userType === 'Superadmin' && (
+         <NavLink to="/Admin/administrators" 
+           className={`flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500`}
+         >
+           <RiTeamLine style={{ width: "30px", height: "30px", color: "white" }} />
+           <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Administradores</span>
+         </NavLink>
+         )}
 
         <NavLink to="request"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-blue-500"

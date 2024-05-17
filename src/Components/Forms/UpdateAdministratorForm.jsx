@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { axiosGet, axiosPut } from '../../Logic/Apihelpers';
+import { axiosGet, axiosPatch, axiosPut } from '../../Logic/Apihelpers';
 import apiUrl from '../../config/apiConfig';
 
 function UpdateAdministratorForm() {
@@ -36,7 +36,7 @@ function UpdateAdministratorForm() {
       formData.append('image_user', image);
     }
     
-    axiosPut(`${apiUrl}/api/user/${id}/`, formData, {
+    axiosPatch(`${apiUrl}/api/user/${id}/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -65,7 +65,7 @@ function UpdateAdministratorForm() {
   return (
     <div className="bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-semibold mb-4 text-white">administrador</h2>
+        <h2 className="text-lg font-semibold mb-4 text-white">Administrador</h2>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Nombre:
