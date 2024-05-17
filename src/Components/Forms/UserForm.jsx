@@ -6,21 +6,18 @@ import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 const UserForm = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm({
-    defaultValues:{
-      isadminUser: false,
-      ismanderUser: false
-    }
+  const { register, handleSubmit, formState: { errors }, } = useForm({
+    
   });
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleRegister = async (formData) => {
     const dataAccountUser = {
       email_account: formData.emailUser,
       password_account: formData.passwordUser,
-      isadmin_account: formData.isadminUser || false,
     };
 
     // Crear la cuenta de usuario
@@ -46,8 +43,12 @@ const UserForm = () => {
     dataUser.append('name_user', formData.nameUser);
     dataUser.append('lastname_user', formData.lastnameUser);
     dataUser.append('phone_user', formData.phoneUser);
+    dataUser.append('isactive_user', true);
+    dataUser.append('isadmin_user', false);
+    dataUser.append('ismander_user', false);
     dataUser.append('account_id_account', accountId);
     dataUser.append('image_user', imageFile);
+
 
     // Crear el usuario
     axiosPost(`${apiUrl}/api/user/`, dataUser)
@@ -67,14 +68,18 @@ const UserForm = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   }
 
   const handleCancel = () => {
     window.history.back();
   }
 
-  const isadminUser = watch("isadminUser");
-  const ismanderUser = watch("ismanderUser");
 
   return (
     <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
@@ -167,6 +172,9 @@ const UserForm = () => {
               onChange={handleImageChange}
               className={`p-2 shadow-lg rounded-lg w-full mb-4`}
             />
+            {imagePreview && (
+              <img src={imagePreview} alt="Preview" className="w-24 h-24 mb-2 object-cover rounded-full" />
+            )}
           </div>
           <button
             type="submit"
@@ -187,8 +195,8 @@ const UserForm = () => {
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">User Registered Successfully!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
+            <p className="text-lg font-semibold mb-4 text-green-900">Registro Exitoso!</p>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Cerrar</button>
           </div>
         </div>
       )}

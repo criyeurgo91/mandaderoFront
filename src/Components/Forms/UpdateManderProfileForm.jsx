@@ -9,6 +9,7 @@ function UpdateManderProfileForm() {
   const { id_user, id_mander } = state;
   const navigate = useNavigate();
   const [ showModal, setShowModal] = useState(false)
+  
 
   // Estado compartido entre los dos formularios
   const [data, setData] = useState({
@@ -40,6 +41,7 @@ function UpdateManderProfileForm() {
         mander: manderData,
         car: manderData.ishavecar_mander,
         bike: manderData.ishavemoto_mander,
+        active: manderData.isactive_mander,
         validate: manderData.isvalidate_mander,
         address: manderData.address_mander,
         existingImage: manderData.image_user,
@@ -72,6 +74,7 @@ function UpdateManderProfileForm() {
     const formData = new FormData();
     formData.append('ishavecar_mander', data.car);
     formData.append('ishavemoto_mander', data.bike);
+    formData.append('isactive_mander', data.active);
     formData.append('isvalidate_mander', data.validate);
     formData.append('address_mander', data.address);
     if (data.image) {
@@ -92,13 +95,16 @@ function UpdateManderProfileForm() {
   };
 
   // Función para manejar el cambio de imagen
-  const handleImageChange = (e) => {
-    setData({
-      ...data,
-      image: e.target.files[0],
-      existingImage: URL.createObjectURL(e.target.files[0]),
-    });
-  };
+const handleImageChange = (e) => {
+  const newImage = e.target.files[0];
+  setData({
+    ...data,
+    image: newImage,
+    existingImage: newImage ? URL.createObjectURL(newImage) : data.existingImage,
+  });
+};
+
+
 
   // Función para cerrar el modal
   const closeModal = () => {
@@ -175,6 +181,16 @@ function UpdateManderProfileForm() {
           />
         </div>
         <div className='text-lg font-bold text-white py-2'>Estado:
+        <div className='text-sm font-bold'>
+            <label>
+              <input
+                type="checkbox"
+                checked={data.active}
+                onChange={() => setData({ ...data, active: !data.active })}
+              />
+              <span className=" text-sm ml-2 text-white">Activo</span>
+            </label>
+          </div>
           <div className='text-sm font-bold'>
             <label>
               <input
