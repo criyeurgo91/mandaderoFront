@@ -1,14 +1,13 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosPost } from '../../Logic/Apihelpers';
 import { useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
-const UserForm = () => {
+const AdministratorForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
     defaultValues:{
-      isadminUser: false,
+      isadminUser: true,
       ismanderUser: false
     }
   });
@@ -48,6 +47,8 @@ const UserForm = () => {
     dataUser.append('phone_user', formData.phoneUser);
     dataUser.append('account_id_account', accountId);
     dataUser.append('image_user', imageFile);
+    dataUser.append('isadmin_user', true);
+    dataUser.append('isactive_user', true);
 
     // Crear el usuario
     axiosPost(`${apiUrl}/api/user/`, dataUser)
@@ -60,7 +61,7 @@ const UserForm = () => {
       })
       .catch((error) => {
         console.error('Error creating user:', error);
-        alert('Failed to create user');
+        alert('Failed to create user: ${error.message}');
       });
   }
 
@@ -79,7 +80,7 @@ const UserForm = () => {
   return (
     <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">Usuario</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Administrador</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="emailUser">
@@ -187,7 +188,7 @@ const UserForm = () => {
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">User Registered Successfully!</p>
+            <p className="text-lg font-semibold mb-4 text-green-900">Administrador registrado con exito!</p>
             <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
           </div>
         </div>
@@ -196,11 +197,4 @@ const UserForm = () => {
   );
 }
 
-export default UserForm;
-
-
-
-
-
-
-
+export default AdministratorForm;

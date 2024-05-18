@@ -1,53 +1,40 @@
-import { useState, useEffect } from 'react';
-import { FaUser, FaUserSecret, FaTasks, FaHourglassHalf, FaCheckCircle, FaUserPlus } from "react-icons/fa";
-import apiUrl from '../../config/apiConfig';
 
-function Home() {
-  const [estadisticas, setEstadisticas] = useState(null);
+import ManderActive from '../../Components/Statistics/ManderActive';
+import RequestDay from '../../Components/Statistics/RequestDay';
+import TotalManders from '../../Components/Statistics/TotalManders';
+import TotalRequest from '../../Components/Statistics/TotalRequest';
+import TotalUsers from '../../Components/Statistics/TotalUsers';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/api/contadores/`);
-        const data = await response.json();
-        setEstadisticas(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-
-    };
-
-    fetchData();
-  }, []);
-
+function index() {
   return (
-    <div className="bg-stone-900 text-white flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold py-10">Inicio</h2>
+    <div className="flex flex-col h-screen py-12">
+      {/* Top components */}
+      <div className="flex justify-around items-center bg-gray-100 shadow-md rounded-md p-4 h-[30%]">
+        <TotalUsers />
+        <TotalManders />
+        <ManderActive />
       </div>
-
-      {estadisticas && (
-        <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg">
-          {renderStatCard("Usuarios Registrados :", estadisticas.total_users, <FaUser />)}
-          {renderStatCard("Mandaderos :", estadisticas.total_manders, <FaUserSecret />)}
-          {renderStatCard("Solicitudes Realizadas : ", estadisticas.total_requests, <FaTasks />)}
-          {renderStatCard("Solicitudes pendientes : ", estadisticas.pending_requests, <FaHourglassHalf />)}
-          {renderStatCard("Solicitudes en Progreso :", estadisticas.processing_requests, <FaUserPlus />)}
-          {renderStatCard("Solicitudes Finalizadas :", estadisticas.finished_requests, <FaCheckCircle />)}
+      {/* Bottom components */}
+      <div className="flex h-[70%]">
+        <div className="w-1/2 bg-white text-black shadow-md rounded-md p-4">
+          <TotalRequest/>
         </div>
-      )}
+        <div className="w-1/2 bg-white text-black shadow-md rounded-md p-4">
+          <RequestDay />
+        </div>
+      </div>
     </div>
   );
 }
 
-function renderStatCard(title, value, icon) {
-  return (
-    <div className="flex flex-col justify-center items-center p-6 bg-black rounded-lg shadow-md ">
-      <div className="text-3xl mb-2">{icon}</div>
-      <p className="text-center font-semibold">{title}</p>
-      <p className="text-center text-white">{value}</p>
-    </div>
-  );
-}
+export default index;
 
-export default Home;
+
+
+
+
+
+
+
+
+
