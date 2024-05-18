@@ -40,7 +40,7 @@ const AdminRoutes = ({ isAuthenticated, userType }) => {
                 </div>
                 <div className="flex-grow overflow-y-auto pt-14">
                     <HeaderComponent />
-                    <main className="mt-16"> {/* Ajustar margen superior aquí */}
+                    <main className="mt-8"> {/* Ajustar margen superior aquí */}
                         <Routes>
                             <Route path='/' element={<Home />} />
                             <Route path='administrators' element={<AdministratorsView />} />

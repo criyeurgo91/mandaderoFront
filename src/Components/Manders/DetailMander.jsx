@@ -47,11 +47,11 @@ const DetailMander = () => {
 
 
   if (loading) {
-    return <div className="bg-sky-800 text-white p-4 py-20">Loading...</div>;
+    return <div className="bg-sky-800 text-white p-4 py-20">Cargando...</div>;
   }
 
   if (!manderData) {
-    return <div className="bg-sky-800 text-white p-4 py-20">No mander found with ID {id}.</div>;
+    return <div className="bg-sky-800 text-white p-4 py-20">No hay un mandadero registrado {id}.</div>;
   }
 
   return (

@@ -131,8 +131,8 @@ function MandersList() {
 
   return (
     <div className="bg-sky-50 text-sky-800 min-h-screen">
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5 py-10">Mandaderos</h2>
+      <div className="container mx-auto px-4 ">
+        <h2 className="text-2xl font-bold mb-5 py-3">Mandaderos</h2>
         {alertMessage && <div className="text-red-500">{alertMessage}</div>}
         <div className="flex mb-4">
           <input
@@ -228,9 +228,9 @@ function MandersList() {
                       value={selectedOption}
                       onChange={(e) => handleRegisterSelect(e.target.value)}
                     >
-                      <option value="">Select...</option>
-                      <option value="vehicle">Vehicle</option>
-                      <option value="document">Document</option>
+                      <option value="">Seleccionar</option>
+                      <option value="vehicle">Vehiculo</option>
+                      <option value="document">Documento</option>
                     </select>
                   </div>
                 )}

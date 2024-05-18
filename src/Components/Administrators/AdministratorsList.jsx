@@ -97,9 +97,9 @@ function AdministratorsList() {
 
   return (
     <div className="bg-sky-50 text-white min-h-screen">
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5 py-10 text-sky-800">Administrador</h2>
-        <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4">
+        <h2 className="text-2xl font-bold mb-5 py-3 text-sky-800">Administrador</h2>
+        <div className="container mx-auto px-4 py-3">
           <div className="flex mb-4">
             <input
               type="text"
@@ -116,7 +116,7 @@ function AdministratorsList() {
           </div>
           {alertMessage && <div className="text-red-950">{alertMessage}</div>}
           <div className='table-container'>
-          <table className="w-full border-collapse border bg-sky-800 custom-table">
+          <table className="w-full border-collapse border text-sky-800">
             <thead className="bg-sky-950 text-white">
               <tr>
                 <th className="px-4 py-2 border">Correo</th>
