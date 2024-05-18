@@ -160,8 +160,8 @@ const RequestList = () => {
   }, [requests, searchTerm, statusFilter]);
 
   return (
-    <div className="bg-sky-50 text-sky-800 min-h-screen py-20">
-      <div className="container mx-auto px-4 py-8">
+    <div className="bg-stone-900 text-white min-h-screen">
+      <div className="container mx-auto px-4 py-12">
         <h1 className="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
         <RequestFilter
           handleSearch={handleSearch}
