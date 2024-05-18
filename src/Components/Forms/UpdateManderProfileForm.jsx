@@ -117,8 +117,8 @@ const handleImageChange = (e) => {
   };
 
   return(
-    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
-      <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
+      <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
         <h2 className="text-lg font-semibold mb-4 text-white">Actualizar Perfil</h2>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">

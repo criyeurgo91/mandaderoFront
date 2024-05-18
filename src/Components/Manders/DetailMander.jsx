@@ -47,15 +47,15 @@ const DetailMander = () => {
 
 
   if (loading) {
-    return <div className="bg-stone-900 text-white p-4 py-20">Loading...</div>;
+    return <div className="bg-sky-800 text-white p-4 py-20">Loading...</div>;
   }
 
   if (!manderData) {
-    return <div className="bg-stone-900 text-white p-4 py-20">No mander found with ID {id}.</div>;
+    return <div className="bg-sky-800 text-white p-4 py-20">No mander found with ID {id}.</div>;
   }
 
   return (
-    <div className="bg-stone-900 text-white p-4 py-20">
+    <div className="bg-sky-800 text-white p-4 py-20">
       <div className="flex justify-between mb-4">
         <div className="w-full md:w-1/3">
           <img src={manderData.image_mander} alt={`Image of ${manderData.name_user} ${manderData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
@@ -111,7 +111,7 @@ const DetailMander = () => {
       </div>
       <div className="flex justify-center">
         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={handleClose}>
-          Vover
+          Volver
         </button>
       </div>
     </div>

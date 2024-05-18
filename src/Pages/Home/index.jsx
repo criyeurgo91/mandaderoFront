@@ -21,13 +21,13 @@ function Home() {
   }, []);
 
   return (
-    <div className="bg-stone-900 text-white flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
+    <div className="bg-blue-50 text-sky-800 flex flex-col min-h-screen p-6 md:p-8 lg:p-10">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold py-10">Inicio</h2>
       </div>
 
       {estadisticas && (
-        <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg">
+        <div className="grid gap-4 grid-cols-2 grid-rows-3 px-10 h-full text-lg  text-white">
           {renderStatCard("Usuarios Registrados :", estadisticas.total_users, <FaUser />)}
           {renderStatCard("Mandaderos :", estadisticas.total_manders, <FaUserSecret />)}
           {renderStatCard("Solicitudes Realizadas : ", estadisticas.total_requests, <FaTasks />)}
@@ -42,7 +42,7 @@ function Home() {
 
 function renderStatCard(title, value, icon) {
   return (
-    <div className="flex flex-col justify-center items-center p-6 bg-black rounded-lg shadow-md ">
+    <div className="flex flex-col justify-center items-center p-6 bg-sky-800 rounded-lg shadow-md ">
       <div className="text-3xl mb-2">{icon}</div>
       <p className="text-center font-semibold">{title}</p>
       <p className="text-center text-white">{value}</p>

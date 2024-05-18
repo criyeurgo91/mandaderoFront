@@ -130,14 +130,14 @@ function MandersList() {
 
 
   return (
-    <div className="bg-stone-900 text-white min-h-screen">
+    <div className="bg-sky-50 text-sky-800 min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-5 py-10">Mandaderos</h2>
         {alertMessage && <div className="text-red-500">{alertMessage}</div>}
         <div className="flex mb-4">
           <input
             type="text"
-            className="w-1/2 border-2 border-gray-500 bg-black h-10 px-6 rounded-lg text-sm focus:outline-none"
+            className="w-1/2 border-2 border-gray-500 bg-sky-950 h-10 px-6 rounded-lg text-sm text-white focus:outline-none"
             placeholder="Buscar..."
             onChange={handleSearchMander}
           />
@@ -150,7 +150,7 @@ function MandersList() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredManders.map((mander, index) => (
-            <div key={index} className="bg-stone-700 rounded-lg shadow-md p-2 border border-black">
+            <div key={index} className="bg-sky-800 rounded-lg shadow-md p-2 border text-white border-black">
               {/* Contenido del mandadero */}
               <div className="flex justify-center py-2">
                 <img src={mander['image_mander']} alt="Mander" className="w-auto h-40 rounded-md" />

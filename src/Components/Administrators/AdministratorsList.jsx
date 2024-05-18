@@ -98,19 +98,19 @@ function AdministratorsList() {
   
 
   return (
-    <div className="bg-stone-900 text-white min-h-screen">
+    <div className="bg-sky-50 text-white min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5 py-10">Administrador</h2>
+        <h2 className="text-2xl font-bold mb-5 py-10 text-sky-800">Administrador</h2>
         <div className="container mx-auto px-4 py-8">
           <div className="flex mb-4">
             <input
               type="text"
-              className="w-1/2 border-2 border-gray-700 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
+              className="w-1/2 border-2 border-blue-500 bg-sky-950 h-10 px-5 rounded-lg text-sm text-white focus:outline-none"
               placeholder="Buscar..."
               onChange={handleSearch}
             />
             <button
-              className="bg-green-950 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+              className="bg-green-700 hover:bg-green-950 text-white font-bold py-2 px-4 rounded ml-2"
               onClick={handleNewUser}
             >
               Registrar
@@ -118,8 +118,8 @@ function AdministratorsList() {
           </div>
           {alertMessage && <div className="text-red-950">{alertMessage}</div>}
           <div className='table-container'>
-          <table className="w-full border-collapse border border-black custom-table">
-            <thead className="bg-stone-600">
+          <table className="w-full border-collapse border bg-sky-800 custom-table">
+            <thead className="bg-sky-950 text-white">
               <tr>
                 <th className="px-4 py-2 border">Correo</th>
                 <th className="px-4 py-2 border">Nombre</th>

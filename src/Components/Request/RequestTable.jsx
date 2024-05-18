@@ -45,7 +45,7 @@ const RequestTable = ({
 
   return (
     <table >
-      <thead className="bg-stone-600">
+      <thead className="bg-sky-800 text-white">
         <tr>
           <th className="border border-gray-300 px-4 py-2 text-center">Tiempo Transcurrido</th>
           <th className="border border-gray-300 px-4 py-2 text-center">Usuario</th>
@@ -96,7 +96,7 @@ const RequestTable = ({
                     <select
                       onClick={handleManderSelectClick}
                       onChange={(e) => handleManderSelect(e.target.value, request.id_request)}
-                      className="border border-gray-300 bg-black"
+                      className="border border-gray-300 bg-sky-950 text-white"
                       disabled={isLoadingManders}
                     >
                       <option value="">Seleccionar Mandadero</option>
