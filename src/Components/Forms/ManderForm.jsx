@@ -133,8 +133,8 @@ const ManderForm = () => {
 
 
   return (
-    <div className=" bg-stone-900 min-h-screen flex justify-center items-center">
-      <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+    <div className=" bg-sky-50 min-h-screen flex justify-center items-center">
+      <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
         <h2 className="text-lg font-bold mb-4 text-white">Mander</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">

@@ -57,9 +57,9 @@ function ServiceList() {
   );
 
   return (
-    <div className="bg-stone-900 text-white min-h-screen">
-      <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-4 py-3">Lista de Servicios</h1>
+    <div className="bg-sky-50 text-white min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-4 py-10 text-sky-800">Lista de Servicios</h1>
         {showUpdateForm && (
           <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
         )}
@@ -74,7 +74,7 @@ function ServiceList() {
                   <input
                     type="text"
                     placeholder="Buscar..."
-                    className="w-1/2 border-2 border-gray-500 bg-black text-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                    className="w-1/2 border-2 border-gray-500 bg-sky-950 text-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                     onChange={handleSearch}
                   />
                   <button
@@ -84,8 +84,8 @@ function ServiceList() {
                     <FiPlus className="mr-2" /> Nuevo servicio
                   </button>
                 </div>
-                <table className="w-full bg-stone-900 shadow-md rounded my-6">
-                  <thead className='bg-stone-600'>
+                <table className="w-full bg-sky-800 shadow-md rounded my-6">
+                  <thead className='bg-sky-950'>
                     <tr>
                     
                       <th className="border px-4 py-2">Nombre</th>

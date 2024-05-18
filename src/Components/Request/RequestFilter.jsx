@@ -6,11 +6,11 @@ const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
       <input
         type="text"
         placeholder="Buscar..."
-        className="w-1/4 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none mr-4"
+        className="w-1/4 border-2 border-gray-500 bg-sky-950 h-10 px-5 rounded-lg text-sm text-white focus:outline-none mr-4"
         onChange={handleSearch}
       />
       <select
-        className="w-1/6 border-2 border-gray-500 bg-black h-10 px-5 rounded-lg text-sm focus:outline-none"
+        className="w-1/6 border-2 border-gray-500 bg-sky-950 h-10 px-5 rounded-lg text-sm text-white focus:outline-none"
         onChange={handleStatusFilter}
       >
         <option value="">Mostrar todo</option>

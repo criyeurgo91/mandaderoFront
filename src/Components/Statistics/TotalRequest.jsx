@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const ChartCard = ({ data }) => {
   return (
     <div className="w-full h-full flex flex-col justify-center">
-      <h2 className="text-2xl font-bold mb-5 py-8 text-black">Solicitudes</h2>
+      <h2 className="text-2xl font-bold mb-5 py-8 text-sky-800">Solicitudes</h2>
       <div className="w-full h-full">
         <ResponsiveContainer width="100%" height="85%">
           <BarChart

@@ -72,7 +72,7 @@ function UpdateManderForm() {
   }
 
   return (
-    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
         <h2 className="text-lg font-bold mb-4 text-white">Edit Mander</h2>
         <div className="mb-4 text-black">

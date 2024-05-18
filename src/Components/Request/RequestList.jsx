@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'; // Importar useState, useEffect, useCallback y useMemo
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import RequestFilter from './RequestFilter';
 import RequestTable from './RequestTable';
+import RequestFinish from './RequestFinish'; // Importar el nuevo componente
 import apiUrl from '../../config/apiConfig';
 
 const RequestList = () => {
@@ -14,37 +15,36 @@ const RequestList = () => {
     fetchData();
     const intervalId = setInterval(updateElapsedTime, 1000);
     return () => clearInterval(intervalId);
-  }, []);
-
+  }, [statusFilter]);
+  
   const fetchData = async () => {
     try {
-      const requestsResponse = await axios.get(`${apiUrl}/api/getlistrequest/`);
-      setRequests(requestsResponse.data);
+      let url = `${apiUrl}/api/getlistrequest/`;
+      if (statusFilter) {
+        url += `?status=${statusFilter}`;
+      }
+      const response = await axios.get(url);
+      setRequests(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+  
 
   const updateElapsedTime = useCallback(() => {
-    setRequests((prevRequests) =>
-      prevRequests.map((request) => {
-        if (request.status_request !== "Finalizado") {
-          return {
-            ...request,
-            elapsedTime: calculateElapsedTime(request.dateregister_request)
-          };
-        } else {
-          return request;
-        }
-      })
+    setRequests(prevRequests =>
+      prevRequests.map(request => ({
+        ...request,
+        elapsedTime: calculateElapsedTime(request.dateregister_request)
+      }))
     );
   }, []);
 
-  const handleSearch = useCallback((event) => {
+  const handleSearch = useCallback(event => {
     setSearchTerm(event.target.value);
   }, []);
 
-  const handleStatusFilter = useCallback((event) => {
+  const handleStatusFilter = useCallback(event => {
     setStatusFilter(event.target.value);
   }, []);
 
@@ -69,10 +69,9 @@ const RequestList = () => {
       await axios.post(`${apiUrl}/api/request_manager/`, requestData);
 
       setRequests(prevRequests =>
-        prevRequests.filter(
-          request =>
-            request.id_request !== requestId ||
-            request.status_request.toLowerCase() === "finalizado"
+        prevRequests.filter(request =>
+          request.id_request !== requestId ||
+          request.status_request.toLowerCase() === "finalizado"
         )
       );
 
@@ -82,7 +81,7 @@ const RequestList = () => {
     }
   }, [selectedMander]);
 
-  const getStatusColor = useCallback((status) => {
+  const getStatusColor = useCallback(status => {
     switch (status.toLowerCase()) {
       case "proceso":
         return "text-blue-500";
@@ -95,7 +94,7 @@ const RequestList = () => {
     }
   }, []);
 
-  const getStatusName = useCallback((status) => {
+  const getStatusName = useCallback(status => {
     switch (status.toLowerCase()) {
       case "proceso":
         return "Proceso";
@@ -108,7 +107,7 @@ const RequestList = () => {
     }
   }, []);
 
-  const calculateElapsedTime = useCallback((startTimeString) => {
+  const calculateElapsedTime = useCallback(startTimeString => {
     const startTime = new Date(startTimeString);
     const currentTime = new Date();
     const elapsedTime = Math.abs(currentTime - startTime);
@@ -118,41 +117,33 @@ const RequestList = () => {
     return `${hours}h ${minutes}m ${seconds}s`;
   }, []);
 
-  const handleOpenInMaps = useCallback((originLat, originLng, destinationLat, destinationLng) => {
-    const originCoords = `${originLat},${originLng}`;
-    const destinationCoords = `${destinationLat},${destinationLng}`;
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originCoords}&destination=${destinationCoords}`;
-    window.open(mapsUrl, "_blank");
-  }, []);
-
   const filteredRequests = useMemo(() => {
     let filtered = requests;
 
     if (statusFilter === "finalizado") {
-      filtered = filtered.filter(
-        (request) => request.status_request.toLowerCase() === "finalizado"
+      filtered = filtered.filter(request =>
+        request.status_request.toLowerCase() === "finalizado"
       );
     } else {
-      filtered = filtered.filter(
-        (request) =>
-          request.status_request.toLowerCase() === "proceso" ||
-          request.status_request.toLowerCase() === "pendiente"
+      filtered = filtered.filter(request =>
+        request.status_request.toLowerCase() === "proceso" ||
+        request.status_request.toLowerCase() === "pendiente"
       );
     }
 
     if (searchTerm) {
-      filtered = filtered.filter(
-        (request) =>
-          request.name_user.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          request.lastname_user.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          request.phone_user.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          request.detail_request.toLowerCase().includes(searchTerm.toLowerCase())
+      const searchTermLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(request =>
+        request.name_user.toLowerCase().includes(searchTermLower) ||
+        request.lastname_user.toLowerCase().includes(searchTermLower) ||
+        request.phone_user.toLowerCase().includes(searchTermLower) ||
+        request.detail_request.toLowerCase().includes(searchTermLower)
       );
     }
 
     if (statusFilter && statusFilter !== "finalizado") {
-      filtered = filtered.filter(
-        (request) => request.status_request.toLowerCase() === statusFilter.toLowerCase()
+      filtered = filtered.filter(request =>
+        request.status_request.toLowerCase() === statusFilter.toLowerCase()
       );
     }
 
@@ -160,8 +151,8 @@ const RequestList = () => {
   }, [requests, searchTerm, statusFilter]);
 
   return (
-    <div className="bg-stone-900 text-white min-h-screen">
-      <div className="container mx-auto px-4 py-3">
+    <div className="bg-sky-50 text-sky-800 min-h-screen">
+      <div className="container mx-auto px-4 py-12">
         <h1 className="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
         <RequestFilter
           handleSearch={handleSearch}
@@ -169,15 +160,18 @@ const RequestList = () => {
         />
       </div>
       <div className="container mx-auto px-4">
-        <RequestTable
-          requests={filteredRequests}
-          handleOpenInMaps={handleOpenInMaps}
-          getStatusColor={getStatusColor}
-          getStatusName={getStatusName}
-          selectedMander={selectedMander}
-          handleAssignMander={handleAssignMander}
-          handleManderSelect={handleManderSelect}
-        />
+        {statusFilter === "finalizado" ? (
+          <RequestFinish finishedRequests={filteredRequests} />
+        ) : (
+          <RequestTable
+            requests={filteredRequests}
+            getStatusColor={getStatusColor}
+            getStatusName={getStatusName}
+            selectedMander={selectedMander}
+            handleAssignMander={handleAssignMander}
+            handleManderSelect={handleManderSelect}
+          />
+        )}
       </div>
     </div>
   );

@@ -43,8 +43,8 @@ function ServicesForm({ onCreate, onClose }) {
   };
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Create Service</h2>
+    <div className="max-w-sm mx-auto p-6 bg-sky-800 rounded-lg shadow-md">
+      <h2 className="text-lg font-semibold mb-4">Crear Nuevo Servicio</h2>
       {message && (
         <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
           {message}
@@ -105,12 +105,12 @@ function ServicesForm({ onCreate, onClose }) {
         </div>
         <div className='flex items-center justify-between'>
         <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold  rounded px-2 py-2">
-          Submit
+          Crear
         </button>
         <button type="reset" className="bg-red-900 hover:bg-red-700 text-white font-bold  rounded px-2 py-2"
         onClick={onClose}
         >
-          Cancel
+          Cancelar
         </button>
         </div>
         

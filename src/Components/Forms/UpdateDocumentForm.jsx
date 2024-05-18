@@ -74,8 +74,8 @@ function UpdateDocumentForm() {
   };
 
   return (
-    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
-      <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
+      <div className="max-w-sm mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
         <h2 className="text-lg font-bold mb-4 text-white">Actualizar Documento</h2>
         {message && (
           <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
