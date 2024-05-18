@@ -29,7 +29,7 @@ const RequestFinish = ({ finishedRequests }) => {
   return (
     <div>
       <table className="w-full">
-        <thead className="bg-stone-600">
+        <thead className="bg-sky-800 text-white">
           <tr>
             <th className="border border-gray-300 px-4 py-2 text-center">Usuario</th>
             <th className="border border-gray-300 px-4 py-2 text-center">Detalle</th>
