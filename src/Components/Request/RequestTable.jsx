@@ -7,7 +7,7 @@ import apiUrl from '../../config/apiConfig';
 
 const RequestTable = ({
   requests,
-  handleOpenInMaps,
+  
   getStatusColor,
   getStatusName,
   selectedMander,
@@ -64,12 +64,7 @@ const RequestTable = ({
             <td className="border border-gray-300 px-4 py-2 text-center">{request.detail_request}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">
               {request.origin}
-              <button
-                className="text-blue-500 ml-2 cursor-pointer"
-                onClick={() => handleOpenInMaps(request.originLat, request.originLng, request.destinationLat, request.destinationLng)}
-              >
-                <MdPlace />
-              </button>
+             
             </td>
             <td className="border border-gray-300 px-4 py-2 text-center">{request.destination}</td>
             <td className={`border px-4 py-2 text-center ${getStatusColor(request.status_request)}`}>
@@ -116,7 +111,7 @@ const RequestTable = ({
 // Definir PropTypes para las props del componente
 RequestTable.propTypes = {
   requests: PropTypes.array.isRequired,
-  handleOpenInMaps: PropTypes.func.isRequired,
+  
   getStatusColor: PropTypes.func.isRequired,
   getStatusName: PropTypes.func.isRequired,
   selectedMander: PropTypes.object.isRequired,
