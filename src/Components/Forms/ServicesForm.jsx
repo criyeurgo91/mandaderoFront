@@ -105,12 +105,12 @@ function ServicesForm({ onCreate, onClose }) {
         </div>
         <div className='flex items-center justify-between'>
         <button type="submit" className="bg-blue-900 hover:bg-blue-700 text-white font-bold  rounded px-2 py-2">
-          Submit
+          Crear
         </button>
         <button type="reset" className="bg-red-900 hover:bg-red-700 text-white font-bold  rounded px-2 py-2"
         onClick={onClose}
         >
-          Cancel
+          Cancelar
         </button>
         </div>
         

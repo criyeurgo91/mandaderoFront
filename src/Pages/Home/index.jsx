@@ -16,10 +16,10 @@ function index() {
       </div>
       {/* Bottom components */}
       <div className="flex h-[70%]">
-        <div className="w-1/2 bg-white text-black shadow-md rounded-md p-4">
+        <div className="w-1/2 bg-white text-sky-800 shadow-md rounded-md p-4">
           <TotalRequest/>
         </div>
-        <div className="w-1/2 bg-white text-black shadow-md rounded-md p-4">
+        <div className="w-1/2 bg-white text-sky-800 shadow-md rounded-md p-4">
           <RequestDay />
         </div>
       </div>

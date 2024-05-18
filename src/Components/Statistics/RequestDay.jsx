@@ -46,7 +46,7 @@ const RequestDay = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-center">
-      <h2 className="text-2xl font-bold mb-5 py-8 text-black">Solicitudes Diarias</h2>
+      <h2 className="text-2xl font-bold mb-5 py-8 text-sky-800">Solicitudes Diarias</h2>
       <ResponsiveContainer width="100%" height="85%">
         <BarChart
           data={processedData}
