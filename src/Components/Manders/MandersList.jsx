@@ -26,10 +26,10 @@ function MandersList() {
         
         const mandersWithIsActive = await Promise.all(response.map(async (mander) => {
           try {
-            const accountResponse = mander.isactive_account;
-            return { ...mander, isactive_account: accountResponse };
+            const userResponse = mander.isactive_user;
+            return { ...mander, isactive_user: userResponse };
           } catch (error) {
-            console.error(`Error fetching account state for mander ${mander.id_mander}:`, error);
+            console.error(`Error fetching state for mander ${mander.id_mander}:`, error);
             return mander;
           }
         }));
@@ -38,7 +38,7 @@ function MandersList() {
         setFilteredManders(mandersWithIsActive);
   
         if (mandersWithIsActive.length > 0) {
-          setManderIsActive(mandersWithIsActive[0].isactive_account || false);
+          setManderIsActive(mandersWithIsActive[0].isactive_user || false);
         }
       })
       .catch(error => {
@@ -47,7 +47,7 @@ function MandersList() {
   }, []);
   
 
-  const handleToggleActive = async (manderId, isActive) => {
+  const handleToggleActive = async (manderId, userId, isActive) => {
     try {
       // Buscar el mandadero en la lista por su ID
       const manderToUpdate = manders.find(mander => mander.id_mander === manderId);
@@ -55,18 +55,16 @@ function MandersList() {
         console.error(`Mander with ID ${manderId} not found.`);
         return;
       }
-      
-      const accountId = manderToUpdate.id_account; // Obtener el ID de la cuenta asociada al mandadero
   
       const updatedMander = {
-        isactive_account: !isActive,
+        isactive_user: !isActive,
       };
   
-      await axiosPatch(`${apiUrl}/api/account/${accountId}/`, updatedMander);
+      await axiosPatch(`${apiUrl}/api/user/${userId}/`, updatedMander);
   
       // Actualizar el estado local después de que se haya confirmado la actualización en el servidor
       const updatedManders = manders.map(mander =>
-        mander.id_mander === manderId ? { ...mander, isactive_account: !isActive } : mander
+        mander.id_mander === manderId ? { ...mander, isactive_user: !isActive } : mander
       );
       setManders(updatedManders);
       setFilteredManders(updatedManders);
@@ -132,14 +130,14 @@ function MandersList() {
 
 
   return (
-    <div className="bg-stone-900 text-white min-h-screen">
+    <div className="bg-sky-50 text-sky-800 min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-5 py-10">Mandaderos</h2>
         {alertMessage && <div className="text-red-500">{alertMessage}</div>}
         <div className="flex mb-4">
           <input
             type="text"
-            className="w-1/2 border-2 border-gray-500 bg-black h-10 px-6 rounded-lg text-sm focus:outline-none"
+            className="w-1/2 border-2 border-gray-500 bg-sky-950 h-10 px-6 rounded-lg text-sm text-white focus:outline-none"
             placeholder="Buscar..."
             onChange={handleSearchMander}
           />
@@ -152,7 +150,7 @@ function MandersList() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredManders.map((mander, index) => (
-            <div key={index} className="bg-stone-700 rounded-lg shadow-md p-2 border border-black">
+            <div key={index} className="bg-sky-800 rounded-lg shadow-md p-2 border text-white border-black">
               {/* Contenido del mandadero */}
               <div className="flex justify-center py-2">
                 <img src={mander['image_mander']} alt="Mander" className="w-auto h-40 rounded-md" />
@@ -163,20 +161,21 @@ function MandersList() {
               <div className="ml-2 py-2 relative">
                       <input
                         type="checkbox"
-                        checked={mander.isactive_account}
-                        onChange={() => handleToggleActive(mander.id_mander, mander.isactive_account)}
+                        checked={mander.isactive_user}
+                        onChange={() => handleToggleActive(mander.id_mander, mander.id_user, mander.isactive_user)}
+
                         id={`toggle-${mander.id_mander}`}
                         className="sr-only"
                       />
                       <label
                         htmlFor={`toggle-${mander.id_mander}`}
-                        className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_account ? 'bg-blue-500' : 'bg-gray-300'}`}
+                        className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_user ? 'bg-blue-500' : 'bg-gray-300'}`}
                       >
                         <span
-                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
+                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_user ? 'translate-x-7' : 'translate-x-0'} `}
                         ></span>
                       </label>
-                      <span className='ml-2'>{mander.isactive_account ? "Activo" : "Bloqueado"}</span>
+                      <span className='ml-2'>{mander.isactive_user ? "Activo" : "Bloqueado"}</span>
                     </div>
               <p className="text-sm mb-1">
                 <span className="font-bold">Celular:</span> {mander['phone_user']}

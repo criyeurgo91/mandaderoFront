@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -17,35 +16,14 @@ const HeaderComponent = () => {
   }, []);
 
   useEffect(() => {
-    const accountId = localStorage.getItem("accountId");
-    if (accountId) {
-      fetchUserDetails(accountId);
+    const userToken = localStorage.getItem("token");
+    if (userToken) {
+      const userName = localStorage.getItem("name");
+      const userLastName = localStorage.getItem("lastname");
+      const userImage = localStorage.getItem("image");
+      setUser({ name_user: userName, lastname_user: userLastName, image_user: userImage });
     }
   }, []);
-
-  const fetchUserDetails = async (accountId) => {
-    try {
-      const response = await axios.get(
-        `${apiUrl}/api/user?idaccount=${accountId}`
-      );
-
-      if (response.status !== 200) {
-        console.log(response);
-        throw new Error("Failed to fetch user details");
-      }
-
-      const userData = response.data;
-      const userForCurrentAccount = userData[0];
-      
-      if (userForCurrentAccount) {
-        setUser(userForCurrentAccount);
-      } else {
-        console.log("User not found for account ID:", accountId);
-      }
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-    }
-  };
 
   const formattedDateTime = currentDateTime.toLocaleString("es-CO", {
     day: "2-digit",
@@ -101,6 +79,3 @@ const HeaderComponent = () => {
 };
 
 export default HeaderComponent;
-
-
-

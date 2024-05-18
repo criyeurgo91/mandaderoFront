@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 const DetailMander = () => {
@@ -47,15 +47,15 @@ const DetailMander = () => {
 
 
   if (loading) {
-    return <div className="bg-stone-900 text-white p-4 py-20">Loading...</div>;
+    return <div className="bg-sky-800 text-white p-4 py-20">Loading...</div>;
   }
 
   if (!manderData) {
-    return <div className="bg-stone-900 text-white p-4 py-20">No mander found with ID {id}.</div>;
+    return <div className="bg-sky-800 text-white p-4 py-20">No mander found with ID {id}.</div>;
   }
 
   return (
-    <div className="bg-stone-900 text-white p-4 py-20">
+    <div className="bg-sky-800 text-white p-4 py-20">
       <div className="flex justify-between mb-4">
         <div className="w-full md:w-1/3">
           <img src={manderData.image_mander} alt={`Image of ${manderData.name_user} ${manderData.lastname_user}`} className="w-auto h-44 mb-2 rounded-lg mx-auto" />
@@ -64,7 +64,11 @@ const DetailMander = () => {
             <span className='font-bold'>Documento:</span>
             <p>{manderData.cc_mander}</p>
             <span className='font-bold'>Correo:</span>
-            <p>{manderData.email_account}</p>
+            <p>
+              <Link to={`updateaccountmander/${manderData.id_account}`}>
+                {manderData.email_account}
+              </Link>
+            </p>
             <span className='font-bold'>Celular:</span>
             <p>{manderData.phone_user}</p>
             <span className='font-bold'>Direccion:</span>
@@ -107,7 +111,7 @@ const DetailMander = () => {
       </div>
       <div className="flex justify-center">
         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={handleClose}>
-          Vover
+          Volver
         </button>
       </div>
     </div>

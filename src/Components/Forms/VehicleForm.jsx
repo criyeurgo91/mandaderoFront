@@ -25,6 +25,7 @@ const VehicleForm = () => {
   const [plateError, setPlateError] = useState('');
   const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
   const [previewImage, setPreviewImage] = useState(null)
+  const [showModal, setShowModal] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -82,8 +83,9 @@ const VehicleForm = () => {
         user_id_user: id 
       });
       setLoading(false);
-      alert('Formulario enviado exitosamente');
-      navigate (-1)
+      setShowModal(true);
+      //alert('Vehiculo Registrado');
+      
 
 
     } catch (error) {
@@ -121,9 +123,14 @@ const VehicleForm = () => {
     window.history.back(); 
   }
 
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(window.history.back()); 
+  };
+
   return (
-    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
-    <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
+    <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
       <div>
         <div>
           <h1 className="text-2xl text-center font-bold mb-4 text-white">Vehiculo</h1>
@@ -255,6 +262,15 @@ const VehicleForm = () => {
         </div>
       </div>
     </div>
+    {/* Modal */}
+    {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p className="text-lg font-semibold mb-4">Vehiculo Registrado!</p>
+            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

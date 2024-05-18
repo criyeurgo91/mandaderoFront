@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { axiosGet, axiosPut } from '../../Logic/Apihelpers';
+import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
 import apiUrl from '../../config/apiConfig';
 
 function UpdateManderForm() {
@@ -45,7 +45,7 @@ function UpdateManderForm() {
       formData.append('image_mander', image);
     }
     
-    axiosPut(`${apiUrl}/api/mander/${id}/`, formData, {
+    axiosPatch(`${apiUrl}/api/mander/${id}/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -59,8 +59,7 @@ function UpdateManderForm() {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    // Mostrar la imagen seleccionada por el usuario
-    setExistingImage(URL.createObjectURL(e.target.files[0]));
+    setExistingImage(e.target.files[0] ? URL.createObjectURL(e.target.files[0]) : null);
   };
 
   const closeModal = () => {
@@ -73,7 +72,7 @@ function UpdateManderForm() {
   }
 
   return (
-    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-black rounded-lg shadow-md mt-20 w-80">
         <h2 className="text-lg font-bold mb-4 text-white">Edit Mander</h2>
         <div className="mb-4 text-black">
@@ -155,7 +154,7 @@ function UpdateManderForm() {
             className={`p-2 shadow-lg rounded-lg w-full mb-4`}
           />
         </div>
-        {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full"/>}
+        {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full" />}
         <div className="flex justify-between">
           <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleUpdate}>
             Update
