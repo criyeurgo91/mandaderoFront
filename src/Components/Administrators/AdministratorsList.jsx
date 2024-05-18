@@ -118,7 +118,7 @@ function AdministratorsList() {
           </div>
           {alertMessage && <div className="text-red-950">{alertMessage}</div>}
           <div className='table-container'>
-          <table className="w-full border-collapse border bg-sky-800 custom-table">
+          <table className="w-full border-collapse border bg-sky-800">
             <thead className="bg-sky-950 text-white">
               <tr>
                 <th className="px-4 py-2 border">Correo</th>
