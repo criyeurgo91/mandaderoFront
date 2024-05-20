@@ -54,7 +54,7 @@ const RequestDay = () => {
             top: 0,
             right: 0,
             left: 0,
-            bottom: 40,
+            bottom: 35,
           }}
         >
           <CartesianGrid strokeDasharray="4 1 2" />

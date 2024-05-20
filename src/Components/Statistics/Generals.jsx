@@ -25,7 +25,7 @@ const Generals = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="text-center">Loading...</div>;
+  if (loading) return <div className="text-center text-2xl font-bold mb-5 py-8 text-sky-800">Loading...</div>;
   if (error) return <div className="text-center text-red-500">Error: {error.message}</div>;
 
   const cards = [
