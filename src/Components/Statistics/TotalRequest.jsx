@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import apiUrl from '../../config/apiConfig';
 
 const ChartCard = ({ data }) => {
   return (
@@ -32,7 +33,7 @@ const TotalRequest = () => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    fetch('https://mandaderos3.azurewebsites.net/api/contadores/')
+    fetch(`${apiUrl}/api/contadores/`)
       .then(response => response.json())
       .then(data => {
         const newData = [

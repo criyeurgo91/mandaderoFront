@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Flex, Metric, Text } from '@tremor/react';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
+import apiUrl from '../../config/apiConfig';
 
 const Generals = () => {
   const [data, setData] = useState({});
@@ -11,7 +12,7 @@ const Generals = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://mandaderos3.azurewebsites.net/api/contadores');
+        const response = await fetch(`${apiUrl}/api/contadores/`);
         const data = await response.json();
         setData(data);
         setLoading(false);

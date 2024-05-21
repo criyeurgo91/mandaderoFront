@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import apiUrl from '../../config/apiConfig';
 
 const RequestDay = () => {
   const [requestData, setRequestData] = useState([]);
@@ -8,7 +9,7 @@ const RequestDay = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://mandaderos3.azurewebsites.net/api/request/');
+        const response = await fetch(`${apiUrl}/api/request/`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
