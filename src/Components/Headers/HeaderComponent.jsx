@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import axios from "axios";
+import apiUrl from "../../config/apiConfig";
+;
+
 
 const HeaderComponent = () => {
   const { state } = useLocation();
@@ -44,7 +48,6 @@ const HeaderComponent = () => {
             <p>{formattedDateTime}</p>
           </div>
         </div>
-        
         <div className="flex items-center space-x-4">
           {user && (
             <div>
@@ -69,7 +72,9 @@ const HeaderComponent = () => {
           )}
         </div>
       </div>
+      
       <Outlet />
+
     </header>
   );
 };
