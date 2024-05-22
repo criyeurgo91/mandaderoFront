@@ -51,4 +51,4 @@ function Index() {
   );
 }
 
-export default index;
+export default Index;
