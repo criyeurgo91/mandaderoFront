@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
-import '../../Components/Administrators/Index.css';
+import '../../Components/Administrators/Index.css'
 import apiUrl from '../../config/apiConfig';
 
 function AdministratorsList() {
@@ -132,7 +132,7 @@ function AdministratorsList() {
                   <td className="border px-4 py-2">
                     {user.email_account}
                     <div className="ml-2 py-2 relative">
-                      <input
+                    <input
                         type="checkbox"
                         checked={user.isactive_user}
                         onChange={() => handleToggleActive(user.id_user, user.isactive_user)}
@@ -144,7 +144,7 @@ function AdministratorsList() {
                         className={`block cursor-pointer w-12 h-5 rounded-full ${user.isactive_user ? 'bg-blue-500' : 'bg-gray-300'}`}
                       >
                         <span
-                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${user.isactive_account ? 'translate-x-7' : 'translate-x-0'} `}
+                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${user.isactive_user ? 'translate-x-7' : 'translate-x-0'} `}
                         ></span>
                       </label>
                       <span className='ml-2'>{user.isactive_user ? "Activo" : "Bloqueado"}</span>

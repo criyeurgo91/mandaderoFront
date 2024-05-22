@@ -8,7 +8,7 @@ import TotalUsers from '../../Components/Statistics/TotalUsers';
 function index() {
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-5 py-3 text-black px-3">Inicio</h2>
+      <h2 className="text-2xl font-bold mb-5 py-3 text-sky-800 px-3">Inicio</h2>
     <div className="flex flex-col h-screen py-12 ">
       {/* Top components */}
       <div className="flex justify-between items-center bg-gray-100 shadow-md rounded-md p-4 h-32 w-auto">

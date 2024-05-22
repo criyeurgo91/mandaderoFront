@@ -1,6 +1,10 @@
+// src/firebase.js
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+import { getMessaging, onMessage, getToken } from "firebase/messaging";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,11 +21,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getFirestore(app);
+const messaging = getMessaging(app);
 
-export const firebaseInitialized = new Promise((resolve, reject) => {
-  if (app) {
-    resolve(app);
-  } else {
-    reject(new Error("Failed to initialize Firebase."));
-  }
-});
+export { app, analytics, db, messaging, onMessage, getToken };

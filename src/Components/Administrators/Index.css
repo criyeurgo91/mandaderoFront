@@ -1,73 +1,38 @@
-/* index.css */
+.switch-container {
+  display: inline-block;
+  position: relative;
+}
 
-.table-container {
-    max-height: calc(100vh - 200px); /* Altura máxima ajustable */
-    overflow-y: auto;
-  }
-  
-  .custom-table th,
-  .custom-table td {
-    padding: 0.75rem;
-    text-align: left;
-  }
-  
-  .custom-table th {
-    font-weight: bold;
-  }
-  
-  .custom-table tbody tr:nth-child(even) {
-    background-color: #000000;
-  }
-  
-  .custom-table tbody tr:hover {
-    background-color: #000000;
-  }
-  
-  /* index.css */
-  .switch-container {
-    position: relative; /* Agregamos posicionamiento relativo */
-  }
-  
-  .switch input[type="checkbox"] {
-    position: absolute; /* Mantenemos el posicionamiento absoluto */
-    opacity: 0; /* Hacemos invisible el checkbox */
-    width: 0;
-    height: 0;
-  }
-  
-  .switch label {
-    position: absolute; /* Mantenemos el posicionamiento absoluto */
-    top: 50%; /* Centramos verticalmente */
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-  
-  .switch .slider {
-    position: relative; /* Cambiamos a posicionamiento relativo */
-    display: block;
-    width: 30px; /* Ancho ajustable según tus necesidades */
-    height: 15px; /* Alto ajustable según tus necesidades */
-    border-radius: 15px; /* Ajustamos para que sea un círculo */
-    background-color: #ccc; /* Color de fondo del slider */
-    transition: background-color 0.3s ease;
-  }
-  
-  .switch input:checked + .slider {
-    background-color: #007bff; /* Color de fondo del slider cuando está activo */
-  }
-  
-  .switch .slider:before {
-    content: '';
-    position: absolute; /* Mantenemos el posicionamiento absoluto */
-    left: 2px; /* Ajustamos la posición inicial del botón */
-    top: 2px; /* Ajustamos la posición inicial del botón */
-    width: 11px; /* Ancho del botón */
-    height: 11px; /* Alto del botón */
-    border-radius: 50%; /* Ajustamos para que sea un círculo */
-    background-color: white; /* Color del botón */
-    transition: transform 0.3s ease;
-  }
-  
-  .switch input:checked + .slider:before {
-    transform: translateX(15px); /* Movemos el botón a la posición deseada cuando está activo */
-  }
+.switch-checkbox {
+  display: none;
+}
+
+.switch-label {
+  display: block;
+  width: 30px;
+  height: 15px;
+  position: relative;
+  background-color: #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.switch-label .slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+.switch-checkbox:checked + .switch-label {
+  background-color: #007bff;
+}
+
+.switch-checkbox:checked + .switch-label .slider {
+  transform: translateX(15px);
+}
