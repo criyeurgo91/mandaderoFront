@@ -48,9 +48,6 @@ const HeaderComponent = () => {
             <p>{formattedDateTime}</p>
           </div>
         </div>
-        <div>
-            <NewRequest/>
-        </div>
         <div className="flex items-center space-x-4">
         {user && (
           <div>
