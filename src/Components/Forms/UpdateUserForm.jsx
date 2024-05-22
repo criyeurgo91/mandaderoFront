@@ -12,6 +12,7 @@ function UpdateUserForm() {
   const [phone, setPhone] = useState('');
   const [image, setImage] = useState(null);
   const [accountId, setAccountId] = useState('')
+  const [previewImage, setPreviewImage] = useState(null);
   const [existingImage, setExistingImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
