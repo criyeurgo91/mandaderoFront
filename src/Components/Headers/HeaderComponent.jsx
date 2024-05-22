@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 import apiUrl from "../../config/apiConfig";
-import NewRequest from "../Statistics/NewRequest";
+;
 
 
 const HeaderComponent = () => {
