@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const RequestFinish = ({ finishedRequests }) => {
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageMap, setImageMap] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchImageUrls = async () => {
       try {
         const response = await axios.get('https://mandaderos3.azurewebsites.net/api/request_manager/');
-        setImageUrls(response.data.map(item => item.image_requestmanager));
+        const images = response.data
+          .filter(item => item.status_requestmanager === 'terminado')
+          .reduce((acc, item) => {
+            acc[item.request_id_request] = item.image_requestmanager;
+            return acc;
+          }, {});
+        setImageMap(images);
       } catch (error) {
         console.error('Error fetching image URLs:', error);
       }
@@ -39,32 +45,44 @@ const RequestFinish = ({ finishedRequests }) => {
           </tr>
         </thead>
         <tbody>
-          {finishedRequests.map((request, index) => (
-            <tr key={request.id_request}>
-              <td className="border border-gray-300 px-4 py-2 text-center">{`${request.name_user} ${request.lastname_user} - ${request.phone_user}`}</td>
-              <td className="border border-gray-300 px-4 py-2 text-center">{request.detail_request}</td>
-              <td className="border border-gray-300 px-4 py-2 text-center">{request.status_request}</td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                {imageUrls.length > index && imageUrls[index] && (
-                  <img
-                    src={imageUrls[index]}
-                    alt={`Evidencia de ${request.id_request}`}
-                    className="w-24 h-24 cursor-pointer"
-                    onClick={() => handleImageClick(imageUrls[index])}
-                  />
-                )}
-              </td>
-              <td className="border border-gray-300 px-4 py-2 text-center">{request.name_mander}</td>
+          {finishedRequests.length === 0 ? (
+            <tr>
+              <td colSpan="5" className="text-center py-4">No hay solicitudes finalizadas</td>
             </tr>
-          ))}
+          ) : (
+            finishedRequests.map((request) => (
+              <tr key={request.id_request}>
+                <td className="border border-gray-300 px-4 py-2 text-center">
+                  <div>{`${request.name_user} ${request.lastname_user}`}</div>
+                  <div>{request.phone_user}</div>
+                </td>
+                <td className="border border-gray-300 px-4 py-2 text-center">{request.detail_request}</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">{request.status_request}</td>
+                <td className="border border-gray-300 px-4 py-2 text-center flex justify-center items-center">
+                  {imageMap[request.id_request] && (
+                    <img
+                      src={imageMap[request.id_request]}
+                      alt={`Evidencia de ${request.id_request}`}
+                      className="w-24 h-24 cursor-pointer"
+                      onClick={() => handleImageClick(imageMap[request.id_request])}
+                    />
+                  )}
+                </td>
+                <td className="border border-gray-300 px-4 py-2 text-center">{request.name_mander}</td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 
       {selectedImage && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="max-w-4xl mx-auto">
+          <div className="relative">
             <img src={selectedImage} alt="Imagen original" className="max-w-full max-h-full" />
-            <button className="absolute top-0 right-0 m-4 p-2 text-black bg-white rounded-full" onClick={handleCloseModal}>
+            <button
+              className="absolute top-2 right-2 p-2 text-black bg-white rounded-full"
+              onClick={handleCloseModal}
+            >
               Cerrar
             </button>
           </div>
