@@ -170,6 +170,8 @@ const RequestList = () => {
       );
     }
 
+    filtered.sort((a, ) => (a.name_mander ? 1 : -1));
+
     return filtered;
   }, [requests, searchTerm, statusFilter]);
 

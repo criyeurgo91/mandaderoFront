@@ -1,13 +1,10 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { MdPlace } from 'react-icons/md';
-import PropTypes from 'prop-types'; // Importar PropTypes
-
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import apiUrl from '../../config/apiConfig';
 
 const RequestTable = ({
   requests,
-  
   getStatusColor,
   getStatusName,
   selectedMander,
@@ -24,6 +21,7 @@ const RequestTable = ({
       setActiveManders(response.data);
     } catch (error) {
       console.error('Error fetching active manders:', error);
+      // Aquí podrías manejar el error de una mejor manera, mostrando un mensaje al usuario
     } finally {
       setIsLoadingManders(false);
     }
@@ -36,15 +34,18 @@ const RequestTable = ({
   }, [activeManders, fetchActiveManders]);
 
   const renderMandersOptions = useMemo(() => {
-    return activeManders.map((mander) => (
-      <option key={mander.id_mander} value={mander.id_mander}>
-        {mander.name_user} {mander.lastname_user}
-      </option>
-    ));
-  }, [activeManders]);
+    const assignedManderIds = requests.map((request) => request.id_mander).filter(Boolean);
+    return activeManders
+      .filter((mander) => !assignedManderIds.includes(mander.id_mander))
+      .map((mander) => (
+        <option key={mander.id_mander} value={mander.id_mander}>
+          {mander.name_user} {mander.lastname_user}
+        </option>
+      ));
+  }, [activeManders, requests]);
 
   return (
-    <table >
+    <table>
       <thead className="bg-sky-800 text-white">
         <tr>
           <th className="border border-gray-300 px-4 py-2 text-center">Tiempo Transcurrido</th>
@@ -58,14 +59,11 @@ const RequestTable = ({
       </thead>
       <tbody>
         {requests.map((request) => (
-          <tr key={request.id_request} >
+          <tr key={request.id_request}>
             <td className="border border-gray-300 px-4 py-2 text-center">{request.elapsedTime}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{`${request.name_user} ${request.lastname_user} - ${request.phone_user}`}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{request.detail_request}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              {request.origin}
-             
-            </td>
+            <td className="border border-gray-300 px-4 py-2 text-center">{request.origin}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{request.destination}</td>
             <td className={`border px-4 py-2 text-center ${getStatusColor(request.status_request)}`}>
               {getStatusName(request.status_request)}
@@ -78,10 +76,7 @@ const RequestTable = ({
                   {selectedMander?.requestId === request.id_request ? (
                     <button
                       onClick={() =>
-                        handleAssignMander(
-                          request.id_request,
-                          request.detail_request
-                        )
+                        handleAssignMander(request.id_request, request.detail_request)
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 text-center"
                     >
@@ -111,7 +106,6 @@ const RequestTable = ({
 // Definir PropTypes para las props del componente
 RequestTable.propTypes = {
   requests: PropTypes.array.isRequired,
-  
   getStatusColor: PropTypes.func.isRequired,
   getStatusName: PropTypes.func.isRequired,
   selectedMander: PropTypes.object.isRequired,
@@ -119,4 +113,4 @@ RequestTable.propTypes = {
   handleManderSelect: PropTypes.func.isRequired,
 };
 
-export default React.memo(RequestTable); // Exportar el componente con nombre
+export default React.memo(RequestTable);
