@@ -20,7 +20,7 @@ const RequestTable = ({
       const response = await axios.get(`${apiUrl}/api/getlistactivemanders/`);
       setActiveManders(response.data);
     } catch (error) {
-      console.error('Error fetching active manders:', error);
+      console.error('Error  active manders:', error);
       // Aquí podrías manejar el error de una mejor manera, mostrando un mensaje al usuario
     } finally {
       setIsLoadingManders(false);
