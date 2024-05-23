@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, LabelList } from 'recharts';
 import apiUrl from '../../config/apiConfig';
 
 const RequestDay = () => {
@@ -41,8 +41,8 @@ const RequestDay = () => {
   const servicesPerDay = countServicesPerDay();
 
   const processedData = Object.keys(servicesPerDay).map(date => ({
-    fecha: date,
-    servicios: servicesPerDay[date],
+    date: date,
+    recibidas: servicesPerDay[date],
   }));
 
   return (
@@ -51,19 +51,16 @@ const RequestDay = () => {
       <ResponsiveContainer width="100%" height="85%">
         <BarChart
           data={processedData}
-          margin={{
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 35,
-          }}
+          margin={{ top: 0, right: 0, left: 0, bottom: 35 }}
         >
           <CartesianGrid strokeDasharray="4 1 2" />
-          <XAxis dataKey="fecha" />
-          <YAxis />
-          <Tooltip />
+    
+          <Bar dataKey="recibidas" fill="#6b48ff" barSize={30} >
+            <LabelList dataKey="date" position="left"/>
+          </Bar>
+          
+          <Tooltip cursor={{ fill: 'rgba(0,0,0,0.1)' }} formatter={(value) => `${value} solicitudes`} />
           <Legend />
-          <Bar dataKey="servicios" fill="#6b48ff" name="Servicios diarios" barSize={30} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -71,4 +68,8 @@ const RequestDay = () => {
 };
 
 export default RequestDay;
+
+
+
+
 

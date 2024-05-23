@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import apiUrl from '../../config/apiConfig';
 
 const ChartCard = ({ data }) => {
@@ -14,14 +14,12 @@ const ChartCard = ({ data }) => {
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="4 1 2" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
+            <Tooltip cursor={{ fill: 'rgba(0,0,0,0.1)' }} />
             <Legend />
-            <Bar dataKey="Solicitudes" fill="#ffc658" barSize={30} />
+            <Bar dataKey="Solicitudes" fill="#6b48ff" barSize={30} />
             <Bar dataKey="Pendientes" fill="#ff7f0e" barSize={30} />
-            <Bar dataKey="Proceso" fill="#ff4d4f" barSize={30} />
-            <Bar dataKey="Finalizado" fill="#52c41a" barSize={30} />
+            <Bar dataKey="Proceso" fill="#52c41a" barSize={30} />
+            <Bar dataKey="Finalizado" fill="#ff4d4f" barSize={30} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -37,10 +35,10 @@ const TotalRequest = () => {
       .then(response => response.json())
       .then(data => {
         const newData = [
-          { name: 'Solicitudes', Solicitudes: data.total_requests, color: '#ffc658' },
+          { name: 'Solicitudes', Solicitudes: data.total_requests, color: '#6b48ff' },
           { name: 'Pendientes', Pendientes: data.pending_requests, color: '#ff7f0e' },
-          { name: 'Proceso', Proceso: data.processing_requests, color: '#ff4d4f' },
-          { name: 'Terminadas', Finalizado: data.finished_requests, color: '#52c41a' },
+          { name: 'Proceso', Proceso: data.processing_requests, color: '#52c41a' },
+          { name: 'Terminadas', Finalizado: data.finished_requests, color: '#ff4d4f' },
         ];
         setChartData(newData);
       })

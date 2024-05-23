@@ -58,8 +58,8 @@ function ServiceList() {
 
   return (
     <div className="bg-sky-50 text-white min-h-screen">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4 py-10 text-sky-800">Lista de Servicios</h1>
+      <div className="container mx-auto px-4">
+        <h1 className="text-2xl font-bold mb-4 py-3 text-sky-800">Lista de Servicios</h1>
         {showUpdateForm && (
           <UpdateServiceForm serviceId={selectedServiceId} onUpdate={handleUpdate} onClose={() => setShowUpdateForm(false)} />
         )}
@@ -84,8 +84,8 @@ function ServiceList() {
                     <FiPlus className="mr-2" /> Nuevo servicio
                   </button>
                 </div>
-                <table className="w-full bg-sky-800 shadow-md rounded my-6">
-                  <thead className='bg-sky-950'>
+                <table className="w-full shadow-md rounded my-6 text-sky-800">
+                  <thead className='bg-sky-950 text-white'>
                     <tr>
                     
                       <th className="border px-4 py-2">Nombre</th>

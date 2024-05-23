@@ -4,18 +4,41 @@ import RequestFilter from './RequestFilter';
 import RequestTable from './RequestTable';
 import RequestFinish from './RequestFinish'; // Importar el nuevo componente
 import apiUrl from '../../config/apiConfig';
+import { messaging, getToken } from '../../firebase/firebase';
+import { onMessage } from '../../firebase/firebase';
+import Modal from '../Modal/Modal';
 
 const RequestList = () => {
   const [requests, setRequests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [selectedMander, setSelectedMander] = useState({});
+  const [newRequest, setNewRequest] = useState(null)
 
   useEffect(() => {
     fetchData();
     const intervalId = setInterval(updateElapsedTime, 1000);
     return () => clearInterval(intervalId);
   }, [statusFilter]);
+
+  useEffect(() => {
+    requestNotificationPermission();
+    onMessage(messaging, (payload) => {
+      console.log('Message received:', payload);
+      setNewRequest(payload.notification); // Actualizar el estado con la nueva solicitud
+    });
+  }, []);
+
+  const requestNotificationPermission = async () => {
+    try {
+      await Notification.requestPermission();
+      const token = await getToken(messaging, { vapidKey: 'BGfk8Sl0S2E31zbEff4iGXggfW3-ayaEJlb9_inj2yWT4yNVmRFGNGBFcRiOcuebFJG-2V4U_SiI14U7luiMV1Y' });
+      console.log('FCM Token:', token);
+      // Envía este token al servidor para que pueda enviar notificaciones push.
+    } catch (error) {
+      console.error('Unable to get permission to notify.', error);
+    }
+  };
   
   const fetchData = async () => {
     try {
@@ -154,7 +177,7 @@ const RequestList = () => {
 
   return (
     <div className="bg-sky-50 text-sky-800 min-h-screen">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-3">
         <h1 className="text-2xl font-bold mb-4">Lista de Solicitudes</h1>
         <RequestFilter
           handleSearch={handleSearch}
@@ -175,6 +198,13 @@ const RequestList = () => {
           />
         )}
       </div>
+      {newRequest && (
+        <Modal
+          title="Nueva Solicitud"
+          message={`Nueva solicitud de ${newRequest.title}`}
+          onClose={() => setNewRequest(null)}
+        />
+      )}
     </div>
   );
 };
