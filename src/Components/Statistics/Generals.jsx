@@ -33,17 +33,17 @@ const Generals = () => {
     {
       title: 'Total Usuarios',
       value: data.total_users,
-      percentage: (data.total_users / 100) * 100
+      percentage: (data.total_users / 1000) * 100
     },
     {
       title: 'Mandaderos Activos',
       value: data.active_manders,
-      percentage: (data.active_manders / 10) * 100
+      percentage: (data.active_manders / 1000) * 100
     },
     {
       title: 'Total Mandaderos',
       value: data.total_manders,
-      percentage: (data.total_manders / 10) * 100
+      percentage: (data.total_manders / 1000) * 100
     },
   ];
 
