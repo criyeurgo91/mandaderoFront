@@ -78,7 +78,7 @@ const RequestTable = ({
                       onClick={() =>
                         handleAssignMander(request.id_request, request.detail_request)
                       }
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 text-center"
+                      className="bg-blue-500 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded ml-2 text-center"
                     >
                       Asignar
                     </button>
@@ -86,7 +86,7 @@ const RequestTable = ({
                     <select
                       onClick={handleManderSelectClick}
                       onChange={(e) => handleManderSelect(e.target.value, request.id_request)}
-                      className="border border-gray-300 bg-sky-950 text-white"
+                      className="border border-gray-300 bg-sky-800 text-white"
                       disabled={isLoadingManders}
                     >
                       <option value="">Seleccionar Mandadero</option>

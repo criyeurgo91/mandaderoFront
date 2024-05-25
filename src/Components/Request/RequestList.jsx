@@ -2,11 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import RequestFilter from './RequestFilter';
 import RequestTable from './RequestTable';
-import RequestFinish from './RequestFinish'; // Importar el nuevo componente
+import RequestFinish from './RequestFinish'; 
 import apiUrl from '../../config/apiConfig';
-import { messaging, getToken } from '../../firebase/firebase';
-import { onMessage } from '../../firebase/firebase';
-import Modal from '../Modal/Modal';
+
 
 const RequestList = () => {
   const [requests, setRequests] = useState([]);
@@ -21,25 +19,6 @@ const RequestList = () => {
     return () => clearInterval(intervalId);
   }, [statusFilter]);
 
-  useEffect(() => {
-    requestNotificationPermission();
-    onMessage(messaging, (payload) => {
-      console.log('Message received:', payload);
-      setNewRequest(payload.notification); // Actualizar el estado con la nueva solicitud
-    });
-  }, []);
-
-  const requestNotificationPermission = async () => {
-    try {
-      await Notification.requestPermission();
-      const token = await getToken(messaging, { vapidKey: 'BGfk8Sl0S2E31zbEff4iGXggfW3-ayaEJlb9_inj2yWT4yNVmRFGNGBFcRiOcuebFJG-2V4U_SiI14U7luiMV1Y' });
-      console.log('FCM Token:', token);
-      // Envía este token al servidor para que pueda enviar notificaciones push.
-    } catch (error) {
-      console.error('Unable to get permission to notify.', error);
-    }
-  };
-  
   const fetchData = async () => {
     try {
       let url = `${apiUrl}/api/getlistrequest/`;
@@ -53,7 +32,6 @@ const RequestList = () => {
     }
   };
   
-
   const updateElapsedTime = useCallback(() => {
     setRequests(prevRequests =>
       prevRequests.map(request => ({
@@ -198,13 +176,7 @@ const RequestList = () => {
           />
         )}
       </div>
-      {newRequest && (
-        <Modal
-          title="Nueva Solicitud"
-          message={`Nueva solicitud de ${newRequest.title}`}
-          onClose={() => setNewRequest(null)}
-        />
-      )}
+
     </div>
   );
 };

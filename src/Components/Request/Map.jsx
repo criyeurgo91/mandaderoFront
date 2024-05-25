@@ -1,4 +1,4 @@
-import React from 'react';
+
 import PropTypes from 'prop-types';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import CustomMarker from './CustomMarker';
@@ -6,7 +6,7 @@ import CustomMarker from './CustomMarker';
 const Map = ({ locations }) => {
   const mapContainerStyle = {
     width: '100%',
-    height: '400px'
+    height: '500px'
   };
 
   const center = {
@@ -17,7 +17,7 @@ const Map = ({ locations }) => {
   const iconUrl = 'https://cdn.icon-icons.com/icons2/2796/PNG/512/bike_motorbike_vehicle_icon_178048.png';
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyBVDTo3sJj6mZ3xzvivSn2EkGh0lS2EGlU">
+    <LoadScript googleMapsApiKey="AIzaSyBohrC403d9OzquVBuQSS6RqQaUmLOa-Y0">
       <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={15}>
         {locations.map(location => (
           <CustomMarker
@@ -52,5 +52,5 @@ Map.propTypes = {
     image: PropTypes.string
   })).isRequired
 };
-
+//1
 export default Map;

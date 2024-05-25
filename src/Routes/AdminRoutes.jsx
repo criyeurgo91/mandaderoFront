@@ -7,6 +7,7 @@ import UserView from "../Pages/User/UserView";
 import MandersView from "../Pages/Manders/MandersView";
 import ServiceView from "../Pages/Services/ServiceView";
 import RequestView from "../Pages/Request/RequestView";
+import ActualLocationTracker from '../Pages/Request/LocationTracker'; 
 import HeaderComponent from "../Components/Headers/HeaderComponent";
 import AdministratorForm from "../Components/Forms/AdministratorForm";
 import UserForm from "../Components/Forms/UserForm";
@@ -16,8 +17,8 @@ import ManderForm from "../Components/Forms/ManderForm";
 import UpdateManderForm from "../Components/Forms/UpdateManderForm";
 import VehicleForm from "../Components/Forms/VehicleForm";
 import UpdateAccountForm from "../Components/Forms/UpdateAccount";
-import DocumentForm from "../Components/Forms/DocumentForm"
-import DetailMander from "../Components/Manders/DetailMander"
+import DocumentForm from "../Components/Forms/DocumentForm";
+import DetailMander from "../Components/Manders/DetailMander";
 import UpdateVehicleForm from "../Components/Forms/UpdateVehicleForm";
 import UpdateDocumentForm from "../Components/Forms/UpdateDocumentForm";
 import UpdateManderProfileForm from "../Components/Forms/UpdateManderProfileForm";
@@ -63,6 +64,10 @@ const AdminRoutes = ({ isAuthenticated, userType }) => {
                             <Route path='manders/detail/:id' element={<DetailMander />} />
                             <Route path='services' element={<ServiceView />} />
                             <Route path='request' element={<RequestView />} />
+                            <Route path='request/request/ubicacion-manders' element={<ActualLocationTracker />} />
+
+
+                            
                         </Routes>
                     </main>
                 </div>

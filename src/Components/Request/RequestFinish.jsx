@@ -76,15 +76,15 @@ const RequestFinish = ({ finishedRequests }) => {
       </table>
 
       {selectedImage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative">
-            <img src={selectedImage} alt="Imagen original" className="max-w-full max-h-full" />
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="relative bg-white p-4 rounded shadow-lg">
             <button
-              className="absolute top-2 right-2 p-2 text-black bg-white rounded-full"
+              className="absolute top-2 right-2 p-2 text-white bg-black rounded-full"
               onClick={handleCloseModal}
             >
-              Cerrar
+              X
             </button>
+            <img src={selectedImage} width= "250px" alt="100%"  />
           </div>
         </div>
       )}

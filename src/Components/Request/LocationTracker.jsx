@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { database, ref, onValue } from '../firebase/firebase';
+import { database, ref, onValue } from '../../firebase/firebase';
 import Map from './Map';
+import apiUrl from '../../config/apiConfig';
+
 
 const LocationTracker = () => {
   const [locations, setLocations] = useState([]);
@@ -18,20 +20,20 @@ const LocationTracker = () => {
             lon: data[key].l[1]
           }));
 
-          const response = await axios.get('https://mandaderos3.azurewebsites.net/api/getlistmanders/');
+          const response = await axios.get(`${apiUrl}/api/getlistmanders/`); 
           const mandersData = response.data;
 
-          const enrichedLocations = parsedLocations.map(location => {
-            const mander = mandersData.find(m => m.id_mander.toString() === location.id);
+          const enrichedLocations = parsedLocations.map(cargando => {
+            const mander = mandersData.find(m => m.id_mander.toString() === cargando.id);
             return mander ? {
-              ...location,
+              ...cargando,
               name: mander.name_user,
               lastname: mander.lastname_user,
               phone: mander.phone_user,
               type_vehicle: mander.vehicles[0]?.type_vehicle || 'N/A',
               plate: mander.vehicles[0]?.plate_vehicle || 'N/A',
               image: mander.image_mander
-            } : location;
+            } : cargando;
           });
 
           setLocations(enrichedLocations);
@@ -44,10 +46,10 @@ const LocationTracker = () => {
 
   return (
     <div>
-      <h1>Ubicaciones de los Mandaderos Activos</h1>
+      <h1 className="text-2xl text-sky-800 font-bold mb-4">Ubicacion Manderos</h1>
       <Map locations={locations} />
     </div>
   );
 };
-
+//2
 export default LocationTracker;
