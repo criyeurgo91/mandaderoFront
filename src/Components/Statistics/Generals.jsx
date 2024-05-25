@@ -26,24 +26,24 @@ const Generals = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="text-center text-2xl font-bold mb-5 py-8 text-sky-800">Loading...</div>;
+  if (loading) return <div className="text-center text-2xl font-bold mb-5 py-8 text-sky-800">Cargando...</div>;
   if (error) return <div className="text-center text-red-500">Error: {error.message}</div>;
 
   const cards = [
     {
       title: 'Total Usuarios',
       value: data.total_users,
-      percentage: (data.total_users / 100) * 100
+      percentage: (data.total_users / 1000) * 100
     },
     {
       title: 'Mandaderos Activos',
       value: data.active_manders,
-      percentage: (data.active_manders / 10) * 100
+      percentage: (data.active_manders / 1000) * 100
     },
     {
       title: 'Total Mandaderos',
       value: data.total_manders,
-      percentage: (data.total_manders / 10) * 100
+      percentage: (data.total_manders / 1000) * 100
     },
   ];
 
