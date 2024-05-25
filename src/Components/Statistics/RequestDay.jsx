@@ -57,7 +57,7 @@ const RequestDay = () => {
       <ResponsiveContainer width="100%" height="85%">
         <BarChart
           data={processedData}
-          margin={{ top: 0, right: 0, left: 0, bottom: 35 }}
+          margin={{ top:10, right: 0, left: 0, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="4 1 2" />
           <Bar dataKey="recibidas" fill="#6b48ff" barSize={30}>

@@ -137,12 +137,12 @@ function MandersList() {
         <div className="flex mb-4">
           <input
             type="text"
-            className="w-1/2 border-2 border-gray-500 bg-sky-950 h-10 px-6 rounded-lg text-sm text-white focus:outline-none"
+            className="w-1/2 border-2 border-blue-500 bg-sky-950 h-10 px-6 rounded-lg text-sm text-white focus:outline-none"
             placeholder="Buscar..."
             onChange={handleSearchMander}
           />
           <button
-            className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+            className="bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-4 rounded ml-2"
             onClick={handleNewMander}
           >
             Registrar
@@ -208,20 +208,20 @@ function MandersList() {
               </div>
               <div className="flex justify-between py-2 mt-auto">
                 <button
-                  className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+                  className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-2 rounded"
                   onClick={() => handleEdit(mander.id_mander, mander.id_user)}
                 >
                   Editar
                 </button>
                 <div className="relative inline-block">
                   <button
-                    className={`bg-green-950 hover:bg-green-700 text-white font-bold py-2 px-2 rounded ${selectedRegisterMander === mander.id_user ? 'bg-green-700' : ''}`}
+                    className={`bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-2 rounded ${selectedRegisterMander === mander.id_user ? 'bg-green-700' : ''}`}
                     onClick={() => handleRegister(mander.id_user)}
                   >
                     Registrar
                   </button>
                   {selectedRegisterMander === mander.id_user && (
-                    <div className="absolute right-0 mt-2 w-48 bg-sky-950 border border-sky-950 rounded-md shadow-lg">
+                    <div className="absolute right-0 mt-2 w-48 bg-sky-700 border border-sky-500 rounded-md shadow-lg">
                       <div className="py-1">
                         <button
                           className={`block px-4 py-2 text-sm text-white w-full text-left ${selectedRegister === 'vehicle' ? 'bg-blue-700' : ''}`}
@@ -240,7 +240,7 @@ function MandersList() {
                   )}
                 </div>
                 <button
-                  className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+                  className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-2 rounded"
                   onClick={() => handleDetail(mander.id_user)}
                 >
                   Detalle

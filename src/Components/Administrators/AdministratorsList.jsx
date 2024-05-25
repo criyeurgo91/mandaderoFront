@@ -108,13 +108,13 @@ function AdministratorsList() {
               onChange={handleSearch}
             />
             <button
-              className="bg-green-700 hover:bg-green-950 text-white font-bold py-2 px-4 rounded ml-2"
+              className="bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-4 rounded ml-2"
               onClick={handleNewUser}
             >
               Registrar
             </button>
           </div>
-          {alertMessage && <div className="text-red-950">{alertMessage}</div>}
+          {alertMessage && <div className="text-red-700">{alertMessage}</div>}
           <div className='table-container'>
           <table className="w-full border-collapse border text-sky-800">
             <thead className="bg-sky-950 text-white">
@@ -156,7 +156,7 @@ function AdministratorsList() {
                   <td className="border px-4 py-2">
                     <div className="flex justify-center">
                       <button
-                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                        className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ml-2"
                         onClick={() => handleEdit(user.id_user)}
                       >
                         Editar

@@ -9,6 +9,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
   const [currentImage, setCurrentImage] = useState(null);
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(true)
+  
 
   useEffect(() => {
     fetchServiceData();
@@ -107,7 +108,7 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
             <p className="text-white text-sm">Selected Image</p>
           </div>
         )}
-        <label htmlFor="image" className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <label htmlFor="image" className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
           Editar
         </label>
         <input
@@ -135,13 +136,13 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
         </div>
         <button
           type="submit"
-          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+          className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
         >
           Actualizar
         </button>
         <button
           type="reset"
-          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+          className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
           onClick={onClose}
         >
           Cancelar

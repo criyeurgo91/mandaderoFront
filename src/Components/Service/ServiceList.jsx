@@ -74,11 +74,11 @@ function ServiceList() {
                   <input
                     type="text"
                     placeholder="Buscar..."
-                    className="w-1/2 border-2 border-gray-500 bg-sky-950 text-white h-10 px-5 rounded-lg text-sm focus:outline-none"
+                    className="w-1/2 border-2 border-blue-500 bg-sky-950 text-white h-10 px-5 rounded-lg text-sm focus:outline-none"
                     onChange={handleSearch}
                   />
                   <button
-                    className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2 flex items-center"
+                    className="bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-4 rounded ml-2 flex items-center"
                     onClick={handleCreateService}
                   >
                     <FiPlus className="mr-2" /> Nuevo servicio
@@ -107,7 +107,7 @@ function ServiceList() {
                        </td>
                         <td className=" flex justify-center items-center mt-6 ">
                           <button
-                            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-4"
+                            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-1 px-2 rounded mr-4"
                             onClick={() => handleEditService(service.id_service)}
                           >
                             Editar

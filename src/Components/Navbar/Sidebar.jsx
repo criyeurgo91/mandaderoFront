@@ -14,7 +14,7 @@ import { getToken, onMessage } from 'firebase/messaging'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-// Definir el componente Message
+
 const Message = ({ notification }) => (
   <div>
     <h4>{notification.title}</h4>
@@ -46,7 +46,7 @@ const Sidebar = () => {
   useEffect(() => {
     requestPermission();
     const unsubscribe = onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload); // Agregar este mensaje de consola
+      console.log('Message received. ', payload); 
       setNotificationCount((prevCount) => prevCount + 1);
 
       const { title, body } = payload.data;

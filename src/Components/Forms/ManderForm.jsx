@@ -247,9 +247,9 @@ const ManderForm = () => {
               {...register('ccMander', { required: true })}
               type="text"
               placeholder='numero de documento'
-              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.ccMander ? 'border-red-500' : ''}`}
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.cc_mander ? 'border-red-500' : ''}`}
             />
-            {errors.ccMander && <span className="text-red-500">este campo es obligatorio</span>}
+            {errors.cc_Mander && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
@@ -314,13 +314,13 @@ const ManderForm = () => {
           <div className='flex justify-center py-2'>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
             Registrar
           </button>
           <button
             type="button"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+            className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={handleCancel}
           >
             Cancelar
@@ -333,7 +333,7 @@ const ManderForm = () => {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
             <p className="text-lg font-semibold mb-4 text-green-900">Registro Exitoso!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>cerrar</button>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>cerrar</button>
           </div>
         </div>
       )}
