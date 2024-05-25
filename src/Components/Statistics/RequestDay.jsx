@@ -56,7 +56,7 @@ const RequestDay = () => {
           <CartesianGrid strokeDasharray="4 1 2" />
     
           <Bar dataKey="recibidas" fill="#6b48ff" barSize={30} >
-            <LabelList dataKey="date" position="left"/>
+            <LabelList dataKey="date" position="top"/>
           </Bar>
           
           <Tooltip cursor={{ fill: 'rgba(0,0,0,0.1)' }} formatter={(value) => `${value} solicitudes`} />

@@ -48,7 +48,10 @@ const Sidebar = () => {
     const unsubscribe = onMessage(messaging, (payload) => {
       console.log('Message received. ', payload); // Agregar este mensaje de consola
       setNotificationCount((prevCount) => prevCount + 1);
-      toast(<Message notification={payload.notification} />);
+
+      const { title, body } = payload.data;
+
+      toast(<Message notification={{ title, body }} />);;
     });
 
     return () => unsubscribe();

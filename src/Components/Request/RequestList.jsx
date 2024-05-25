@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import RequestFilter from './RequestFilter';
 import RequestTable from './RequestTable';
-import RequestFinish from './RequestFinish'; // Importar el nuevo componente
+import RequestFinish from './RequestFinish';
 import apiUrl from '../../config/apiConfig';
 
 

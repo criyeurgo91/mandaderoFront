@@ -13,10 +13,10 @@ const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
         className="w-1/6 border-2 border-gray-500 bg-sky-950 h-10 px-5 rounded-lg text-sm text-white focus:outline-none"
         onChange={handleStatusFilter}
       >
-        <option value="">Mostrar todo</option>
-        <option value="proceso">Proceso</option>
         <option value="pendiente">Pendiente</option>
+        <option value="proceso">Proceso</option>
         <option value="finalizado">Finalizado</option>
+        <option value="">Mostrar todo</option>
       </select>
     </div>
   );
