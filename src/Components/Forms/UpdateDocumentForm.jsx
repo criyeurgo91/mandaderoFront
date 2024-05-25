@@ -120,13 +120,13 @@ function UpdateDocumentForm() {
           <div className='flex justify-between'>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-2 rounded"
           >
             Actualizar
           </button>
           <button
             type="button"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-2 rounded"
+            className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-2 rounded"
             onClick={handleCancel}
           >
             Cancelar
@@ -139,7 +139,7 @@ function UpdateDocumentForm() {
               <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
               <div className="relative bg-white p-8 rounded-lg shadow-lg">
                 <p className="text-lg text-center font-semibold">Document updated successfully</p>
-                <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={closeModalAndNavigate}>Close</button>
+                <button className="mt-4 bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={closeModalAndNavigate}>Cerrar</button>
               </div>
             </div>
           )}

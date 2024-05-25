@@ -143,13 +143,13 @@ function UpdateVehicleForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 {loading ? 'Loading...' : 'Actualizar'}
               </button>
               <button
                 type="button"
-                className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+                className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
                 onClick={handleCancel}
               >
                 Cancelar
@@ -159,10 +159,10 @@ function UpdateVehicleForm() {
         </div>
       </div>
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blue-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
             <p className="text-lg font-semibold mb-4">Actualizacion Exitosa!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}
