@@ -65,6 +65,10 @@ const Sidebar = () => {
 
   const userType = localStorage.getItem('userType');
 
+  const resetNotificationCount = () => {
+    setNotificationCount(0);
+  };
+
   return (
     <div 
       className={`bg-blue-800 h-full border-e-4 border-white flex flex-col justify-center relative ${isOpen ? "w-72" : "w-20"}`}
@@ -90,6 +94,7 @@ const Sidebar = () => {
         )}
         <NavLink to="request"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500 relative"
+          onClick={resetNotificationCount}
         >
           <RiNotification2Line style={{ width: "30px", height: "30px", color: "white" }}/>
           <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Solicitudes</span>

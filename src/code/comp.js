@@ -1,185 +1,135 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
-import apiUrl from '../../config/apiConfig';
-import '../../Components/Manders/index.css'
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"; 
+import {
+  RiHome4Line,
+  RiUserSearchLine,
+  RiLogoutBoxRLine,
+  RiToolsLine,
+  RiNotification2Line,
+  RiTaxiWifiLine,
+  RiTeamLine
+} from "react-icons/ri";
+import { messaging } from "../../firebase/firebase";
+import { getToken, onMessage } from 'firebase/messaging'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
-function MandersList() {
-  const [manders, setManders] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredManders, setFilteredManders] = useState([]);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [selectedManderId, setSelectedManderId] = useState(null);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [selectedAccountId, setSelectedAccountId] = useState(null);
-  const [selectedOption, setSelectedOption] = useState('');
-  const [selectedRegister, setSelectedRegister] = useState('');
-  const [selectedRegisterMander, setSelectedRegisterMander] = useState('');
-  const [manderIsActive, setManderIsActive] = useState(false);
+
+const Message = ({ notification }) => (
+  <div>
+    <h4>{notification.title}</h4>
+    <p>{notification.body}</p>
+  </div>
+);
+
+const Sidebar = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  const VITE_APP_VAPID_KEY = 'BGfk8Sl0S2E31zbEff4iGXggfW3-ayaEJlb9_inj2yWT4yNVmRFGNGBFcRiOcuebFJG-2V4U_SiI14U7luiMV1Y';
+
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      try {
+        const token = await getToken(messaging, { vapidKey: VITE_APP_VAPID_KEY });
+        console.log('Token generated: ', token);
+      } catch (error) {
+        console.error('Error getting token: ', error);
+      }
+    } else if (permission === 'denied') {
+      alert('You denied the notification');
+    }
+  }
 
   useEffect(() => {
-    axiosGet(`${apiUrl}/api/getlistmanders/`).then((response) => {
-      console.log(response);
-      setManders(response);
-      setFilteredManders(response);
+    requestPermission();
+    const unsubscribe = onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload); 
+      setNotificationCount((prevCount) => prevCount + 1);
+
+      const { title, body } = payload.data;
+
+      toast(<Message notification={{ title, body }} />);;
     });
+
+    return () => unsubscribe();
   }, []);
 
-
-  const handleSearchMander = (event) => {
-    const searchTerm = event.target.value.toLowerCase();
-    setSearchTerm(searchTerm);
-    const filtered = manders.filter(
-      (mander) =>
-        mander.name_user.toLowerCase().includes(searchTerm) ||
-        mander.lastname_user.toLowerCase().includes(searchTerm) ||
-        mander.phone_user.toLowerCase().includes(searchTerm)
-    );
-    setFilteredManders(filtered);
-
-    if (filtered.length === 0) {
-      setAlertMessage("Mandadero doesn't exist");
-    } else {
-      setAlertMessage('');
-    }
+  const logout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userType');
+    navigate("/login");
   };
 
-  const handleNewMander = () => {
-    navigate('profilemander');
-  };
-
-  const handleEdit = (manderId, userId) => {
-    setSelectedManderId(manderId);
-    setSelectedUserId(userId);
-    navigate(`updatemander/${manderId}`, { state: { id_user: userId, id_mander: manderId } });
-  };
-  
-  
-
-  const handleRegister = (userId) => {
-    if (selectedRegisterMander === userId) {
-      setSelectedRegister('');
-      setSelectedRegisterMander(null);
-    } else {
-      setSelectedRegisterMander(userId);
-      setSelectedRegister('');
-    }
-  };
-
-  const handleRegisterSelect = (option) => {
-    setSelectedRegister(option);
-    if (option === 'vehicle') {
-      navigate(`vehicle/${selectedRegisterMander}`);
-    } else if (option === 'document') {
-      navigate(`document/${selectedRegisterMander}`);
-    }
-  };
-
-  const handleDetail = (manderId) => {
-    navigate(`detail/${manderId}`);
-  };
-
+  const userType = localStorage.getItem('userType');
 
   return (
-    <div className="bg-stone-900 text-white min-h-screen">
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-5">Mandaderos</h2>
-        {alertMessage && <div className="text-red-500">{alertMessage}</div>}
-        <div className="flex mb-4">
-          <input
-            type="text"
-            className="w-1/2 border-2 border-gray-500 bg-black h-10 px-6 rounded-lg text-sm focus:outline-none"
-            placeholder="Search..."
-            onChange={handleSearchMander}
-          />
-          <button
-            className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
-            onClick={handleNewMander}
+    <div 
+      className={`bg-blue-800 h-full border-e-4 border-white flex flex-col justify-center relative ${isOpen ? "w-72" : "w-20"}`}
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <nav className="flex flex-col gap-3 place-self-center justify-between" style={{ width: isOpen ? "calc(100%)" : "auto" }}>
+        {userType === 'Superadmin' && (
+          <NavLink to="/Admin"
+            className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500"
           >
-            Registrar
-          </button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filteredManders.map((mander, index) => (
-            <div key={index} className="bg-stone-700 rounded-lg shadow-md p-2 border border-black">
-              {/* Contenido del mandadero */}
-              <div className="flex justify-center py-2">
-                <img src={mander['image_mander']} alt="Mander" className="w-auto h-40 rounded-md" />
-              </div>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Mandadero:</span> {mander['name_user']} {mander['lastname_user']}
-              </p>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Correo:</span> {mander['email_account']}
-              </p>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Documento:</span> {mander['cc_mander']}
-              </p>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Direccion:</span> {mander['address_mander']}
-              </p>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Celular:</span> {mander['phone_user']}
-              </p>
-              <div>
-                <span className="font-bold"> Vehiculo Activo:</span>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Carro:</span> {mander['ishavecar_mander'] ? 'Si' : 'No'}
-                </p>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Moto:</span> {mander['ishavemoto_mander'] ? 'Si' : 'No'}
-                </p>
-              </div>
-              <div>
-                <span className="font-bold"> Estado:</span>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Activo:</span> {mander['isactive_mander'] ? 'Si' : 'No'}
-                </p>
-                <p className="text-sm mb-1">
-                  <span className="font-bold">Validado:</span> {mander['isvalidate_mander'] ? 'Si' : 'No'}
-                </p>
-              </div>
-              {/* Botones */}
-              <div className="flex justify-between py-2">
-                <button
-                  className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-                  onClick={() => handleEdit(mander.id_mander, mander.id_user)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-                  onClick={() => handleRegister(mander.id_user)}
-                >
-                  Registrar
-                </button>
-                {selectedRegisterMander === mander.id_user && (
-                  <div className="ml-2">
-                    <select
-                      className="bg-gray-700 text-white px-2 py-1 rounded"
-                      value={selectedOption}
-                      onChange={(e) => handleRegisterSelect(e.target.value)}
-                    >
-                      <option value="">Select...</option>
-                      <option value="vehicle">Vehicle</option>
-                      <option value="document">Document</option>
-                    </select>
-                  </div>
-                )}
-                <button
-                  className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-2 rounded"
-                  onClick={() => handleDetail(mander.id_mander)}
-                >
-                  Detalle
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+            <RiHome4Line style={{ width: "30px", height: "30px", color: "white" }} />
+            <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Inicio</span>
+          </NavLink>
+        )}
+        {userType === 'Superadmin' && (
+          <NavLink to="/Admin/administrators" 
+            className={`flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500`}
+          >
+            <RiTeamLine style={{ width: "30px", height: "30px", color: "white" }} />
+            <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Administradores</span>
+          </NavLink>
+        )}
+        <NavLink to="request"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500 relative"
+        >
+          <RiNotification2Line style={{ width: "30px", height: "30px", color: "white" }}/>
+          <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Solicitudes</span>
+          {notificationCount > 0 && (
+            <span className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+              {notificationCount}
+            </span>
+          )}
+        </NavLink>
+        <NavLink to="manders"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-blue-500"
+        >
+          <RiTaxiWifiLine style={{ width: "30px", height: "30px", color: "white" }}/>
+          <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Mandaderos</span>
+        </NavLink>
+        <NavLink to="/Admin/users"
+          className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-blue-500"
+        >
+          <RiUserSearchLine style={{ width: "30px", height: "30px", color: "white" }}/>
+          <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Usuarios</span>
+        </NavLink>
+        {userType === 'Superadmin' && (
+          <NavLink to="services"
+            className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-blue-500"
+          >
+            <RiToolsLine style={{ width: "30px", height: "30px", color: "white" }}/>
+            <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Servicios</span>
+          </NavLink>
+        )}
+      </nav>
+      <div
+        onClick={logout}
+        className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px]  hover:bg-blue-500 cursor-pointer"
+      >
+        <RiLogoutBoxRLine style={{ width: "30px", height: "30px", color: "white" }}/>
+        <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Salir</span>
       </div>
+      <ToastContainer />
     </div>
   );
-}
+};
 
-export default MandersList;
+export default Sidebar;
