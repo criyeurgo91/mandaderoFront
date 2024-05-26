@@ -161,6 +161,7 @@ const RequestList = () => {
           handleStatusFilter={handleStatusFilter}
         />
       </div>
+
       <div className="container mx-auto px-4">
         {statusFilter === "finalizado" ? (
           <RequestFinish finishedRequests={filteredRequests} />

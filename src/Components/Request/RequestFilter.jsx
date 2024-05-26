@@ -18,6 +18,10 @@ const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
         <option value="proceso">Proceso</option>
         <option value="finalizado">Finalizado</option>
       </select>
+      <div>
+      <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Mandaderos</Link>
+
+      </div>
     </div>
   );
 };
