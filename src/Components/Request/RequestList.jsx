@@ -31,7 +31,6 @@ const RequestList = () => {
     }
   };
   
-
   const updateElapsedTime = useCallback(() => {
     setRequests(prevRequests =>
       prevRequests.map(request => ({

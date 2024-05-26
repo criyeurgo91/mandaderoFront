@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types'; // Importar PropTypes
+
+import { Link } from 'react-router-dom';
 
 const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
   return (
@@ -19,12 +20,6 @@ const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
       </select>
     </div>
   );
-};
-
-// Definir PropTypes para las props del componente
-RequestFilter.propTypes = {
-  handleSearch: PropTypes.func.isRequired,
-  handleStatusFilter: PropTypes.func.isRequired,
 };
 
 export default RequestFilter;
