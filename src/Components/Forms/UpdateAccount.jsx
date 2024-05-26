@@ -53,9 +53,9 @@ const UpdateAccountForm = () => {
   }
 
   return (
-    <div className="bg-stone-900 min-h-screen flex justify-center items-center">
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
     <div className="flex justify-center items-center h-screen">
-      <div className="max-w-sm mx-auto p-6 bg-black rounded-lg shadow-md">
+      <div className="max-w-sm mx-auto p-6 bg-sky-800 rounded-lg shadow-md">
         <h2 className="text-lg font-semibold mb-4 text-white">Actualizar Cuenta</h2>
         <form onSubmit={handleSubmit(handleUpdateAccount)}>
           <div className="mb-4 text-black">
@@ -87,13 +87,13 @@ const UpdateAccountForm = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
             Actualizar
           </button>
           <button
             type="button"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+            className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={ handleCancel}
           >
             Cancelar

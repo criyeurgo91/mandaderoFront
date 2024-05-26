@@ -53,15 +53,13 @@ const AdminRoutes = ({ isAuthenticated, userType }) => {
                             <Route path='users/updateaccount/:id' element={<UpdateAccountForm />} />
                             <Route path='users/updateprofile/:id' element={<UpdateUserForm />} />
                             <Route path='manders' element={<MandersView />} />
-                            <Route path='manders/profilemander' element={<ManderForm />} />
-                            <Route path='manders/updateaccountmander/:id' element={<UpdateAccountForm />} />
-                            <Route path='manders/updateuser/:id' element={<UpdateUserForm />} />
                             <Route path='manders/updatemander/:id' element={<UpdateManderProfileForm />} />
                             <Route path='manders/vehicle/:id' element={<VehicleForm />} />
                             <Route path='manders/detail/:id/updatevehicle/:id' element={<UpdateVehicleForm />} />
                             <Route path='manders/document/:id' element={<DocumentForm />} />
                             <Route path='manders/detail/:id/updatedocument/:id' element={<UpdateDocumentForm />} />
                             <Route path='manders/detail/:id' element={<DetailMander />} />
+                            <Route path='manders/detail/:id/updateaccountmander/:id' element={<UpdateAccountForm />} />
                             <Route path='services' element={<ServiceView />} />
                             <Route path='request' element={<RequestView />} />
                             <Route path='request/request/ubicacion-manders' element={<ActualLocationTracker />} />
