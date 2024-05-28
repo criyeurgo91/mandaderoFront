@@ -46,7 +46,7 @@ const LocationTracker = () => {
 
   return (
     <div>
-      <h1 className="text-2xl text-sky-800 font-bold mb-4">Ubicacion Manderos</h1>
+      <h1 className="text-2xl text-sky-800 font-bold mb-4">Ubicacion Mandaderos</h1>
       <Map locations={locations} />
     </div>
   );

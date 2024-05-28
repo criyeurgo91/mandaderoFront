@@ -7,7 +7,7 @@ import apiUrl from '../../config/apiConfig';
 const ManderForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
     defaultValues: {
-      isMander: false, 
+      isMander: true, 
       activeMander: false, 
       validateMander: false, 
       carMander: false,
@@ -60,7 +60,7 @@ const ManderForm = () => {
       name_user: formData.nameUser,
       lastname_user: formData.lastnameUser,
       phone_user: formData.phoneUser,
-      ismander_user: formData.isMander || false,
+      ismander_user: formData.isMander || true,
       isactive_user: formData.activeUser || true,
       account_id_account: accountId,
     };
@@ -125,7 +125,7 @@ const ManderForm = () => {
     window.history.back();
   }
 
-  const isMander = watch("isMander");
+  
   const activeMander = watch("activeMander");
   const validateMander = watch("validateMander");
   const carMander = watch("carMander");
@@ -185,17 +185,6 @@ const ManderForm = () => {
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
-          </div>
-          <div className="mb-4">
-            <label className="flex items-center">
-              <input
-                {...register('isMander')}
-                type="checkbox"
-                className="form-checkbox"
-                checked={isMander}
-              />
-              <span className="ml-2 text-white font-bold text-sm">Mander</span>
-            </label>
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
