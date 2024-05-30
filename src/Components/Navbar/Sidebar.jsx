@@ -1,5 +1,8 @@
+// Sidebar.js
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react"; 
+import { useState } from "react"; 
+import Notification from "../Notification/Notification";
+import { useNotification } from "../Notification/NotificationContext";
 import {
   RiHome4Line,
   RiUserSearchLine,
@@ -9,53 +12,11 @@ import {
   RiTaxiWifiLine,
   RiTeamLine
 } from "react-icons/ri";
-import { messaging } from "../../firebase/firebase";
-import { getToken, onMessage } from 'firebase/messaging'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-
-
-const Message = ({ notification }) => (
-  <div>
-    <h4>{notification.title}</h4>
-    <p>{notification.body}</p>
-  </div>
-);
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(0);
-
-  const VITE_APP_VAPID_KEY = 'BGfk8Sl0S2E31zbEff4iGXggfW3-ayaEJlb9_inj2yWT4yNVmRFGNGBFcRiOcuebFJG-2V4U_SiI14U7luiMV1Y';
-
-  async function requestPermission() {
-    const permission = await Notification.requestPermission();
-    if (permission === 'granted') {
-      try {
-        const token = await getToken(messaging, { vapidKey: VITE_APP_VAPID_KEY });
-        console.log('Token generated: ', token);
-      } catch (error) {
-        console.error('Error getting token: ', error);
-      }
-    } else if (permission === 'denied') {
-      alert('You denied the notification');
-    }
-  }
-
-  useEffect(() => {
-    requestPermission();
-    const unsubscribe = onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload); 
-      setNotificationCount((prevCount) => prevCount + 1);
-
-      const { title, body } = payload.data;
-
-      toast(<Message notification={{ title, body }} />);;
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const { notificationCount, resetNotificationCount } = useNotification();
 
   const logout = () => {
     localStorage.removeItem('isAuthenticated');
@@ -64,10 +25,6 @@ const Sidebar = () => {
   };
 
   const userType = localStorage.getItem('userType');
-
-  const resetNotificationCount = () => {
-    setNotificationCount(0);
-  };
 
   return (
     <div 
@@ -131,7 +88,7 @@ const Sidebar = () => {
         <RiLogoutBoxRLine style={{ width: "30px", height: "30px", color: "white" }}/>
         <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Salir</span>
       </div>
-      <ToastContainer />
+      <Notification />
     </div>
   );
 };

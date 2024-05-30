@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { NotificationProvider } from '../Components/Notification/NotificationContext';
 import Sidebar from "../Components/Navbar/Sidebar";
 import Home from "../Pages/Home";
 import AdministratorsView from '../Pages/Administrators/AdministratorsView';
@@ -37,7 +38,9 @@ const AdminRoutes = ({ isAuthenticated, userType }) => {
         <>
             <div className="flex h-screen">
                 <div className="col-span-1">
+                <NotificationProvider>
                     <Sidebar />
+                </NotificationProvider>
                 </div>
                 <div className="flex-grow overflow-y-auto pt-14">
                     <HeaderComponent />
