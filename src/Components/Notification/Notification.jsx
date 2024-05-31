@@ -9,7 +9,8 @@ function Notification() {
   useEffect(() => {
     requestPermission();
     const unsubscribe = onMessageListener().then((payload) => {
-      toast.success(`${payload?.notification?.title}: ${payload?.notification?.body}`, {
+      console.log('Message received: ', payload);
+      toast.success(`${payload?.data?.title}: ${payload?.data?.body}`, {
         duration: 6000,
         position: 'top-right',
       });
