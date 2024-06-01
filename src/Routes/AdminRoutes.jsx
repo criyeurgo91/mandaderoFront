@@ -53,6 +53,7 @@ const AdminRoutes = ({ isAuthenticated, userType }) => {
                             <Route path='users/updateaccount/:id' element={<UpdateAccountForm />} />
                             <Route path='users/updateprofile/:id' element={<UpdateUserForm />} />
                             <Route path='manders' element={<MandersView />} />
+                            <Route path='manders/profilemander' element={<ManderForm />} />
                             <Route path='manders/updatemander/:id' element={<UpdateManderProfileForm />} />
                             <Route path='manders/vehicle/:id' element={<VehicleForm />} />
                             <Route path='manders/detail/:id/updatevehicle/:id' element={<UpdateVehicleForm />} />

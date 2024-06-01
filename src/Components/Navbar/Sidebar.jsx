@@ -75,14 +75,13 @@ const Sidebar = () => {
       onMouseLeave={() => setIsOpen(false)}
     >
       <nav className="flex flex-col gap-3 place-self-center justify-between" style={{ width: isOpen ? "calc(100%)" : "auto" }}>
-        {userType === 'Superadmin' && (
           <NavLink to="/Admin"
             className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500"
           >
             <RiHome4Line style={{ width: "30px", height: "30px", color: "white" }} />
             <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Inicio</span>
           </NavLink>
-        )}
+        
         {userType === 'Superadmin' && (
           <NavLink to="/Admin/administrators" 
             className={`flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500`}
