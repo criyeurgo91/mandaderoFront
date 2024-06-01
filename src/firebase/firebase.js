@@ -1,5 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getMessaging } from 'firebase/messaging';
+//import { getMessaging } from 'firebase/messaging';
+
+import { getDatabase, ref, onValue } from "firebase/database";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVDTo3sJj6mZ3xzvivSn2EkGh0lS2EGlU",
@@ -13,4 +16,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const messaging = getMessaging(app);
+const database = getDatabase(app);
+const messaging = getMessaging(app);
+export { database, ref, onValue, messaging, getToken, onMessage };

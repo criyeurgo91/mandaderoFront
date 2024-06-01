@@ -21,7 +21,7 @@ const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
         </select>
       </div>
       <div>
-      <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Manders</Link>
+      <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Mandaderos</Link>
 
       </div>
     </div>

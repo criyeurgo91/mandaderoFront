@@ -21,7 +21,7 @@ const RequestTable = ({
       setActiveManders(response.data);
     } catch (error) {
       console.error('Error  active manders:', error);
-      // Aquí podrías manejar el error de una mejor manera, mostrando un mensaje al usuario
+      
     } finally {
       setIsLoadingManders(false);
     }

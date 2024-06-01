@@ -1,5 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react"; 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   RiHome4Line,
   RiUserSearchLine,
@@ -10,10 +12,7 @@ import {
   RiTeamLine
 } from "react-icons/ri";
 import { messaging } from "../../firebase/firebase";
-import { getToken, onMessage } from 'firebase/messaging'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-
+import { getToken, onMessage } from 'firebase/messaging';
 
 const Message = ({ notification }) => (
   <div>
@@ -51,7 +50,7 @@ const Sidebar = () => {
 
       const { title, body } = payload.data;
 
-      toast(<Message notification={{ title, body }} />);;
+      toast(<Message notification={{ title, body }} />);
     });
 
     return () => unsubscribe();
