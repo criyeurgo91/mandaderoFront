@@ -1,25 +1,29 @@
-importScripts('https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.19.1/firebase-messaging.js');
+importScripts("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js");
 
-firebase.initializeApp({
-  apiKey: "AIzaSyBVDTo3sJj6mZ3xzvivSn2EkGh0lS2EGlU",
-  authDomain: "mandersdev.firebaseapp.com",
-  databaseURL: "https://mandersdev-default-rtdb.firebaseio.com",
-  projectId: "mandersdev",
-  storageBucket: "mandersdev.appspot.com",
-  messagingSenderId: "76782946615",
-  appId: "1:76782946615:web:53d337f2c39f9139e972b2",
-  measurementId: "G-7RH7132411"
-});
-
-const messaging = firebase.messaging();
-
-messaging.onBackgroundMessage((payload) => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  const notificationTitle = 'Nueva Solicitudtittle';
-  const notificationOptions = {
-    body: 'Tienes una nueva solicitud',
+ //the Firebase config object 
+const firebaseConfig = {
+    apiKey: "AIzaSyBVDTo3sJj6mZ3xzvivSn2EkGh0lS2EGlU",
+    authDomain: "mandersdev.firebaseapp.com",
+    databaseURL: "https://mandersdev-default-rtdb.firebaseio.com",
+    projectId: "mandersdev",
+    storageBucket: "mandersdev.appspot.com",
+    messagingSenderId: "76782946615",
+    appId: "1:76782946615:web:53d337f2c39f9139e972b2",
+    measurementId: "G-7RH7132411"
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+
+messaging.onBackgroundMessage(function(payload) {
+  console.log('Received background message ', payload);
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+  };
+
+  self.registration.showNotification(notificationTitle,
+    notificationOptions);
 });
