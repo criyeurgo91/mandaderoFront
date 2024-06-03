@@ -23,6 +23,8 @@ import DetailMander from "../Components/Manders/DetailMander";
 import UpdateVehicleForm from "../Components/Forms/UpdateVehicleForm";
 import UpdateDocumentForm from "../Components/Forms/UpdateDocumentForm";
 import UpdateManderProfileForm from "../Components/Forms/UpdateManderProfileForm";
+import ServicesForm from '../Components/Forms/ServicesForm';
+import UpdateServiceForm from '../Components/Forms/UpdateServiceForm';
 
 const AdminRoutes = ({ isAuthenticated, userType }) => {
     const navigate = useNavigate();
@@ -65,6 +67,8 @@ const AdminRoutes = ({ isAuthenticated, userType }) => {
                             <Route path='manders/detail/:id' element={<DetailMander />} />
                             <Route path='manders/detail/:id/updateaccountmander/:id' element={<UpdateAccountForm />} />
                             <Route path='services' element={<ServiceView />} />
+                            <Route path='services/create' element={<ServicesForm />} />
+                            <Route path='services/update/:id' element={<UpdateServiceForm />} />
                             <Route path='request' element={<RequestView />} />
                             <Route path='request/request/ubicacion-manders' element={<ActualLocationTracker />} />
 
