@@ -7,7 +7,7 @@ import apiUrl from '../../config/apiConfig';
 const ManderForm = () => {
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
     defaultValues: {
-      isMander: false, 
+      isMander: true, 
       activeMander: false, 
       validateMander: false, 
       carMander: false,
@@ -60,7 +60,7 @@ const ManderForm = () => {
       name_user: formData.nameUser,
       lastname_user: formData.lastnameUser,
       phone_user: formData.phoneUser,
-      ismander_user: formData.isMander || false,
+      ismander_user: formData.isMander || true,
       isactive_user: formData.activeUser || true,
       account_id_account: accountId,
     };
@@ -109,8 +109,6 @@ const ManderForm = () => {
 
       .then((response) => {
         if (response) {
-          
-          navigate(window.history.back());
         } else {
           alert('Failed to save Mander');
         }
@@ -121,11 +119,16 @@ const ManderForm = () => {
       });
   }
 
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(-1); 
+  };
+
   const handleCancel = () => {
-    window.history.back();
+    navigate(-1);
   }
 
-  const isMander = watch("isMander");
+  
   const activeMander = watch("activeMander");
   const validateMander = watch("validateMander");
   const carMander = watch("carMander");
@@ -135,7 +138,7 @@ const ManderForm = () => {
   return (
     <div className=" bg-sky-50 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">Mander</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Mandadero</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
           <div className="mb-4 text-black">
@@ -161,7 +164,7 @@ const ManderForm = () => {
                 required: 'este campo es obligatorio',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'correo invalido'
+                  message: 'ingresa un correo valido'
                 }
               })}
               type="email"
@@ -185,17 +188,6 @@ const ManderForm = () => {
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.passwordUser ? 'border-red-500' : ''}`}
             />
             {errors.passwordUser && <span className="text-red-500">{errors.passwordUser.message}</span>}
-          </div>
-          <div className="mb-4">
-            <label className="flex items-center">
-              <input
-                {...register('isMander')}
-                type="checkbox"
-                className="form-checkbox"
-                checked={isMander}
-              />
-              <span className="ml-2 text-white font-bold text-sm">Mander</span>
-            </label>
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="nameUser">
@@ -247,9 +239,9 @@ const ManderForm = () => {
               {...register('ccMander', { required: true })}
               type="text"
               placeholder='numero de documento'
-              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.ccMander ? 'border-red-500' : ''}`}
+              className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.cc_mander ? 'border-red-500' : ''}`}
             />
-            {errors.ccMander && <span className="text-red-500">este campo es obligatorio</span>}
+            {errors.cc_Mander && <span className="text-red-500">este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
@@ -314,13 +306,13 @@ const ManderForm = () => {
           <div className='flex justify-center py-2'>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
             Registrar
           </button>
           <button
             type="button"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+            className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={handleCancel}
           >
             Cancelar
@@ -330,10 +322,10 @@ const ManderForm = () => {
       </div>
       {/* Modal */}
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blues-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">Registro Exitoso!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>cerrar</button>
+            <p className="text-lg font-semibold mb-4">Registro de Mandadero Exitoso!</p>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

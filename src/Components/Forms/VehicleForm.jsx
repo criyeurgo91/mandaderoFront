@@ -120,12 +120,12 @@ const VehicleForm = () => {
   ];
 
   const handleCancel = () => {
-    window.history.back(); 
+    navigate(-1)
   }
 
   const closeModal = () => {
     setShowModal(false);
-    navigate(window.history.back()); 
+    navigate(-1)
   };
 
   return (
@@ -246,13 +246,13 @@ const VehicleForm = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-900 hover:bg-blue-700 text-white font-bold rounded focus:outline-none focus:shadow-outline px-2 py-2"
+                className="bg-blue-700 hover:bg-blue-500 text-white font-bold rounded focus:outline-none focus:shadow-outline px-2 py-2"
               > 
                 {loading ? 'Loading...' : 'Registrar'}
               </button>
               <button
           type="reset"
-          className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-2 rounded "
+          className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-2 rounded "
           onClick={handleCancel}
         >
           Cancelar
@@ -267,7 +267,7 @@ const VehicleForm = () => {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
             <p className="text-lg font-semibold mb-4">Vehiculo Registrado!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Close</button>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

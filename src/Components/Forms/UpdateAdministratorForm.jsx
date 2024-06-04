@@ -55,17 +55,17 @@ function UpdateAdministratorForm() {
 
   const closeModal = () => {
     setShowModal(false);
-    navigate(window.history.back()); 
+    navigate(-1)
   };
 
   const handleCancel = () => {
-    window.history.back(); 
+    navigate(-1)
   }
 
   return (
     <div className="bg-sky-50 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-semibold mb-4 text-white">Administrador</h2>
+        <h2 className="text-lg font-semibold mb-4 text-white">Actualizar Datos Administrador</h2>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Nombre:
@@ -115,10 +115,10 @@ function UpdateAdministratorForm() {
         </div>
         {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full"/>}
         <div className="flex justify-between">
-          <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleUpdate}>
+          <button className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleUpdate}>
             Actualizar
           </button>
-          <button className="bg-red-700 hover:bg-red-950 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
+          <button className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
             Cancelar
           </button>
         </div>
@@ -128,7 +128,7 @@ function UpdateAdministratorForm() {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
             <p className="text-lg font-semibold mb-4">Actualizacion Exitosa!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Close</button>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

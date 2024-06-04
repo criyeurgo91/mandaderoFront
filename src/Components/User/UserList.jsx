@@ -30,7 +30,7 @@ function UserList() {
           }
         }));
         
-        // Solo listar usuarios que no sean mandaderos
+        // Solo listar usuarios ordinarios
         const filteredUsers = usersWithIsActive.filter(user => !user.ismander_user && !user.isadmin_user);
   
         setUsers(filteredUsers);
@@ -107,12 +107,12 @@ function UserList() {
           <div className="flex mb-4">
             <input
               type="text"
-              className="w-1/2 border-2 border-gray-700 bg-sky-950 h-10 px-5 rounded-lg text-sm focus:outline-none"
+              className="w-1/2 border-2 border-blue-700 bg-sky-950 h-10 px-5 rounded-lg text-sm focus:outline-none"
               placeholder="Buscar..."
               onChange={handleSearch}
             />
             <button
-              className="bg-green-950 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+              className="bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-4 rounded ml-2"
               onClick={handleNewUser}
             >
               Registrar
@@ -160,7 +160,7 @@ function UserList() {
                   <td className="border px-4 py-2">
                     <div className="flex justify-center">
                       <button
-                        className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                        className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded ml-2"
                         onClick={() => handleEdit(user.id_user)}
                       >
                         Editar

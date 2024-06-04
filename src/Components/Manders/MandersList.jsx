@@ -137,12 +137,12 @@ function MandersList() {
         <div className="flex mb-4">
           <input
             type="text"
-            className="w-1/2 border-2 border-gray-500 bg-sky-950 h-10 px-6 rounded-lg text-sm text-white focus:outline-none"
+            className="w-1/2 border-2 border-blue-500 bg-sky-950 h-10 px-6 rounded-lg text-sm text-white focus:outline-none"
             placeholder="Buscar..."
             onChange={handleSearchMander}
           />
           <button
-            className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+            className="bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-4 rounded ml-2"
             onClick={handleNewMander}
           >
             Registrar
@@ -150,92 +150,97 @@ function MandersList() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredManders.map((mander, index) => (
-            <div key={index} className="bg-sky-800 rounded-lg shadow-md p-2 border text-white border-black">
-              {/* Contenido del mandadero */}
+            <div key={index} className="bg-sky-800 rounded-lg shadow-md p-2 border text-white border-black flex flex-col">
               <div className="flex justify-center py-2">
                 <img src={mander['image_mander']} alt="Mander" className="w-auto h-40 rounded-md" />
               </div>
-              <p className="text-sm mb-1">
-                <span className="font-bold"></span> {mander['name_user']} {mander['lastname_user']}
-              </p>
-              <div className="ml-2 py-2 relative">
-                      <input
-                        type="checkbox"
-                        checked={mander.isactive_user}
-                        onChange={() => handleToggleActive(mander.id_mander, mander.id_user, mander.isactive_user)}
-
-                        id={`toggle-${mander.id_mander}`}
-                        className="sr-only"
-                      />
-                      <label
-                        htmlFor={`toggle-${mander.id_mander}`}
-                        className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_user ? 'bg-blue-500' : 'bg-gray-300'}`}
-                      >
-                        <span
-                          className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_user ? 'translate-x-7' : 'translate-x-0'} `}
-                        ></span>
-                      </label>
-                      <span className='ml-2'>{mander.isactive_user ? "Activo" : "Bloqueado"}</span>
-                    </div>
-              <p className="text-sm mb-1">
-                <span className="font-bold">Celular:</span> {mander['phone_user']}
-              </p>
-              <div>
-              {mander['vehicles']
-                .filter(vehicle => vehicle.isactive_vehicle)
-                .map((vehicle, index) => (
-                  <div key={index}>
-                    <span className="font-bold">Vehículo:</span>
-                    {vehicle.type_vehicle === 'car' ? (
-                      <span>
-                        <FaCar size={24} />
-                        <span> {vehicle.plate_vehicle}</span>
-                      </span>
-                    ) : (
-                      <span>
-                        <FaMotorcycle size={24} />
-                        <span> {vehicle.plate_vehicle}</span>
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <span className="font-bold"> Estado:</span>
+              <div className="flex-grow">
                 <p className="text-sm mb-1">
-                <FaLightbulb size={24} className={mander.isactive_mander ? 'text-green-500' : 'text-red-500'} />
+                  <span className="font-bold"></span> {mander['name_user']} {mander['lastname_user']}
                 </p>
-                
+                <div className="ml-2 py-2 relative">
+                  <input
+                    type="checkbox"
+                    checked={mander.isactive_user}
+                    onChange={() => handleToggleActive(mander.id_mander, mander.id_user, mander.isactive_user)}
+                    id={`toggle-${mander.id_mander}`}
+                    className="sr-only"
+                  />
+                  <label
+                    htmlFor={`toggle-${mander.id_mander}`}
+                    className={`block cursor-pointer w-12 h-5 rounded-full ${mander.isactive_user ? 'bg-blue-500' : 'bg-gray-300'}`}
+                  >
+                    <span
+                      className={`block w-5 h-5 rounded-full bg-white shadow-md transform duration-300 ${mander.isactive_user ? 'translate-x-7' : 'translate-x-0'} `}
+                    ></span>
+                  </label>
+                  <span className='ml-2'>{mander.isactive_user ? "Activo" : "Bloqueado"}</span>
+                </div>
+                <p className="text-sm mb-1">
+                  <span className="font-bold">Celular:</span> {mander['phone_user']}
+                </p>
+                <div>
+                  {mander['vehicles']
+                    .filter(vehicle => vehicle.isactive_vehicle)
+                    .map((vehicle, index) => (
+                      <div key={index}>
+                        <span className="font-bold">Vehículo:</span>
+                        {vehicle.type_vehicle === 'car' ? (
+                          <span>
+                            <FaCar size={24} />
+                            <span> {vehicle.plate_vehicle}</span>
+                          </span>
+                        ) : (
+                          <span>
+                            <FaMotorcycle size={24} />
+                            <span> {vehicle.plate_vehicle}</span>
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                </div>
+                <div>
+                  <span className="font-bold"> Estado:</span>
+                  <p className="text-sm mb-1">
+                    <FaLightbulb size={24} className={mander.isactive_mander ? 'text-green-500' : 'text-red-500'} />
+                  </p>
+                </div>
               </div>
-              {/* Botones */}
-              <div className="flex justify-between py-2">
+              <div className="flex justify-between py-2 mt-auto">
                 <button
-                  className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
+                  className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-2 rounded"
                   onClick={() => handleEdit(mander.id_mander, mander.id_user)}
                 >
                   Editar
                 </button>
+                <div className="relative inline-block">
+                  <button
+                    className={`bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-2 rounded ${selectedRegisterMander === mander.id_user ? 'bg-green-700' : ''}`}
+                    onClick={() => handleRegister(mander.id_user)}
+                  >
+                    Registrar
+                  </button>
+                  {selectedRegisterMander === mander.id_user && (
+                    <div className="absolute right-0 mt-2 w-48 bg-sky-700 border border-sky-500 rounded-md shadow-lg">
+                      <div className="py-1">
+                        <button
+                          className={`block px-4 py-2 text-sm text-white w-full text-left ${selectedRegister === 'vehicle' ? 'bg-blue-700' : ''}`}
+                          onClick={() => handleRegisterSelect('vehicle')}
+                        >
+                          Vehículo
+                        </button>
+                        <button
+                          className={`block px-4 py-2 text-sm text-white w-full text-left ${selectedRegister === 'document' ? 'bg-blue-700' : ''}`}
+                          onClick={() => handleRegisterSelect('document')}
+                        >
+                          Documento
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <button
-                  className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-                  onClick={() => handleRegister(mander.id_user)}
-                >
-                  Registrar
-                </button>
-                {selectedRegisterMander === mander.id_user && (
-                  <div className="ml-2">
-                    <select
-                      className="bg-gray-700 text-white px-2 py-1 rounded"
-                      value={selectedOption}
-                      onChange={(e) => handleRegisterSelect(e.target.value)}
-                    >
-                      <option value="">Seleccionar</option>
-                      <option value="vehicle">Vehiculo</option>
-                      <option value="document">Documento</option>
-                    </select>
-                  </div>
-                )}
-                <button
-                  className="bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-2 rounded"
+                  className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-2 rounded"
                   onClick={() => handleDetail(mander.id_user)}
                 >
                   Detalle
@@ -248,5 +253,6 @@ function MandersList() {
     </div>
   );
 }
+
 
 export default MandersList;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../../config/apiConfig';
 
 const RequestFinish = ({ finishedRequests }) => {
   const [imageMap, setImageMap] = useState({});
@@ -8,7 +9,7 @@ const RequestFinish = ({ finishedRequests }) => {
   useEffect(() => {
     const fetchImageUrls = async () => {
       try {
-        const response = await axios.get('https://mandaderos3.azurewebsites.net/api/request_manager/');
+        const response = await axios.get(`${apiUrl}/api/request_manager/`);
         const images = response.data
           .filter(item => item.status_requestmanager === 'terminado')
           .reduce((acc, item) => {
@@ -68,7 +69,7 @@ const RequestFinish = ({ finishedRequests }) => {
                     />
                   )}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 text-center">{request.name_mander}</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">{request.name_mander} {request.lastname_mander}</td>
               </tr>
             ))
           )}
@@ -91,5 +92,5 @@ const RequestFinish = ({ finishedRequests }) => {
     </div>
   );
 };
-
+//3
 export default RequestFinish;

@@ -23,7 +23,7 @@ const DetailMander = () => {
       } else {
         throw new Error(`Mander with ID ${id} not found.`);
       }
-      //const mander = allManders.find(mander => mander.id_mander === parseInt(id));
+      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -81,7 +81,7 @@ const DetailMander = () => {
             <div key={index}>
               <p><img src={document.image_document} alt={`Document ${index}`} className='w-auto h-44' /></p>
               <p>Tipo de Documento: {document.type_document}</p>
-              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
+              <button className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
                 onClick={() => handleEditDocument(document.id_document)}
               >
                 Editar
@@ -97,7 +97,7 @@ const DetailMander = () => {
               <p>Marca: {vehicle.brand_vehicle}</p>
               <p>Modelo: {vehicle.model_vehicle}</p>
               <p>Placa: {vehicle.plate_vehicle}</p>
-              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
+              <button className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-2 mt-4"
                 onClick={() => handleEditVehicle(vehicle.id_vehicle)}
               >
                 Editar
@@ -110,7 +110,7 @@ const DetailMander = () => {
         </div>
       </div>
       <div className="flex justify-center">
-        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={handleClose}>
+        <button className="bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded" onClick={handleClose}>
           Volver
         </button>
       </div>

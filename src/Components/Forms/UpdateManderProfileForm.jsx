@@ -225,10 +225,10 @@ const handleImageChange = (e) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <button className="bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={() => {handleUserUpdate(); handleManderUpdate();}}>
+          <button className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4" onClick={() => {handleUserUpdate(); handleManderUpdate();}}>
             Actualizar
           </button>
-          <button className="bg-red-950 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
+          <button className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
             Cancelar
           </button>
         </div>
@@ -238,7 +238,7 @@ const handleImageChange = (e) => {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
             <p className="text-lg font-semibold mb-4">¡Actualización exitosa!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

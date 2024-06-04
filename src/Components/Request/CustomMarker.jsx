@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Marker, InfoWindow } from '@react-google-maps/api';
 
@@ -62,5 +62,5 @@ CustomMarker.propTypes = {
     image: PropTypes.string
   }).isRequired
 };
-//1
+//2
 export default CustomMarker;

@@ -14,6 +14,7 @@ const AdministratorForm = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleRegister = async (formData) => {
     const dataAccountUser = {
@@ -54,7 +55,6 @@ const AdministratorForm = () => {
     axiosPost(`${apiUrl}/api/user/`, dataUser)
       .then((response) => {
         if (response) {
-          navigate(window.history.back());
         } else {
           alert('Failed to save User');
         }
@@ -68,10 +68,21 @@ const AdministratorForm = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   }
 
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(-1); 
+  };
+
   const handleCancel = () => {
-    window.history.back();
+   navigate(-1);
   }
 
   const isadminUser = watch("isadminUser");
@@ -91,7 +102,7 @@ const AdministratorForm = () => {
                 required: 'Este campo es obligatorio',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'correo invalido'
+                  message: 'ingresa un correo valido'
                 }
               })}
               type="email"
@@ -126,7 +137,7 @@ const AdministratorForm = () => {
               placeholder="nombre"
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.nameUser ? 'border-red-500' : ''}`}
             />
-            {errors.nameUser && <span className="text-red-500">Este campo es requerido</span>}
+            {errors.nameUser && <span className="text-red-500">Este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
@@ -138,7 +149,7 @@ const AdministratorForm = () => {
               placeholder='apellido'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.lastnameUser ? 'border-red-500' : ''}`}
             />
-            {errors.lastnameUser && <span className="text-red-500">Este campo es requerido</span>}
+            {errors.lastnameUser && <span className="text-red-500">Este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="phoneUser">
@@ -146,7 +157,7 @@ const AdministratorForm = () => {
             </label>
             <input
               {...register('phoneUser', {
-                required: 'Este campo es requerido',
+                required: 'Este campo es obligatorio',
                 pattern: {
                   value: /^\d{10}$/, // valida que el telefono tenga 10 digitos
                   message: 'Numero de celular invalido'
@@ -156,7 +167,7 @@ const AdministratorForm = () => {
               placeholder='celular'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.phoneUser ? 'border-red-500' : ''}`}
             />
-            {errors.phoneUser && <span className="text-red-500">Este campo es requerido</span>}
+            {errors.phoneUser && <span className="text-red-500">Este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="imageUser">
@@ -168,16 +179,19 @@ const AdministratorForm = () => {
               onChange={handleImageChange}
               className={`p-2 shadow-lg rounded-lg w-full mb-4`}
             />
+            {imagePreview && (
+              <img src={imagePreview} alt="Preview" className="w-24 h-24 mb-2 object-cover rounded-full" />
+            )}
           </div>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
+            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
           >
             Guardar
           </button>
           <button
             type="button"
-            className="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-2"
+            className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={handleCancel}
           >
             Cancelar
@@ -186,10 +200,10 @@ const AdministratorForm = () => {
       </div>
       {/* Modal */}
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blues-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">Administrador registrado con exito!</p>
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Close</button>
+            <p className="text-lg font-semibold mb-4">Registro de Administrador Exitoso!</p>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

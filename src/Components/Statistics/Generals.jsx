@@ -1,30 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, Flex, Metric, Text } from '@tremor/react';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
-import apiUrl from '../../config/apiConfig';
 
-const Generals = () => {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/api/contadores/`);
-        const data = await response.json();
-        setData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+const Generals = ({data, loading, error}) => {
 
   if (loading) return <div className="text-center text-2xl font-bold mb-5 py-8 text-sky-800">Cargando...</div>;
   if (error) return <div className="text-center text-red-500">Error: {error.message}</div>;
@@ -32,18 +11,23 @@ const Generals = () => {
   const cards = [
     {
       title: 'Total Usuarios',
-      value: data.total_users,
-      percentage: (data.total_users / 1000) * 100
-    },
-    {
-      title: 'Mandaderos Activos',
-      value: data.active_manders,
-      percentage: (data.active_manders / 1000) * 100
+      value: data.users.total,
+      percentage: (data.users.total / 1000) * 100
     },
     {
       title: 'Total Mandaderos',
-      value: data.total_manders,
-      percentage: (data.total_manders / 1000) * 100
+      value: data.manders.total_valid,
+      percentage: (data.manders.total_valid / 100) * 100
+    },
+    {
+      title: 'Mandaderos Activos',
+      value: data.manders.active_valid,
+      percentage: (data.manders.active_valid / data.manders.total_valid) * 100
+    },
+    {
+      title: 'Total Ingresos',
+      value: data.requests.total_value,
+      percentage: (data.requests.total_value / 100000000) * 100
     },
   ];
 
@@ -56,7 +40,7 @@ const Generals = () => {
           <Flex className="mt-4 items-center justify-between">
             <div className="flex items-center">
               <ArrowUpIcon className="h-5 w-5 text-green-500 mr-2" />
-              <Text className="text-sm font-medium text-gray-600">{card.percentage.toFixed(2)}% de progreso</Text>
+              <Text className="text-sm font-medium text-gray-600">{card.percentage.toFixed(2)}%</Text>
             </div>
           </Flex>
           <div className="mt-4 h-2 w-full bg-gray-200 rounded-full">
