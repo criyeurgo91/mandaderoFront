@@ -1,151 +1,146 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiUrl from '../../config/apiConfig';
 
 function UpdateDocumentForm() {
-  const { id } = useParams();
-  const navigate = useNavigate();
 
-  const [imageDocument, setImageDocument] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [isDocumentVehicle, setIsDocumentVehicle] = useState(false);
-  const [isVerifiedDocument, setIsVerifiedDocument] = useState(false);
-  const [message, setMessage] = useState('');
+  const { id } = useParams();
+  const [formData, setFormData] = useState({
+    isverified_document: false,
+    isdocument_vehicle: false,
+  });
+  const [existingImage, setExistingImage] = useState(null);
+  const [image, setImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
 
   useEffect(() => {
-    const fetchDocument = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/api/document/${id}`);
-        const documentData = response.data;
-
-        setImageDocument(null); // Limpiar la imagen previa
-        setPreviewImage(null);
-        setIsDocumentVehicle(documentData.isdocument_vehicle);
-        setIsVerifiedDocument(documentData.isverified_document);
-      } catch (error) {
-        console.error('Error fetching document:', error);
-      }
-    };
-
-    fetchDocument();
+    axiosGet(`${apiUrl}/api/document/${id}`).then(response => {
+      setExistingImage(response.image_document);
+      setFormData({
+        isverified_document: response.isverified_document,
+        isdocument_vehicle: response.isdocument_vehicle,
+      });
+    });
   }, [id]);
 
-  const handleImageChange = (event) => {
-    const selectedImage = event.target.files[0];
-    setImageDocument(selectedImage);
-    setPreviewImage(URL.createObjectURL(selectedImage));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('isverified_document', formData.isverified_document);
+    formDataToSubmit.append('isdocument_vehicle', formData.isdocument_vehicle);
+    if (image) {
+      formDataToSubmit.append('image_document', image);
+    }
+    
+    axiosPatch(`${apiUrl}/api/document/${id}/`, formDataToSubmit, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(response => {
+      setShowModal(true); 
+    }).catch(error => {
+      console.error(error);
+    });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
 
-    try {
-      const formData = new FormData();
-      formData.append('image_document', imageDocument);
-      formData.append('isdocument_vehicle', isDocumentVehicle);
-      formData.append('isverified_document', isVerifiedDocument);
-
-      await axios.patch(`${apiUrl}/api/document/${id}/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setMessage('Document updated successfully.');
-      setShowModal(true);
-
-      // Puedes agregar lógica adicional aquí, como limpiar los estados o redirigir al usuario
-
-    } catch (error) {
-      setMessage('Error updating document. Please try again.');
-      console.error('Error updating document:', error);
-    }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setPreviewImage(file ? URL.createObjectURL(file) : null);
   };
 
   const handleCancel = () => {
     navigate(-1); // Navegar hacia atrás en la historia
   };
 
-  const closeModalAndNavigate = () => {
+  const closeModal = () => {
     setShowModal(false);
     navigate(-1); // Navegar hacia atrás en la historia
   };
 
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
   return (
     <div className="bg-sky-50 min-h-screen flex justify-center items-center">
-      <div className="max-w-sm mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">Actualizar Documento</h2>
-        {message && (
-          <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
-            {message}
-          </div>
-        )}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-white text-sm font-bold mb-2" htmlFor="image_document">
-              Imagen:
-            </label>
-            <input
-              id="image_document"
-              type="file"
-              className="w-full px-3 py-2 border rounded-md"
-              onChange={handleImageChange}
-            />
-            {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
-          </div>
-          <div className="mb-4">
-            <label className="block text-white text-sm font-bold mb-2">
-              Documento del Vehiculo
-            </label>
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={isDocumentVehicle}
-              onChange={(event) => setIsDocumentVehicle(event.target.checked)}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-white text-sm font-bold mb-2">
-              Verificar Documento
-            </label>
-            <input
-              type="checkbox"
-              className="form-checkbox"
-              checked={isVerifiedDocument}
-              onChange={(event) => setIsVerifiedDocument(event.target.checked)}
-            />
-          </div>
-          <div className='flex justify-between'>
-          <button
-            type="submit"
-            className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-2 rounded"
-          >
-            Actualizar
-          </button>
-          <button
-            type="button"
-            className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-2 rounded"
-            onClick={handleCancel}
-          >
-            Cancelar
-          </button>
-          </div>
-        </form>
-        {/* Modal */}
-        {showModal && (
-            <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
-              <div className="relative bg-white p-8 rounded-lg shadow-lg">
-                <p className="text-lg text-center font-semibold">Document updated successfully</p>
-                <button className="mt-4 bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={closeModalAndNavigate}>Cerrar</button>
-              </div>
+      <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
+        <div>
+          <h1 className="text-2xl text-center font-bold mb-4 text-white">Actualizar Documento</h1>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">
+                <input
+                  type="checkbox"
+                  name="isverified_document"
+                  checked={formData.isverified_document}
+                  onChange={handleInputChange}
+                  className="ml-2"
+                />
+                <span className="ml-2 text-white">Documento Verificado</span>
+              </label>
             </div>
-          )}
+            <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">
+                <input
+                  type="checkbox"
+                  name="isdocument_vehicle"
+                  checked={formData.isdocument_vehicle}
+                  onChange={handleInputChange}
+                  className="ml-2"
+                />
+                <span className="ml-2 text-white">Documento Vehiculo</span>
+              </label>
+            </div>
+            <div className="mb-4">
+              <label className="block text-white text-sm font-bold mb-2">Imagen:</label>
+              <input
+                type="file"
+                name="image_vehicle"
+                onChange={handleImageChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+              {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
+            </div>
+            {existingImage && <img src={existingImage} alt="Existing User Image" className="w-24 h-24 mb-2 object-cover rounded-full" />}
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                {loading ? 'Loading...' : 'Actualizar'}
+              </button>
+              <button
+                type="button"
+                className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
+                onClick={handleCancel}
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blue-800 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p className="text-lg font-semibold mb-4">Actualizacion Exitosa!</p>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default UpdateDocumentForm;

@@ -120,12 +120,12 @@ const VehicleForm = () => {
   ];
 
   const handleCancel = () => {
-    window.history.back(); 
+    navigate(-1)
   }
 
   const closeModal = () => {
     setShowModal(false);
-    navigate(window.history.back()); 
+    navigate(-1)
   };
 
   return (

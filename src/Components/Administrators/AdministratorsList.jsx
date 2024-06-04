@@ -98,7 +98,7 @@ function AdministratorsList() {
   return (
     <div className="bg-sky-50 text-white min-h-screen">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-5 py-3 text-sky-800">Administrador</h2>
+        <h2 className="text-2xl font-bold mb-5 py-3 text-sky-800">Administradores</h2>
         <div className="container mx-auto px-4 py-3">
           <div className="flex mb-4">
             <input
