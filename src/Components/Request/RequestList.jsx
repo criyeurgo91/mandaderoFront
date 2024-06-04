@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import RequestFilter from './RequestFilter';
 import RequestTable from './RequestTable';
@@ -9,7 +9,7 @@ import apiUrl from '../../config/apiConfig';
 const RequestList = () => {
   const [requests, setRequests] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("pendiente");
   const [selectedMander, setSelectedMander] = useState({});
 
   useEffect(() => {
@@ -81,18 +81,23 @@ const RequestList = () => {
     }
   }, [selectedMander]);
 
-  const getStatusColor = useCallback(status => {
-    switch (status.toLowerCase()) {
-      case "proceso":
-        return "text-blue-500";
-      case "pendiente":
-        return "text-yellow-500";
-      case "finalizado":
-        return "text-green-500";
-      default:
-        return "text-white";
+  const getStatusColor = useCallback((status, isPriority) => {
+    if (isPriority) {
+      return "text-red-400"; 
+    } else {
+      switch (status.toLowerCase()) {
+        case "proceso":
+          return "text-blue-500";
+        case "pendiente":
+          return "text-yellow-500";
+        case "finalizado":
+          return "text-green-500";
+        default:
+          return "text-white";
+      }
     }
   }, []);
+  
 
   const getStatusName = useCallback(status => {
     switch (status.toLowerCase()) {
@@ -159,6 +164,7 @@ const RequestList = () => {
         <RequestFilter
           handleSearch={handleSearch}
           handleStatusFilter={handleStatusFilter}
+          statusFilter={statusFilter} 
         />
       </div>
 
@@ -179,5 +185,5 @@ const RequestList = () => {
     </div>
   );
 };
-
+//3
 export default RequestList;

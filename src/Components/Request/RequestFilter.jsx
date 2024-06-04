@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 
-const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
+const RequestFilter = ({ handleSearch, handleStatusFilter, statusFilter}) => {
   return (
     <div className="flex justify-between items-center mb-4">
       <div>
@@ -21,11 +21,13 @@ const RequestFilter = ({ handleSearch, handleStatusFilter }) => {
         </select>
       </div>
       <div>
-      <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Mandaderos</Link>
-
+        
+      {statusFilter !== "finalizado" && statusFilter !== "proceso" && (
+          <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Mandaderos y Servicios</Link>
+        )}
       </div>
     </div>
   );
 };
-
+//3
 export default RequestFilter;
