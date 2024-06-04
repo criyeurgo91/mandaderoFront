@@ -23,7 +23,7 @@ const RequestFilter = ({ handleSearch, handleStatusFilter, statusFilter}) => {
       <div>
         
       {statusFilter !== "finalizado" && statusFilter !== "proceso" && (
-          <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Mandaderos</Link>
+          <Link to="request/ubicacion-manders" className="bg-sky-800 text-white py-2 px-4 rounded-md">Ubicación Mandaderos y Servicios</Link>
         )}
       </div>
     </div>
