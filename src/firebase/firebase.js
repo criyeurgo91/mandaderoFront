@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-//import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+
 
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
@@ -57,5 +57,5 @@ export const onMessageListener = () =>
       });
   });
 const database = getDatabase(app);
-const messaging = getMessaging(app);
+
 export { database, ref, onValue, messaging, getToken, onMessage };

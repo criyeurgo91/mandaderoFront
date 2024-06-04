@@ -69,7 +69,7 @@ const RequestFinish = ({ finishedRequests }) => {
                     />
                   )}
                 </td>
-                <td className="border border-gray-300 px-4 py-2 text-center">{request.name_mander}</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">{request.name_mander} {request.lastname_mander}</td>
               </tr>
             ))
           )}
@@ -92,5 +92,5 @@ const RequestFinish = ({ finishedRequests }) => {
     </div>
   );
 };
-
+//3
 export default RequestFinish;

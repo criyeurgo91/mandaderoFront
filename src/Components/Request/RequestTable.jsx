@@ -58,19 +58,19 @@ const RequestTable = ({
         </tr>
       </thead>
       <tbody>
-        {requests.map((request) => (
-          <tr key={request.id_request}>
-            <td className="border border-gray-300 px-4 py-2 text-center">{request.elapsedTime}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{`${request.name_user} ${request.lastname_user} - ${request.phone_user}`}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{request.detail_request}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{request.origin}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{request.destination}</td>
-            <td className={`border px-4 py-2 text-center ${getStatusColor(request.status_request)}`}>
-              {getStatusName(request.status_request)}
-            </td>
+      {requests.map((request) => (
+    <tr key={request.id_request}>
+      <td className="border border-gray-300 px-4 py-2 text-center">{request.elapsedTime}</td>
+      <td className="border border-gray-300 px-4 py-2 text-center">{`${request.name_user} ${request.lastname_user} - ${request.phone_user}`}</td>
+      <td className="border border-gray-300 px-4 py-2 text-center">{request.detail_request}</td>
+      <td className="border border-gray-300 px-4 py-2 text-center">{request.origin}</td>
+      <td className="border border-gray-300 px-4 py-2 text-center">{request.destination}</td>
+      <td className={`border px-4 py-2 text-center ${getStatusColor(request.status_request, request.ispriority_request)}`}>
+        {getStatusName(request.status_request)}
+      </td>
             <td className="border border-gray-300 px-4 py-2 text-center">
               {request.name_mander ? (
-                request.name_mander
+                request.name_mander  + ' ' + request.lastname_mander
               ) : (
                 <>
                   {selectedMander?.requestId === request.id_request ? (
