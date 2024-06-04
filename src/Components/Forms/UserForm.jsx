@@ -54,7 +54,6 @@ const UserForm = () => {
     axiosPost(`${apiUrl}/api/user/`, dataUser)
       .then((response) => {
         if (response) {
-          navigate(window.history.back());
         } else {
           alert('Failed to save User');
         }
@@ -76,8 +75,13 @@ const UserForm = () => {
     reader.readAsDataURL(file);
   }
 
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(-1); 
+  };
+
   const handleCancel = () => {
-    window.history.back();
+    navigate(-1);
   }
 
 
@@ -95,7 +99,7 @@ const UserForm = () => {
                 required: 'Este campo es obligatorio',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'correo invalido'
+                  message: 'ingresa un correo valido'
                 }
               })}
               type="email"
@@ -130,7 +134,7 @@ const UserForm = () => {
               placeholder="nombre"
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.nameUser ? 'border-red-500' : ''}`}
             />
-            {errors.nameUser && <span className="text-red-500">Este campo es requerido</span>}
+            {errors.nameUser && <span className="text-red-500">Este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="lastnameUser">
@@ -142,7 +146,7 @@ const UserForm = () => {
               placeholder='apellido'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.lastnameUser ? 'border-red-500' : ''}`}
             />
-            {errors.lastnameUser && <span className="text-red-500">Este campo es requerido</span>}
+            {errors.lastnameUser && <span className="text-red-500">Este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="phoneUser">
@@ -160,7 +164,7 @@ const UserForm = () => {
               placeholder='celular'
               className={`p-2 shadow-lg rounded-lg w-full mb-4 ${errors.phoneUser ? 'border-red-500' : ''}`}
             />
-            {errors.phoneUser && <span className="text-red-500">Este campo es requerido</span>}
+            {errors.phoneUser && <span className="text-red-500">Este campo es obligatorio</span>}
           </div>
           <div className="mb-4 text-black">
             <label className="block text-white text-sm font-bold mb-2" htmlFor="imageUser">
@@ -193,10 +197,10 @@ const UserForm = () => {
       </div>
       {/* Modal */}
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blue-800 bg-opacity-75 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blues-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4">Registro Exitoso!</p>
-            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>Cerrar</button>
+            <p className="text-lg font-semibold mb-4">Registro de Usuario Exitoso!</p>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

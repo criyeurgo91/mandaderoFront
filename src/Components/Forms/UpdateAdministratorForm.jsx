@@ -55,17 +55,17 @@ function UpdateAdministratorForm() {
 
   const closeModal = () => {
     setShowModal(false);
-    navigate(window.history.back()); 
+    navigate(-1)
   };
 
   const handleCancel = () => {
-    window.history.back(); 
+    navigate(-1)
   }
 
   return (
     <div className="bg-sky-50 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-semibold mb-4 text-white">Administrador</h2>
+        <h2 className="text-lg font-semibold mb-4 text-white">Actualizar Datos Administrador</h2>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Nombre:
