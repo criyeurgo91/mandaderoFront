@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { GoogleMap } from '@react-google-maps/api';
 import CustomMarker from './CustomMarker';
-import ServiceMarker from './ServiceMarker'; // Importar un nuevo componente para manejar los marcadores de las solicitudes
+import ServiceMarker from './ServiceMarker';
 
 const Map = ({ manderLocations, serviceLocations }) => {
   const mapContainerStyle = {
@@ -20,10 +20,10 @@ const Map = ({ manderLocations, serviceLocations }) => {
   } : popayanCenter;
 
   const manderIconUrl = 'https://cdn.icon-icons.com/icons2/2796/PNG/512/bike_motorbike_vehicle_icon_178048.png';
-  const serviceIconUrl = 'https://cdn.icon-icons.com/icons2/882/PNG/512/1-65_icon-icons.com_68858.png'; // Ícono para las solicitudes
+  const serviceIconUrl = 'https://cdn.icon-icons.com/icons2/882/PNG/512/1-65_icon-icons.com_68858.png';
 
   return (
-    <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={15}>
+    <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={12}>
       {manderLocations.map(location => (
         <CustomMarker
           key={location.id}
@@ -50,7 +50,7 @@ const Map = ({ manderLocations, serviceLocations }) => {
             type_vehicle: service.typevehicle_request,
             priority: service.ispriority_request,
             user: `${service.name_user} ${service.lastname_user}`,
-            mander: `${service.name_mander} ${service.lastname_mander}`
+            mander: service.name_mander ? `${service.name_mander} ${service.lastname_mander}` : 'Sin asignar'
           }}
         />
       ))}
@@ -80,9 +80,9 @@ Map.propTypes = {
     ispriority_request: PropTypes.bool.isRequired,
     name_user: PropTypes.string.isRequired,
     lastname_user: PropTypes.string.isRequired,
-    name_mander: PropTypes.string.isRequired,
-    lastname_mander: PropTypes.string.isRequired
+    name_mander: PropTypes.string, 
+    lastname_mander: PropTypes.string
   })).isRequired
 };
-//3
+//5
 export default Map;

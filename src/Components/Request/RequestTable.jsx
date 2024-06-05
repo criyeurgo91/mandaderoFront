@@ -34,7 +34,10 @@ const RequestTable = ({
   }, [activeManders, fetchActiveManders]);
 
   const renderMandersOptions = useMemo(() => {
+    // Crear una lista de IDs de mandaderos asignados
     const assignedManderIds = requests.map((request) => request.id_mander).filter(Boolean);
+    
+    // Filtrar mandaderos activos que no están asignados
     return activeManders
       .filter((mander) => !assignedManderIds.includes(mander.id_mander))
       .map((mander) => (
@@ -43,6 +46,7 @@ const RequestTable = ({
         </option>
       ));
   }, [activeManders, requests]);
+  
 
   return (
     <table>
@@ -112,5 +116,5 @@ RequestTable.propTypes = {
   handleAssignMander: PropTypes.func.isRequired,
   handleManderSelect: PropTypes.func.isRequired,
 };
-
+//2
 export default React.memo(RequestTable);

@@ -69,9 +69,10 @@ const RequestList = () => {
       await axios.post(`${apiUrl}/api/request_manager/`, requestData);
 
       setRequests(prevRequests =>
-        prevRequests.filter(request =>
-          request.id_request !== requestId ||
-          request.status_request.toLowerCase() === "finalizado"
+        prevRequests.map(request =>
+          request.id_request === requestId 
+          ? { ...request, name_mander: selectedMander.manderId }
+          : request
         )
       );
 
@@ -173,13 +174,13 @@ const RequestList = () => {
           <RequestFinish finishedRequests={filteredRequests} />
         ) : (
           <RequestTable
-            requests={filteredRequests}
-            getStatusColor={getStatusColor}
-            getStatusName={getStatusName}
-            selectedMander={selectedMander}
-            handleAssignMander={handleAssignMander}
-            handleManderSelect={handleManderSelect}
-          />
+          requests={filteredRequests}
+          getStatusColor={getStatusColor}
+          getStatusName={getStatusName}
+          selectedMander={selectedMander}
+          handleAssignMander={handleAssignMander}
+          handleManderSelect={handleManderSelect}
+        />
         )}
       </div>
     </div>

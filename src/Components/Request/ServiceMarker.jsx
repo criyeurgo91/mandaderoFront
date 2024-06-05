@@ -50,6 +50,5 @@ ServiceMarker.propTypes = {
     mander: PropTypes.string.isRequired
   }).isRequired
 };
-//3
+//5
 export default ServiceMarker;
-

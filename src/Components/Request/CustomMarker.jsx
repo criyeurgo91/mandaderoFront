@@ -62,5 +62,5 @@ CustomMarker.propTypes = {
     image: PropTypes.string
   }).isRequired
 };
-//2
+//5
 export default CustomMarker;
