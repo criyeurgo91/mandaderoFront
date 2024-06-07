@@ -21,13 +21,13 @@ const ServiceMarker = ({ position, iconUrl, service }) => {
       />
       {isOpen && (
         <InfoWindow position={position} onCloseClick={handleToggleOpen}>
-          <div style={{ textAlign: 'center' }}>
-            <h2>{service.user}</h2>
-            <p>Origen: {service.origin}</p>
-            <p>Destino: {service.destination}</p>
-            <p>Vehículo: {service.type_vehicle}</p>
-            <p>Prioridad: {service.priority ? 'Sí' : 'No'}</p>
-            <p>Mandadero: {service.mander}</p>
+          <div className="p-4 bg-white shadow-lg rounded-lg text-center">
+            <h2 className="text-xl font-semibold mb-2">{service.user}</h2>
+            <p className="text-sm text-gray-600"><strong>Origen:</strong> {service.origin}</p>
+            <p className="text-sm text-gray-600"><strong>Destino:</strong> {service.destination}</p>
+            <p className="text-sm text-gray-600"><strong>Vehículo:</strong> {service.type_vehicle}</p>
+            <p className="text-sm text-gray-600"><strong>Prioridad:</strong> {service.priority ? 'Sí' : 'No'}</p>
+            <p className="text-sm text-gray-600"><strong>Mandadero:</strong> {service.mander}</p>
           </div>
         </InfoWindow>
       )}
@@ -50,5 +50,5 @@ ServiceMarker.propTypes = {
     mander: PropTypes.string.isRequired
   }).isRequired
 };
-//5
+//3
 export default ServiceMarker;

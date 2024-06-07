@@ -15,11 +15,10 @@ const LocationTracker = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-       
+        // Obtener datos de mandaderos y servicios
         const mandersResponse = await axios.get(`${apiUrl}/api/getlistmanders/`);
         const mandersData = mandersResponse.data;
 
-      
         const servicesResponse = await axios.get(`${apiUrl}/api/getlistrequest/`);
         const serviceLocationsData = servicesResponse.data
           .filter(service => service.status_request !== 'Finalizado')
@@ -28,7 +27,7 @@ const LocationTracker = () => {
             name_mander: service.name_mander || 'Sin asignar',
           }));
 
-    
+        // Obtener ubicaciones de mandaderos desde Firebase
         const locationRef = ref(database, 'Manders/location_manders');
         onValue(locationRef, (snapshot) => {
           const data = snapshot.val();
@@ -82,17 +81,17 @@ const LocationTracker = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl text-sky-800 font-bold">Ubicación de Mandaderos y Servicios</h1>
+    <div className="relative h-screen">
+      <Map manderLocations={manderLocations} serviceLocations={serviceLocations} />
+      <div className="absolute top-0 right-0 p-4 flex justify-between items-center">
+        
         <button 
           className="bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
           onClick={() => navigate(-1)}
         >
-          Volver
+          Cerrar
         </button>
       </div>
-      <Map manderLocations={manderLocations} serviceLocations={serviceLocations} />
     </div>
   );
 };
