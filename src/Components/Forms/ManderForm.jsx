@@ -109,8 +109,6 @@ const ManderForm = () => {
 
       .then((response) => {
         if (response) {
-          
-          navigate(window.history.back());
         } else {
           alert('Failed to save Mander');
         }
@@ -121,8 +119,13 @@ const ManderForm = () => {
       });
   }
 
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(-1); 
+  };
+
   const handleCancel = () => {
-    window.history.back();
+    navigate(-1);
   }
 
   
@@ -135,7 +138,7 @@ const ManderForm = () => {
   return (
     <div className=" bg-sky-50 min-h-screen flex justify-center items-center">
       <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
-        <h2 className="text-lg font-bold mb-4 text-white">Mander</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Mandadero</h2>
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="mb-4 text-black">
           <div className="mb-4 text-black">
@@ -161,7 +164,7 @@ const ManderForm = () => {
                 required: 'este campo es obligatorio',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'correo invalido'
+                  message: 'ingresa un correo valido'
                 }
               })}
               type="email"
@@ -319,10 +322,10 @@ const ManderForm = () => {
       </div>
       {/* Modal */}
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blues-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p className="text-lg font-semibold mb-4 text-green-900">Registro Exitoso!</p>
-            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setShowModal(false)}>cerrar</button>
+            <p className="text-lg font-semibold mb-4">Registro de Mandadero Exitoso!</p>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
           </div>
         </div>
       )}

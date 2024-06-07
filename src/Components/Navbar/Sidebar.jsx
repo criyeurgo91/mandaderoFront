@@ -1,4 +1,3 @@
-// Sidebar.js
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react"; 
 import Notification from "../Notification/Notification";
@@ -22,6 +21,13 @@ const Sidebar = () => {
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('userType');
     navigate("/login");
+  };
+
+  const handleRequestClick = () => {
+    resetNotificationCount();
+    setTimeout(() => {
+      window.location.reload();
+    }, 0);
   };
 
   const userType = localStorage.getItem('userType');
@@ -50,7 +56,7 @@ const Sidebar = () => {
         )}
         <NavLink to="request"
           className="flex items-center gap-4 justify-center text-3xl text-white py-2 px-4 rounded-tr-[20px] hover:bg-blue-500 relative"
-          onClick={resetNotificationCount}
+          onClick={handleRequestClick}
         >
           <RiNotification2Line style={{ width: "30px", height: "30px", color: "white" }}/>
           <span className={`ml-2 ${isOpen ? 'text-base font-bold' : 'hidden'}`} style={{ color: "white", width: "60px" }}>Solicitudes</span>

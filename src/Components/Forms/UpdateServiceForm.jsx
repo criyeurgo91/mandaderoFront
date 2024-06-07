@@ -1,84 +1,82 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { axiosGet, axiosPatch } from '../../Logic/Apihelpers';
 import apiUrl from '../../config/apiConfig';
 
-function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
+function UpdateServiceForm() {
+  const { id } = useParams();
+  const navigate = useNavigate()
+  const [service, setService] = useState({});
   const [name, setName] = useState('');
   const [detail, setDetail] = useState('');
   const [image, setImage] = useState(null);
-  const [currentImage, setCurrentImage] = useState(null);
-  const [message, setMessage] = useState('');
-  const [visible, setVisible] = useState(true)
-  
+  const [serviceId, setServiceId] = useState('')
+  const [previewImage, setPreviewImage] = useState(null);
+  const [existingImage, setExistingImage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetchServiceData();
-  }, [serviceId]);
+    axiosGet(`${apiUrl}/api/service/${id}`).then(response => {
+      setService(response);
+      setName(response.name_service);
+      setDetail(response.detail_service);
+      setServiceId(response.service_id_service);
+      setExistingImage(response.image_service);
+    });
+  }, [id]);
 
-  const fetchServiceData = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/api/service/${serviceId}`);
-      setName(response.data.name_service);
-      setDetail(response.data.detail_service);
-      setCurrentImage(response.data.image_service);
-      setVisible(response.data.isvisible_service);
-    } catch (error) {
-      console.error('Error fetching service data:', error);
+  const handleUpdate = () => {
+    const formData = new FormData();
+    formData.append('name_service', name);
+    formData.append('detail_service', detail);
+    formData.append('service_id_service', serviceId)
+    if (image) {
+      formData.append('image_service', image);
     }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const formData = new FormData();
-      formData.append('name_service', name);
-      formData.append('detail_service', detail);
-      formData.append('isvisible_service', visible)
-      
-      if (image) {
-        formData.append('image_service', image);
-      } else if (currentImage) {
-        const response = await fetch(currentImage);
-        const blob = await response.blob();
-        const file = new File([blob], 'current_image.jpg');
-  
-        formData.append('image_service', file);
+    
+    axiosPatch(`${apiUrl}/api/service/${id}/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
-
-      const response = await axios.patch(`${apiUrl}/api/service/${serviceId}/`, formData);
-
-      setMessage('Service updated successfully.');
-      console.log('Service updated successfully.', response.data);
-
-      onUpdate();
-      onClose();
-    } catch (error) {
-      setMessage('Failed to update service. Please try again.');
-      console.error('Error updating service:', error);
-    }
+    }).then(response => {
+      console.log(response);
+      setShowModal(true); 
+    }).catch(error => {
+      console.error(error);
+    });
   };
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+    setExistingImage(e.target.files[0] ? URL.createObjectURL(e.target.files[0]) : null);
+  };
+  
+  
+  
+
+  const closeModal = () => {
+    setShowModal(false);
+    navigate(-1); 
+  };
+
+  const handleCancel = () => {
+    navigate(-1);
+  }
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-sky-800 rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Actualizar servicio</h2>
-      {message && (
-        <div className={`bg-${message.includes('successfully') ? 'green' : 'red'}-100 border border-${message.includes('successfully') ? 'green' : 'red'}-400 text-${message.includes('successfully') ? 'green' : 'red'}-700 px-4 py-3 mb-4 rounded`}>
-          {message}
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
+    <div className="bg-sky-50 min-h-screen flex justify-center items-center">
+      <div className="max-w-md mx-auto p-6 bg-sky-800 rounded-lg shadow-md mt-20 w-80">
+        <h2 className="text-lg font-semibold mb-4 text-white">Actualizar Servicio</h2>
         <div className="mb-4 text-black">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="name">
             Nombre:
           </label>
           <input
-            id="name"
             type="text"
-            className="w-full px-3 py-2 border rounded-md"
+            id="name"
             value={name}
-            onChange={(event) => setName(event.target.value)}
-            required
+            onChange={e => setName(e.target.value)}
+            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
           />
         </div>
         <div className="mb-4 text-black">
@@ -86,68 +84,43 @@ function UpdateServiceForm({ serviceId, onUpdate, onClose }) {
             Detalle:
           </label>
           <input
-            id="detail"
             type="text"
-            className="w-full px-3 py-2 border rounded-md"
+            id="detail"
             value={detail}
-            onChange={(event) => setDetail(event.target.value)}
-            required
+            onChange={e => setDetail(e.target.value)}
+            className={`p-2 shadow-lg rounded-lg w-full mb-4`}
           />
         </div>
-        
-        <div className="mb-4">
-        {currentImage && !image && (
-        <div className="mb-4">
-          <img src={currentImage} alt="Current Image" className="mb-2" style={{ maxWidth: '50%' }} />
-          <p className="text-white text-sm">Current Image</p>
+        <div className="mb-4 text-black">
+        <label className="block text-white text-sm font-bold mb-2">Imagen:</label>
+              <input
+                type="file"
+                name="image_service"
+                onChange={handleImageChange}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+              {previewImage && <img src={previewImage} alt="Preview" className="mt-2 w-40" />}
         </div>
-        )}
-        {image && (
-          <div className="mb-4">
-            <img src={URL.createObjectURL(image)} alt="Selected Image" className="mb-2" style={{ maxWidth: '50%' }} />
-            <p className="text-white text-sm">Selected Image</p>
-          </div>
-        )}
-        <label htmlFor="image" className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
-          Editar
-        </label>
-        <input
-          id="image"
-          type="file"
-          className="hidden"
-          onChange={(event) => {
-            const selectedImage = event.target.files[0];
-            setImage(selectedImage);
-            setCurrentImage(URL.createObjectURL(selectedImage));
-          }}
-          accept="image/*"
-        />
+        {existingImage && <img src={existingImage} alt="Existing Service Image" className="w-24 h-24 mb-2 object-cover rounded-full" />}
+
+        <div className="flex justify-between">
+          <button className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleUpdate}>
+            Actualizar
+          </button>
+          <button className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mt-4" onClick={handleCancel}>
+            Cancelar
+          </button>
+        </div>
       </div>
-      <div className="mb-4">
-          <label className="block text-white text-sm font-bold mb-2">
-          
-          <input
-            type="checkbox"
-            checked={visible}
-            onChange={(event) => setVisible(event.target.checked)}
-          />
-          <span className="ml-2 text-white">Visible</span>
-          </label>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-blues-800 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p className="text-lg font-semibold mb-4">Actualizacion Exitosa!</p>
+            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>Cerrar</button>
+          </div>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-20 mb-2"
-        >
-          Actualizar
-        </button>
-        <button
-          type="reset"
-          className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded mb-2"
-          onClick={onClose}
-        >
-          Cancelar
-        </button>
-      </form>
+      )}
     </div>
   );
 }

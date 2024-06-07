@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { database, ref, onValue } from '../../firebase/firebase';
+import { database, ref, onValue } from '../../firebase/firebase.jsx';
 import Map from './Map';
 import apiUrl from '../../config/apiConfig';
 import { useNavigate } from 'react-router-dom';
