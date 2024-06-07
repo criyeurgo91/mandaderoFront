@@ -53,11 +53,11 @@ const RequestList = () => {
   }, []);
 
   const handleAssignMander = useCallback(async (requestId, detail_request) => {
-    if (!selectedMander.manderId) {
+    if (!selectedMander || !selectedMander.manderId) {
       alert("Por favor, selecciona primero un mandadero.");
       return;
     }
-
+  
     try {
       const requestData = {
         request_id_request: requestId,
@@ -65,22 +65,26 @@ const RequestList = () => {
         status_requestmanager: "espera",
         detail_requestmanager: detail_request,
       };
-
+  
       await axios.post(`${apiUrl}/api/request_manager/`, requestData);
-
+  
+      // Obtener el nombre del mandadero seleccionado
+      const selectedManderName = activeManders.find(mander => mander.id_mander === selectedMander.manderId)?.name_user ?? '';
+  
       setRequests(prevRequests =>
         prevRequests.map(request =>
           request.id_request === requestId 
-          ? { ...request, name_mander: selectedMander.manderId }
+          ? { ...request, name_mander: selectedManderName }
           : request
         )
       );
-
+  
       setSelectedMander({});
     } catch (error) {
       console.error(`Error asignando mandadero a la solicitud ${requestId}:`, error);
     }
   }, [selectedMander]);
+  
 
   const getStatusColor = useCallback((status, isPriority) => {
     if (isPriority) {

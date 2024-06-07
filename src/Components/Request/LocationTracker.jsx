@@ -15,12 +15,13 @@ const LocationTracker = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Obtener datos de mandaderos y servicios
+        // Obtener datos de mandaderos
         const mandersResponse = await axios.get(`${apiUrl}/api/getlistmanders/`);
         const mandersData = mandersResponse.data;
 
+        // Obtener datos de servicios excluyendo los finalizados
         const servicesResponse = await axios.get(`${apiUrl}/api/getlistrequest/`);
-        const serviceLocationsData = servicesResponse.data
+        const filteredServiceLocations = servicesResponse.data
           .filter(service => service.status_request !== 'Finalizado')
           .map(service => ({
             ...service,
@@ -60,7 +61,7 @@ const LocationTracker = () => {
           setError('Error obteniendo ubicaciones desde Firebase');
         });
 
-        setServiceLocations(serviceLocationsData);
+        setServiceLocations(filteredServiceLocations);
         setLoading(false);
       } catch (error) {
         console.error('Error obteniendo datos:', error);
@@ -95,5 +96,6 @@ const LocationTracker = () => {
     </div>
   );
 };
+
 //5
 export default LocationTracker;
