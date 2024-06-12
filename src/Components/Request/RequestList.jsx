@@ -92,9 +92,9 @@ const RequestList = () => {
     } else {
       switch (status.toLowerCase()) {
         case "proceso":
-          return "text-blue-500";
+          return "text-black-500";
         case "pendiente":
-          return "text-yellow-500";
+          return "text-blue-500";
         case "finalizado":
           return "text-green-500";
         default:
