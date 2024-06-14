@@ -4,7 +4,7 @@ import { LoadScript } from '@react-google-maps/api';
 import AdminRoutes from '../../Routes/AdminRoutes';
 import StateContext from '../../Context/StateContext';
 import LoginForm from '../../Components/Login/Login';
-import LocationTrackerPage from '../../Components/Request/LocationTracker'; 
+//import LocationTrackerPage from '../../Components/Request/LocationTracker'; 
 
 const App = () => {
   const [userType, setUserType] = useState(localStorage.getItem('userType'));
@@ -21,14 +21,16 @@ const App = () => {
 
   return (
     <StateContext>
-      <LoadScript googleMapsApiKey="AIzaSyBohrC403d9OzquVBuQSS6RqQaUmLOa-Y0">
+      
         <BrowserRouter>
           <Routes>
             <Route path='/*' element={<LoginForm onLogin={handleLogin} />} />
             <Route path='/admin/*' element={<AdminRoutes isAuthenticated={isAuthenticated} userType={userType} />} />
-            <Route path='/location-tracker' element={<LocationTrackerPage />} />
+           
           </Routes>
         </BrowserRouter>
+       <LoadScript googleMapsApiKey="AIzaSyBohrC403d9OzquVBuQSS6RqQaUmLOa-Y0">
+        {/*<Route path='/location-tracker' element={<LocationTrackerPage />} />*/} 
       </LoadScript>
     </StateContext>
   );

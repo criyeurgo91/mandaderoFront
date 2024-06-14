@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { GoogleMap } from '@react-google-maps/api';
 import CustomMarker from './CustomMarker';
-import ServiceMarker from './ServiceMarker'; // Importar un nuevo componente para manejar los marcadores de las solicitudes
+import ServiceMarker from './ServiceMarker';
+import { DarkMapStyle } from './DarkMapStyle';
 
 const Map = ({ manderLocations, serviceLocations }) => {
   const mapContainerStyle = {
     width: '100%',
-    height: '500px'
+    height: '100vh', // 100% de la altura de la ventana
   };
 
   const popayanCenter = {
@@ -19,11 +20,17 @@ const Map = ({ manderLocations, serviceLocations }) => {
     lng: manderLocations[0].lon
   } : popayanCenter;
 
-  const manderIconUrl = 'https://cdn.icon-icons.com/icons2/2796/PNG/512/bike_motorbike_vehicle_icon_178048.png';
-  const serviceIconUrl = 'https://cdn.icon-icons.com/icons2/882/PNG/512/1-65_icon-icons.com_68858.png'; // Ícono para las solicitudes
+  const manderIconUrl = 'https://th.bing.com/th/id/R.cfe8d36adf43ce116228ab73a2f421aa?rik=TId%2fSI%2fdPtMnvw&riu=http%3a%2f%2fprimeiroalerta.com.br%2fimg%2fservicos%2fservico_ronda_motorizada.png&ehk=tJ5M2DB7hAFG9TpOTLOm5SEVpfdGSo%2bjFDx1GN03JBA%3d&risl=&pid=ImgRaw&r=0';
+  const serviceIconUrl = 'https://cdn-icons-png.flaticon.com/512/6325/6325479.png';
+  const priorityServiceIconUrl = 'https://cdn-icons-png.flaticon.com/512/7972/7972973.png'; 
 
   return (
-    <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={15}>
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      center={center}
+      zoom={12}
+      options={{ styles: DarkMapStyle }}
+    >
       {manderLocations.map(location => (
         <CustomMarker
           key={location.id}
@@ -43,14 +50,14 @@ const Map = ({ manderLocations, serviceLocations }) => {
         <ServiceMarker
           key={service.id_request}
           position={{ lat: parseFloat(service.originLat), lng: parseFloat(service.originLng) }}
-          iconUrl={serviceIconUrl}
+          iconUrl={service.ispriority_request ? priorityServiceIconUrl : serviceIconUrl}
           service={{
             origin: service.origin,
             destination: service.destination,
             type_vehicle: service.typevehicle_request,
             priority: service.ispriority_request,
             user: `${service.name_user} ${service.lastname_user}`,
-            mander: `${service.name_mander} ${service.lastname_mander}`
+            mander: service.name_mander ? `${service.name_mander} ${service.lastname_mander}` : 'Sin asignar'
           }}
         />
       ))}
@@ -80,9 +87,9 @@ Map.propTypes = {
     ispriority_request: PropTypes.bool.isRequired,
     name_user: PropTypes.string.isRequired,
     lastname_user: PropTypes.string.isRequired,
-    name_mander: PropTypes.string.isRequired,
-    lastname_mander: PropTypes.string.isRequired
+    name_mander: PropTypes.string,
+    lastname_mander: PropTypes.string
   })).isRequired
 };
-//3
+//5
 export default Map;
