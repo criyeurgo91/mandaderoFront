@@ -25,9 +25,7 @@ const Sidebar = () => {
 
   const handleRequestClick = () => {
     resetNotificationCount();
-    setTimeout(() => {
-      window.location.reload();
-    }, 0);
+    
   };
 
   const userType = localStorage.getItem('userType');
