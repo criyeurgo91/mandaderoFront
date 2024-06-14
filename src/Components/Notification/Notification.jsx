@@ -10,6 +10,11 @@ function Notification() {
     requestPermission();
     const unsubscribe = onMessageListener().then((payload) => {
       console.log('Message received: ', payload);
+
+      // Reproduce el sonido de notificación
+      const audio = new Audio('/sounds/notification.mp3');
+      audio.play();
+      
       toast.success(`${payload?.data?.title}: ${payload?.data?.body}`, {
         duration: 6000,
         position: 'top-right',
